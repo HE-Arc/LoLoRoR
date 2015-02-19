@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   root 'pages#home'
+  
   resources :users
+  get 'users/:id/friends' => 'users#friends'
+  
   get 'about' => 'pages#about'
   
   get 'login' => 'sessions#new'

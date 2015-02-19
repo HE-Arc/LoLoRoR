@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   end
   
   def friends
-    @users = User
+    @user = User.find(params[:id])
   end
   
   def new
