@@ -8,6 +8,10 @@ class UsersController < ApplicationController
     @users = User.all
   end
   
+  def friends
+    @users = User
+  end
+  
   def new
     @user = User.new
   end
