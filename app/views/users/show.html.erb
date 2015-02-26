@@ -1,5 +1,6 @@
-<h2><%= @user.pseudoLoL %></h2>
+<h2><%= @user.email %></h2>
 
-<p>
-  <%= link_to 'Friends',  "/users/#{@user.id}/friends" %> 
-</p>
+<% if user_signed_in? %>
+  <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+<% end %>
+

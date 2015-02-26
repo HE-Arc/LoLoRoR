@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class FriendTest < ActiveSupport::TestCase
+class TrackgroupTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
