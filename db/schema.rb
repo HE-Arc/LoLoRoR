@@ -19,9 +19,26 @@ ActiveRecord::Schema.define(version: 20150226202540) do
   create_table "accounts", force: true do |t|
     t.string   "pseudoLoL"
     t.integer  "idLoL"
+    t.string   "region"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "accounts_trackgroups", id: false, force: true do |t|
+    t.integer "trackgroup_id"
+    t.integer "account_id"
+  end
+
+  add_index "accounts_trackgroups", ["account_id"], name: "index_accounts_trackgroups_on_account_id", using: :btree
+  add_index "accounts_trackgroups", ["trackgroup_id"], name: "index_accounts_trackgroups_on_trackgroup_id", using: :btree
+
+  create_table "accounts_users", id: false, force: true do |t|
+    t.integer "user_id"
+    t.integer "account_id"
+  end
+
+  add_index "accounts_users", ["account_id"], name: "index_accounts_users_on_account_id", using: :btree
+  add_index "accounts_users", ["user_id"], name: "index_accounts_users_on_user_id", using: :btree
 
   create_table "trackgroups", force: true do |t|
     t.integer  "user_id"
@@ -31,14 +48,6 @@ ActiveRecord::Schema.define(version: 20150226202540) do
   end
 
   add_index "trackgroups", ["user_id"], name: "index_trackgroups_on_user_id", using: :btree
-
-  create_table "trackgroups_accounts", id: false, force: true do |t|
-    t.integer "trackgroup_id"
-    t.integer "account_id"
-  end
-
-  add_index "trackgroups_accounts", ["account_id"], name: "index_trackgroups_accounts_on_account_id", using: :btree
-  add_index "trackgroups_accounts", ["trackgroup_id"], name: "index_trackgroups_accounts_on_trackgroup_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -57,13 +66,5 @@ ActiveRecord::Schema.define(version: 20150226202540) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-
-  create_table "users_accounts", id: false, force: true do |t|
-    t.integer "user_id"
-    t.integer "account_id"
-  end
-
-  add_index "users_accounts", ["account_id"], name: "index_users_accounts_on_account_id", using: :btree
-  add_index "users_accounts", ["user_id"], name: "index_users_accounts_on_user_id", using: :btree
 
 end

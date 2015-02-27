@@ -10,11 +10,12 @@ class CreateTrackgroupsAndAccounts < ActiveRecord::Migration
     create_table :accounts do |t|
       t.string :pseudoLoL
       t.integer :idLoL
-
+      t.string :region
+      
       t.timestamps
     end
     
-    create_table :trackgroups_accounts, id: false do |t|
+    create_table :accounts_trackgroups, id: false do |t|
       t.belongs_to :trackgroup, index: true
       t.belongs_to :account, index: true
     end
