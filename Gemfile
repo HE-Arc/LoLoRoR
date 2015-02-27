@@ -32,6 +32,12 @@ gem 'devise'
 gem 'bootstrap-sass', '~> 3.3.2'
 gem 'autoprefixer-rails'
 
+#RITO API wrapper
+gem 'ruby-lol'
+
+#key-value storage, used for caching
+gem 'redis'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
