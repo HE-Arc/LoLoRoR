@@ -24,10 +24,13 @@ ActiveRecord::Schema.define(version: 20150226202540) do
   end
 
   create_table "trackgroups", force: true do |t|
+    t.integer  "user_id"
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "trackgroups", ["user_id"], name: "index_trackgroups_on_user_id", using: :btree
 
   create_table "trackgroups_accounts", id: false, force: true do |t|
     t.integer "trackgroup_id"
@@ -62,13 +65,5 @@ ActiveRecord::Schema.define(version: 20150226202540) do
 
   add_index "users_accounts", ["account_id"], name: "index_users_accounts_on_account_id", using: :btree
   add_index "users_accounts", ["user_id"], name: "index_users_accounts_on_user_id", using: :btree
-
-  create_table "users_trackgroups", id: false, force: true do |t|
-    t.integer "user_id"
-    t.integer "trackgroup_id"
-  end
-
-  add_index "users_trackgroups", ["trackgroup_id"], name: "index_users_trackgroups_on_trackgroup_id", using: :btree
-  add_index "users_trackgroups", ["user_id"], name: "index_users_trackgroups_on_user_id", using: :btree
 
 end
