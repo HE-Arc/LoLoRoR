@@ -151,7 +151,7 @@ DEPENDENCIES
   rails (= 4.1.0)
   redis
   ruby-lol
-  sass-rails (~> 4.0.3)
+  sass-rails (~> 4.0.1)
   sdoc (~> 0.4.0)
   spring
   turbolinks
