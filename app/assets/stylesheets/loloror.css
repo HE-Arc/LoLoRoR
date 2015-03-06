@@ -1,0 +1,72 @@
+body {
+  padding-top: 50px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+.align-content-center
+{
+  text-align:center;
+
+
+}
+
+.input-group
+{
+  margin-top:2px;
+  margin-bottom:2px;
+
+
+}
+
+.article-row
+{
+  border-bottom:1px solid #d9230f;
+
+}
+
+.label-link
+{
+    color:#fff;
+}
+
+.map_name
+{
+    font-style:italic;
+    font-weight: bolder;
+}
+
+.game_date
+{
+    //font-style: italic;
+}
+
+.victory
+{
+    color:#00CC00; 
+    font-weight: bold;
+}
+.defeat{
+    color:#CC0000; 
+    font-weight: bold;
+}
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+.img-responsive
+{
+ padding:0px;
+}
+
+.list-group-item{
+ padding: 0px;   
+}
+
+.obj_img
+{
+    width: 100%;   
+}
