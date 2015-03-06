@@ -1,0 +1,13 @@
+<%= form_for @account, url: {action: "addTrackgroup"}, html: {method: "patch"}  do |f| %>
+
+<p>
+  <%= f.label :trackgroups %>
+  
+  <%= f.collection_select(:trackgroups, @trackgroups, :id, :name) %>
+</p>
+
+<p>
+  <%= f.submit "Add to this trackgroup", class: 'btn btn-success' %>
+</p>
+
+<% end %>

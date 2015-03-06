@@ -5,4 +5,5 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   has_many :trackgroups
   has_and_belongs_to_many :accounts
+  
 end

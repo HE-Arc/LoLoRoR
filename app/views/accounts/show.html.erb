@@ -1,0 +1,7 @@
+<h1><%= @account.pseudoLoL %> from <%= @account.region %></h1>
+
+<% if user_signed_in? %>
+  <%= render "addUser" %>
+
+  <%= render "addTrackgroup" %>
+<% end %>

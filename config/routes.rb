@@ -10,6 +10,12 @@ Rails.application.routes.draw do
   
   get 'users/:id' => 'users#show'
   
+  resources :accounts, only: [:show, :new, :create, :update]
+  patch 'accounts/:id/addUser' => 'accounts#addUser'
+  patch 'accounts/:id/addTrackgroup' => 'accounts#addTrackgroup'
+  
+  resources :trackgroups
+  
   get 'about' => 'pages#about'
 
   # The priority is based upon order of creation: first created -> highest priority.
