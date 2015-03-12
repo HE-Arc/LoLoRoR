@@ -1,6 +1,8 @@
 body {
-  padding-top: 50px;
+  padding-top: 90px;
 }
+
+
 .starter-template {
   padding: 40px 15px;
   text-align: center;
@@ -69,4 +71,9 @@ body {
 .obj_img
 {
     width: 100%;   
+}
+
+.col-centered{
+float: none;
+margin: 0 auto;
 }

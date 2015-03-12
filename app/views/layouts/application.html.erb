@@ -10,7 +10,7 @@
 </head>
 <body>
   <nav class="navbar navbar-default navbar-fixed-top ">
-    <div class="container">
+    <div class="container mainbody">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="true" aria-controls="navbar">
           <span class="sr-only">Toggle navigation</span>
@@ -32,18 +32,18 @@
 
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <button type="submit" class="btn btn-primary navbar-btn">S'enregistrer</button>
-          <button type="submit" class="btn btn-default navbar-btn">Se connecter</button>
+          <%= render 'users/menu/register_items' %>
+          <%= render 'users/menu/login_items' %>
         </ul>
       </div>
     </div>
   </nav>
   <div class="container">
-    <div class="row">
-      <div class="col-sm-4 header">
+    <div class="row clearfix">
+      <div class="col-md-4 header hidden-xs">
         <img height="75" alt="Brand" src="img/logo.png" class="img-circle">
       </div>
-      <div class="col-sm-4 header">
+      <div class="col-md-4 header">
         <div class="input-group dark-dropdown">
           <input type="text" class="form-control" placeholder="Chercher un invocateur...">
           <div class="input-group-btn ">
@@ -68,8 +68,8 @@
     </div>
   <p class="notice"><%= notice %></p>
   <p class="alert"><%= alert %></p> 
-
+  <div class="container">
 <%= yield %>
-
+    </div>
 </body>
 </html>
