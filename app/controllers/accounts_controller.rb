@@ -29,7 +29,7 @@ class AccountsController < ApplicationController
   end
   
   # the user must be authenticated for add account to his profil or to one of his trackgroups
-  before_action :authenticate_user!, :only => [:addUser, :addTrackgroup]
+  before_action :authenticate_user!, :only => [:addUser, :addTrackgroup, :removeUser]
   
   # Create an association between the current user and the account
   def addUser
@@ -51,7 +51,7 @@ class AccountsController < ApplicationController
     
   end
   
-  # Add the account to a trackgroup 
+  # Create an association between the trackgroup and the account
   def addTrackgroup
      
     @trackgroup = Trackgroup.find(params[:account][:trackgroups])
@@ -60,6 +60,18 @@ class AccountsController < ApplicationController
     redirect_to @account
     
   end
+  
+   # Remove the association between the trackgroup and the account
+  def removeTrackgroup
+    
+    @trackgroup = Trackgroup.find(params[:account][:trackgroups])
+    @account = Account.find(params[:id])
+    @account.users.delete(@trackgroup)
+    redirect_to @account
+    
+  end
+  
+  
   
   private
   def get_params
