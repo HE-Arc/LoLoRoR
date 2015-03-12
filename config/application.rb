@@ -2,11 +2,11 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
-CONFIG = YAML.load_file(File.expand_path('../app.yml',__FILE__))[Rails.env]
-
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+
+CONFIG = YAML.load_file(File.expand_path('../app.yml',__FILE__))[Rails.env]
 
 module LoLoRoR
   class Application < Rails::Application
