@@ -86,3 +86,4 @@ production:
   database: loloror_production
   username: loloror
   password: loloror
+  host: localhost
