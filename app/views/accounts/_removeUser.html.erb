@@ -1,0 +1,7 @@
+<%= form_for @account, url: {action: "removeUser"}, html: {method: "delete"}  do |f| %>
+
+<p>
+  <%= f.submit "Remove from your accounts", class: 'btn btn-danger' %>
+</p>
+
+<% end %>

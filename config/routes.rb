@@ -11,8 +11,10 @@ Rails.application.routes.draw do
   get 'users/:id' => 'users#show'
   
   resources :accounts, only: [:show, :new, :create, :update]
-  patch 'accounts/:id/addUser' => 'accounts#addUser'
-  patch 'accounts/:id/addTrackgroup' => 'accounts#addTrackgroup'
+  post 'accounts/:id/addUser' => 'accounts#addUser'
+  post 'accounts/:id/addTrackgroup' => 'accounts#addTrackgroup'
+  
+  delete 'accounts/:id/removeUser' => 'accounts#removeUser'
   
   resources :trackgroups
   

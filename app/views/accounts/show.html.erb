@@ -1,7 +1,13 @@
 <h1><%= @account.pseudoLoL %> from <%= @account.region %></h1>
 
 <% if user_signed_in? %>
-  <%= render "addUser" %>
 
-  <%= render "addTrackgroup" %>
+<% #Check if the user already have this account %>
+<% if @account.users.include?(current_user) %>
+<%= render "removeUser" %>
+<% else %>
+<%= render "addUser" %>
+<% end %>
+  
+<%= render "addTrackgroup" %>
 <% end %>
