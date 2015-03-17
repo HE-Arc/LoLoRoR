@@ -23,10 +23,14 @@
       </div>
       <div id="navbar" class="navbar-collapse collapse nav-justified">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Accueil</a></li>
+          <li class="active"><a href="/">Accueil</a></li>
+          <% if user_signed_in? %>
           <li><a href="#dashboard">Dashboard</a></li>
-          <li><a href="#accounts">Mes comptes</a></li>
+          <li>
+            
+            <a href="#">Mes comptes</a></li>
           <li><a href="#friends">Mes amis</a></li>
+          <% end %>
           <li><a href="#contact">Contact</a></li>
           <li><a href="#accounts">A propos</a></li>
 
@@ -40,8 +44,7 @@
   </nav>
   <div class="container">
     <div class="row clearfix">
-      <div class="col-md-4 header hidden-xs">
-        <img height="75" alt="Brand" src="img/logo.png" class="img-circle">
+      <div class="col-md-4 header hidden-xs hidden-sm">
       </div>
       <div class="col-md-4 header">
         <div class="input-group dark-dropdown">
@@ -66,10 +69,16 @@
       </div>
      </div>
     </div>
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p> 
+    
+  
   <div class="container">
-<%= yield %>
+    <div class="row">
+      <div class="col-md-8">
+        <p class="notice"><%= notice %></p>
+        <p class="alert"><%= alert %></p> 
+      </div>
+    </div>
+    <%= yield %>
     </div>
 </body>
 </html>
