@@ -1,2 +1,9 @@
 fr:
   hello: "test francais"
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            password_confirmation:
+              confirmation: "Les mots de passes sont différents !"
