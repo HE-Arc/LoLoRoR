@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :trackgroups, dependent: :destroy
+  has_many :dashboards, dependent: :destroy
   has_and_belongs_to_many :accounts, -> { uniq }
   
 end

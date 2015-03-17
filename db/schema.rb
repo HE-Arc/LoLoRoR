@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150226202540) do
+ActiveRecord::Schema.define(version: 20150313124824) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,39 @@ ActiveRecord::Schema.define(version: 20150226202540) do
 
   add_index "accounts_users", ["account_id"], name: "index_accounts_users_on_account_id", using: :btree
   add_index "accounts_users", ["user_id"], name: "index_accounts_users_on_user_id", using: :btree
+
+  create_table "dashboards", force: true do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "dashboards", ["user_id"], name: "index_dashboards_on_user_id", using: :btree
+
+  create_table "match_history_modules", force: true do |t|
+    t.integer  "dashboard_id"
+    t.integer  "account_id"
+    t.integer  "nb_match"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "match_history_modules", ["account_id"], name: "index_match_history_modules_on_account_id", using: :btree
+  add_index "match_history_modules", ["dashboard_id"], name: "index_match_history_modules_on_dashboard_id", using: :btree
+
+  create_table "top_champions_modules", force: true do |t|
+    t.integer  "dashboard_id"
+    t.integer  "account_id"
+    t.integer  "nb_champion"
+    t.integer  "duration"
+    t.string   "match_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "top_champions_modules", ["account_id"], name: "index_top_champions_modules_on_account_id", using: :btree
+  add_index "top_champions_modules", ["dashboard_id"], name: "index_top_champions_modules_on_dashboard_id", using: :btree
 
   create_table "trackgroups", force: true do |t|
     t.integer  "user_id"
