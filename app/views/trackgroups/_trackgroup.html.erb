@@ -1,5 +1,5 @@
 <div>
-<h2><%= trackgroup.name %></h2>
+<h2><%= link_to trackgroup.name, trackgroup %></h2>
   <% for account in trackgroup.accounts %>
    <%= render account %>
   <% end %>

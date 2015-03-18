@@ -21,8 +21,6 @@ Rails.application.routes.draw do
   post 'users/trackgroups' => 'trackgroups_users#create'
   delete 'users/trackgroups' => 'trackgroups_users#destroy'
   
-  
-  
   resources :trackgroups
   
   get 'about' => 'pages#about'
