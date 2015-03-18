@@ -7,6 +7,15 @@ class TrackgroupsController < ApplicationController
     @trackgroup = Trackgroup.find(params[:id])
     @accounts = @trackgroup.accounts
   end
+  
+  def showUserTrackgroups
+    @user = current_user
+    @trackgroups = @user.trackgroups
+    @trackgroup = @user.trackgroups.build
+   # @accounts = @trackgroup.accounts
+   # @account = @trackgroup.accounts.build
+    
+  end
 
   def new
     @trackgroup = Trackgroup.new

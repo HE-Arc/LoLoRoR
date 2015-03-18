@@ -8,13 +8,20 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
       }  
   
-  get 'users/:id' => 'users#show'
+  #get 'users/:id' => 'users#show'
+  get 'users' => 'users#showCurrentUser'
+  get 'users/accounts' => 'accounts#showUserAccounts'
+  get 'users/trackgroups' => 'trackgroups#showUserTrackgroups'
   
   resources :accounts, only: [:show, :new, :create, :update]
-  post 'accounts/:id/addUser' => 'accounts#addUser'
-  post 'accounts/:id/addTrackgroup' => 'accounts#addTrackgroup'
   
-  delete 'accounts/:id/removeUser' => 'accounts#removeUser'
+  post 'users/accounts' => 'accounts_users#create'
+  delete 'users/accounts' => 'accounts_users#destroy'
+  
+  post 'users/trackgroups' => 'trackgroups_users#create'
+  delete 'users/trackgroups' => 'trackgroups_users#destroy'
+  
+  
   
   resources :trackgroups
   
