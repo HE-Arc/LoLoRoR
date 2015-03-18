@@ -4,10 +4,10 @@
 
 <% #Check if the user already have this account %>
 <% if @account.users.include?(current_user) %>
-<%= render "removeUser" %>
+<%= render "accounts_users/removeAccount" %>
 <% else %>
-<%= render "addUser" %>
+<%= render "accounts_users/addAccount" %>
 <% end %>
   
-<%= render "addTrackgroup" %>
+<%= render "trackgroups_users/addTrackgroup" %>
 <% end %>

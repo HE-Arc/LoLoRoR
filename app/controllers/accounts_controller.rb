@@ -1,5 +1,8 @@
 class AccountsController < ApplicationController
   
+   # the user must be authenticated
+  before_action :authenticate_user!, :except => [:show]
+  
   def show
     @account = Account.find(params[:id])
     # if the user is signed in, we find all his trackgroups so he can add a account to one of his trackgroup
@@ -7,6 +10,12 @@ class AccountsController < ApplicationController
       @user = current_user
       @trackgroups = @user.trackgroups
     end
+  end
+  
+  def showUserAccounts
+    @user = current_user
+    @accounts = @user.accounts
+    @account = @user.accounts.build
   end
 
   def new
@@ -27,51 +36,6 @@ class AccountsController < ApplicationController
   def update
     #TODO Ask LoL API for the actual account information
   end
-  
-  # the user must be authenticated for add account to his profil or to one of his trackgroups
-  before_action :authenticate_user!, :only => [:addUser, :addTrackgroup, :removeUser]
-  
-  # Create an association between the current user and the account
-  def addUser
-     
-    @user = current_user
-    @account = Account.find(params[:id])
-    @user.accounts << @account
-    redirect_to @account
-    
-  end
-  
-  # Remove the association between the current user and the account
-  def removeUser
-    
-    @user = current_user
-    @account = Account.find(params[:id])
-    @account.users.delete(@user)
-    redirect_to @account
-    
-  end
-  
-  # Create an association between the trackgroup and the account
-  def addTrackgroup
-     
-    @trackgroup = Trackgroup.find(params[:account][:trackgroups])
-    @account = Account.find(params[:id])
-    @trackgroup.accounts << @account
-    redirect_to @account
-    
-  end
-  
-   # Remove the association between the trackgroup and the account
-  def removeTrackgroup
-    
-    @trackgroup = Trackgroup.find(params[:account][:trackgroups])
-    @account = Account.find(params[:id])
-    @account.users.delete(@trackgroup)
-    redirect_to @account
-    
-  end
-  
-  
   
   private
   def get_params
