@@ -11,9 +11,6 @@ class TrackgroupsController < ApplicationController
   def showUserTrackgroups
     @user = current_user
     @trackgroups = @user.trackgroups
-    @trackgroup = @user.trackgroups.build
-   # @accounts = @trackgroup.accounts
-   # @account = @trackgroup.accounts.build
     
   end
 

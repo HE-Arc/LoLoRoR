@@ -15,7 +15,6 @@ class AccountsController < ApplicationController
   def showUserAccounts
     @user = current_user
     @accounts = @user.accounts
-    @account = @user.accounts.build
   end
 
   def new
