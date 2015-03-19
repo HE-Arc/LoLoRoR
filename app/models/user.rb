@@ -4,19 +4,24 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   
+  # Useful link for authenticating with an username : https://github.com/plataformatec/devise/wiki/How-To:-Allow-users-to-sign-in-using-their-username-or-email-address#rails-4
   # Virtual attribute for authenticating by either username or email
   # This is in addition to a real persisted field like 'username'
   attr_accessor :login
   attr_accessor :login
   
-  def self.find_for_database_authentication(warden_conditions)
-      conditions = warden_conditions.dup
-      if login = conditions.delete(:login)
-        where(conditions.to_h).where(["username = :value OR email = :value", { :value => login.downcase }]).first
-      else
-        where(conditions.to_h).first
-      end
+  def self.find_first_by_auth_conditions(warden_conditions)
+  conditions = warden_conditions.dup
+  if login = conditions.delete(:login)
+    where(conditions).where(["username = :value OR email = :value", { :value => login.downcase }]).first
+  else
+    if conditions[:username].nil?
+      where(conditions).first
+    else
+      where(username: conditions[:username]).first
     end
+  end
+end
   
   validates :username,
   :presence => true,
