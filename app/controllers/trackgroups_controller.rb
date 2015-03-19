@@ -2,9 +2,9 @@ class TrackgroupsController < ApplicationController
   
   # The user must be authenticated for manage trackgroup
   before_action :authenticate_user!
+  before_action :check_user, except: [:new, :create, :showUserTrackgroups]
   
   def show
-    @trackgroup = Trackgroup.find(params[:id])
     @accounts = @trackgroup.accounts
   end
   
@@ -29,11 +29,9 @@ class TrackgroupsController < ApplicationController
   end
   
   def edit
-    @trackgroup = Trackgroup.find(params[:id])
   end
   
   def update
-    @trackgroup = Trackgroup.find(params[:id])
     if(@trackgroup.update(get_params))
       redirect_to @trackgroup
     else
@@ -50,6 +48,15 @@ class TrackgroupsController < ApplicationController
   private
   def get_params
     params[:trackgroup].permit(:name)
+  end
+  
+  private
+  def check_user
+    @trackgroup = Trackgroup.find(params[:id])
+     #the current user must own the resource
+    if @trackgroup.user != current_user
+      render :file => "public/401.html", :status => :unauthorized
+    end
   end
   
 end
