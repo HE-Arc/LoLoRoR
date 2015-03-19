@@ -10,19 +10,28 @@ Rails.application.routes.draw do
   
   #get 'users/:id' => 'users#show'
   get 'users' => 'users#showCurrentUser'
-  get 'users/accounts' => 'accounts#showUserAccounts'
-  get 'users/trackgroups' => 'trackgroups#showUserTrackgroups'
   
   resources :accounts, only: [:show, :new, :create, :update]
   
+  resources :trackgroups
+  
+  resources :dashboards
+  
+  #Manage accounts (show, create, destroy) for the current user
+  get 'users/accounts' => 'accounts#showUserAccounts'
   post 'users/accounts' => 'accounts_users#create'
   delete 'users/accounts' => 'accounts_users#destroy'
   
-  post 'users/trackgroups' => 'trackgroups_users#create'
-  delete 'users/trackgroups' => 'trackgroups_users#destroy'
+  #Manage trackgroups (show, create, destroy) for the current user
+  get 'users/trackgroups' => 'trackgroups#showUserTrackgroups'
+  post 'users/trackgroups' => 'accounts_trackgroups#create'
+  delete 'users/trackgroups' => 'accounts_trackgroups#destroy'
   
-  resources :trackgroups
-  
+  #Manage dashboards for the current user
+  get 'users/dashboards' => 'dashboards#showUserDashboards'
+  post 'users/dashboards' => 'dashboards#create'
+  delete 'users/dashboards' => 'dashboards#destroy'
+ 
   get 'about' => 'pages#about'
 
   # The priority is based upon order of creation: first created -> highest priority.

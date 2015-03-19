@@ -1,11 +1,11 @@
-class TrackgroupsUsersController < ApplicationController
+class AccountsTrackgroupsController < ApplicationController
   
-   # the user must be authenticated
+  # the user must be authenticated
   before_action :authenticate_user!
   
   # Create an association between the trackgroup and the account
   def create
-     
+    
     @trackgroup = Trackgroup.find(params[:account][:trackgroups])
     @account = Account.find(params[:account][:id])
     @trackgroup.accounts << @account
@@ -22,5 +22,4 @@ class TrackgroupsUsersController < ApplicationController
     redirect_to @account
     
   end
-  
 end
