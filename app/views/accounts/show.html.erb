@@ -1,4 +1,4 @@
-<h1><%= @account.pseudoLoL %> from <%= @account.region %></h1>
+<h1><%= @account.pseudoLoL %> from <%= @account.region %>, level <%= @level %></h1>
 
 <% if user_signed_in? %>
 
@@ -8,6 +8,6 @@
 <% else %>
 <%= render "accounts_users/addAccount" %>
 <% end %>
-  
+ 
 <%= render "accounts_trackgroups/addTrackgroup" %>
 <% end %>
