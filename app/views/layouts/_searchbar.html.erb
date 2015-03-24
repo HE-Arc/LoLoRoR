@@ -1,28 +1,26 @@
 <div class="container header">
-  <div class="row">
-    <div class="col-md-4 hidden-xs hidden-sm"> </div>
-    <div class="col-md-4">
-      <%= form_tag(accounts_search_path, method: "get") do %>
+  <div class="row line-content">
+    <div class="col-md-4 hidden-xs hidden-sm text-center"><%= image_tag "logo/logo.png", height: "90" %></div>
+    <div class="col-md-4 centered">
       <div class="input-group dark-dropdown">
-       <%= text_field_tag :search, params[:search], :class => "form-control", :placeholder => "Chercher un invocateur..." %>
-          <div class="input-group-btn ">
+        <input type="text" class="form-control" placeholder="Chercher un invocateur...">
+          <div class="input-group-btn">
             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-              BR
+              <span class="region-name">BR</span>
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="#">EUW</a></li>
-              <li><a href="#">EUNE</a></li>
-              <li><a href="#">NA</a></li>
+              <li><a class="region-selection">EUW</a></li>
+              <li><a class="region-selection">EUNE</a></li>
+              <li><a class="region-selection">NA</a></li>
               <li class="divider"></li>
-              <li><a href="#">All</a></li>
+              <li><a class="region-selection">All</a></li>
           </ul>
         </div>
         <span class="input-group-btn">
-          <%= submit_tag "Chercher", :name => nil, :class =>"btn btn-primary" %>
+          <button class="btn btn-primary" type="button">Chercher</button>
         </span>
         </div>
-      <% end %>
     </div>
   </div>
 </div>

@@ -15,3 +15,13 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require_tree .
+
+
+$( window ).load(function() {
+  $('.region-selection').click(function(){
+    var container = $(this).parent().parent().siblings(".dropdown-toggle").children(".region-name");
+    container.empty();
+    container.text($(this).text());
+  });
+});
+
