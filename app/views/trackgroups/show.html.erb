@@ -1,11 +1,24 @@
 <div class="row">
   <div class="col-md-8">
+    
+    <%= link_to users_trackgroups_path, class:"btn btn-default btn-xs" do %>
+      <i class="glyphicon glyphicon-chevron-left"></i> Retourner aux groupes
+    <% end %>
 <h2><%= @trackgroup.name %></h2>
-     <div class="btn-group">
-    <h3>Amis du groupe</h3> <%= button_to "Ajouter un ami au groupe", users_trackgroups_path ,:class => "btn btn-primary" %>
-    </div>
+     <%= button_to "Ajouter un ami au groupe", users_trackgroups_path ,:class => "btn btn-primary" %>
+    <h3>Amis du groupe</h3>
+    
     <table class="table table-hover">
-  <%= render @accounts %>
+      <thead>
+        <tr>
+          <th>Nom du compte</th>
+          <th>Serveur</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      <%= render @accounts %>
+      </tbody>
     </table>
   </div>
 </div>
