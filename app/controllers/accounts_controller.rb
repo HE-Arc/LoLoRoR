@@ -19,8 +19,8 @@ class AccountsController < ApplicationController
   end
   
   def searchAccounts
-    @accounts = Account.search(params[:search])
-   # @accounts = Account.find(params[:search])
+    #TODO utiliser l'API
+    @accounts = Account.all
     render "showUserAccounts"
   end
 
