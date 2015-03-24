@@ -103,10 +103,19 @@ margin-top:-32767px;/* thank you Erik J - negate effect of float*/
     color:#CC0000; 
     font-weight: bold;
 }
+
+.line-content
+{
+  display: table;
+  width: 100%;
+  
+}
+
 .vcenter {
+    display: table-cell;
     display: inline-block;
-    vertical-align: middle;
-    float: none;
+    vertical-align: middle; 
+    background-color:red;
 }
 
 .img-responsive
@@ -135,12 +144,20 @@ margin: 0 auto;
 
 .table{
   margin-top:10px;
-  
 }
 
 .last_td_right {
    text-align:right;
 }
+
+.centered
+{
+  margin-left: auto;
+margin-right: auto;
+float: none !important;
+  
+}
+
 
 
 
