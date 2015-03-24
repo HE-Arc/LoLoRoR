@@ -8,7 +8,6 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
       }  
   
-  #get 'users/:id' => 'users#show'
   get 'users' => 'users#showCurrentUser'
   
   resources :accounts, only: [:show, :new, :create, :update]
@@ -35,6 +34,11 @@ Rails.application.routes.draw do
   delete 'users/dashboards' => 'dashboards#destroy'
  
   get 'about' => 'pages#about'
+  
+  #Admin routes
+  get 'users/all' => 'users#index', as: 'users_all'
+  get 'users/show/:id' => 'users#show', as: 'user'
+  get 'users/edit/:id' => 'users#edit'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
