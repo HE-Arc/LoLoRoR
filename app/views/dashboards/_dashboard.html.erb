@@ -1,3 +1,21 @@
 <div>
-  <h2><%= link_to dashboard.name, dashboard %></h2>
+  <tr>
+    <td><%= link_to dashboard.name, dashboard %></td>
+      <td >[Editer] 
+        <%= form_for dashboard, url: edit_dashboard_path(dashboard), html: {method: "get"}  do |f| %>
+      <button type="submit" class="btn btn-default btn-xs">
+        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+      </button> 
+      <% end %>
+    </td>
+    <td class="last_td_right">[Supprimer] 
+      <%= form_for dashboard, html: {method: "delete"}  do |f| %>
+     
+      <button type="submit" class="btn btn-default btn-xs">
+        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+      </button> 
+      <% end %>
+    </td>
+  
+   
 </div>

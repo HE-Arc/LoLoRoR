@@ -39,7 +39,7 @@ class DashboardsController < ApplicationController
   
  def destroy 
     @dashboard.destroy
-    redirect_to dashboards_path
+   redirect_to users_dashboards_path
   end
   
   private
