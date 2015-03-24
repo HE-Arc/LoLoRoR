@@ -1,6 +1,12 @@
 <div>
-<h2><%= link_to trackgroup.name, trackgroup %></h2>
-  <% for account in trackgroup.accounts %>
-   <%= render account %>
-  <% end %>
+  <tr>
+    <td><%= link_to trackgroup.name, trackgroup %></td>
+    <td><small><%= trackgroup.accounts.count %> membres </small></<td>
+    <td class="last_td_right">[Supprimer le trackgroup] 
+      <button type="button" class="btn btn-default btn-xs">
+        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+      </button> 
+    </td>
+  
+   
 </div>

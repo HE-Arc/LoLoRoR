@@ -81,3 +81,13 @@ body {
 float: none;
 margin: 0 auto;
 }
+
+
+.table{
+  margin-top:10px;
+  
+}
+
+.last_td_right {
+   text-align:right;
+}
