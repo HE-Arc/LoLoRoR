@@ -9,8 +9,7 @@ class DashboardsController < ApplicationController
   
   def showUserDashboards
     @user = current_user
-    @dashboards = @user.dashboards
-    
+    @dashboards = @user.dashboards    
   end
 
   def new

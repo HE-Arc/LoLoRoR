@@ -13,9 +13,11 @@ Rails.application.routes.draw do
   
   resources :accounts, only: [:show, :new, :create, :update]
   
-  resources :trackgroups
+  resources :trackgroups, except: [:index]
   
-  resources :dashboards
+  resources :dashboards, except: [:index]
+  
+  get 'search/accounts/' => 'accounts#searchAccounts', as: 'accounts_search'
   
   #Manage accounts (show, create, destroy) for the current user
   get 'users/accounts' => 'accounts#showUserAccounts'

@@ -16,6 +16,12 @@ class AccountsController < ApplicationController
     @user = current_user
     @accounts = @user.accounts
   end
+  
+  def searchAccounts
+    @accounts = Account.search(params[:search])
+   # @accounts = Account.find(params[:search])
+    render "showUserAccounts"
+  end
 
   def new
     @account = Account.new
