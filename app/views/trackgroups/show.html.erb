@@ -1,7 +1,11 @@
-<h1><%= @trackgroup.name %></h1>
-<p>belongs to <%=@trackgroup.user.username %></p>
-
-<h2> Accounts </h2>
-
-<%= render @accounts %>
-  
+<div class="row">
+  <div class="col-md-8">
+<h2><%= @trackgroup.name %></h2>
+     <div class="btn-group">
+    <h3>Amis du groupe</h3> <%= button_to "Ajouter un ami au groupe", users_trackgroups_path ,:class => "btn btn-primary" %>
+    </div>
+    <table class="table table-hover">
+  <%= render @accounts %>
+    </table>
+  </div>
+</div>
