@@ -1,2 +1,15 @@
 <h1>Pages#home</h1>
 <p>Find me in app/views/pages/home.html.erb</p>
+
+
+<h2>-----------TEST--------------------</h2>
+<p> Current user accounts in JSON </p>
+<p>
+<%= current_user.accounts.to_json %>
+  </p>
+  <p> Current user accounts for each trackgroups in JSON </p>
+  <p>
+<% current_user.trackgroups.each do |t|  %>
+<%= t.accounts.to_json %>
+<%end%>
+    </p>
