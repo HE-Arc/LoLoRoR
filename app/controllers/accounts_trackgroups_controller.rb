@@ -16,10 +16,10 @@ class AccountsTrackgroupsController < ApplicationController
    # Remove the association between the trackgroup and the account
   def destroy
     
-    @trackgroup = Trackgroup.find(params[:account][:trackgroups])
-    @account = Account.find(params[:account][:id])
-    @account.users.delete(@trackgroup)
-    redirect_to @account
+    @trackgroup = Trackgroup.find(params[:account][:idTrackgroup])
+    @account = Account.find(params[:account][:idAccount])
+    @account.trackgroups.delete(@trackgroup)
+    redirect_to(:back)
     
   end
 end

@@ -19,7 +19,7 @@ class AccountsUsersController < ApplicationController
     @user = current_user
     @account = Account.find(params[:account][:id])
     @account.users.delete(@user)
-    redirect_to @account
+    redirect_to(:back)
     
   end
   
