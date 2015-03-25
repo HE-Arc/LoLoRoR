@@ -20,11 +20,11 @@ class UsersController < ApplicationController
     render "show"
   end
   
-  # GET /users/edit/[:id]
-  def edit
+  def destroy
     @user = User.find(params[:id])
-    render "users/registrations/edit"
-  end 
+    @user.destroy
+   redirect_to users_all_path
+  end
   
   private
   def check_admin
