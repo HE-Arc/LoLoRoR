@@ -9,7 +9,8 @@ class AccountsController < ApplicationController
     if user_signed_in?
       @user = current_user
       @trackgroups = @user.trackgroups
-      @level = LOL_WRAPPER.get_level(@account.pseudoLoL, @account.region)
+      #@level = LOL_WRAPPER.get_level(@account.pseudoLoL, @account.region)
+      @level = 30
     end
   end
   
