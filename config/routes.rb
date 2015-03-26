@@ -10,14 +10,14 @@ Rails.application.routes.draw do
   
   get 'users' => 'users#showCurrentUser'
   
-  resources :accounts, only: [:show, :new, :create, :update]
+  #API account routes
+  get 'accounts/:region/:idLoL' => 'accounts#show', as: 'account' 
+  get 'search/accounts/' => 'accounts#searchAccounts', as: 'accounts_search'
   
   resources :trackgroups, except: [:index]
   
   resources :dashboards, except: [:index]
-  
-  get 'search/accounts/' => 'accounts#searchAccounts', as: 'accounts_search'
-  
+ 
   #Manage accounts (show, create, destroy) for the current user
   get 'users/accounts' => 'accounts#showUserAccounts'
   post 'users/accounts' => 'accounts_users#create'
