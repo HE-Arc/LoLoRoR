@@ -9,12 +9,12 @@ require 'net/http'
 #this class is meant to be a singleton, TODO: singletonize the stuff
 class LolWrapper
   include Singleton
-  attr_accessor :list_clients, :api_key, :ddragon_version, :region_list
+  attr_accessor :list_clients, :api_key, :ddragon_region, :ddragon_version, :region_list
   
   def initialize
     @list_clients = Hash.new
     @api_key = CONFIG[:api_key]
-    @ddragon_version = '5.5.2'
+    set_ddragon_infos('euw')
     populate_region_list()
   end
   
@@ -22,21 +22,57 @@ class LolWrapper
     return @region_list
   end
   
-  #gets the summoner's level, using their name and server's region name
-  def get_level(summoner_name, region_name)
+  #gets the summoner profile using summoner_id and region_name
+  def get_summoner_by_id(summoner_id, region_name)
     client = get_check_client(region_name)
-    summoner = client.summoner.by_name(summoner_name)[0]
-    return summoner.summoner_level
+    return client.summoner.get(summoner_id)
   end
   
+  #returns a loading-screen picture of the champion refered by champion_id the skin can be selected with skin_id
   def get_champion_image_link(champion_id, skin_id = '0')
     champion = get_champion(champion_id)
     return "http://ddragon.leagueoflegends.com/cdn/img/champion/loading/"+champion.name+"_"+skin_id+".jpg"
   end
   
+  #returns a little square picture of the champion refered by champion_id
   def get_champion_square_link(champion_id)
     champion = get_champion(champion_id)
     return "http://ddragon.leagueoflegends.com/cdn/"+@ddragon_version+"/img/champion/"+champion.name+".png"
+  end
+  
+  #gets the current game of the player refered by account_id on region_name server
+  def get_current_game(account_id, region_name)
+    client = get_check_client(region_name)
+    current_game = nil
+    begin
+      current_game = client.current_game.spectator_game_info(  "1", account_id )
+    rescue
+      puts "Summoner not in game"
+    end
+    return current_game
+  end
+  
+  #gets the summoner id of the player refered by summoner_name on region_name server
+  def get_summoner_id(summoner_name, region_name)
+    client = get_check_client(region_name)
+    return client.summoner.by_name(summoner_name)[0].id
+  end
+  #gets a stats summary of the player refered by account_id on region_name server
+  def get_account_infos(account_id, region_name)
+    client = get_check_client(region_name)
+    return client.stats.summary(account_id)
+  end
+  
+  #gets the ranked infos of the player refered by account_id on region_name server
+  def get_account_ranked_infos(account_id, region_name)
+    client = get_check_client(region_name)
+    return client.stats.ranked(account_id)
+  end
+
+  #gets the match history of the player refered by account_id on region_name server
+  def get_match_history(account_id, region_name)
+    client = get_check_client(region_name)
+    return client.game.recent(account_id)
   end
   
   private
@@ -55,7 +91,7 @@ class LolWrapper
   end
   
   def get_static_client
-    client = get_check_client("euw") #this is dirty, but hey, it works
+    client = get_check_client(@ddragon_region) #this is dirty, but hey, it works
                                      #(should create a static client, but since there is no such thing included in the gem...)
     return client.static
   end
@@ -99,5 +135,15 @@ class LolWrapper
     responseJSON.each do |child|
       @region_list.push(child['slug'])
     end
+  end
+  
+  #using the region_name server, gets the ddragon version and sets the @ddragon_version variable
+  def set_ddragon_infos(region_name)
+    @ddragon_region = region_name
+    requestString = 'https://global.api.pvp.net/api/lol/static-data/euw/v1.2/versions?api_key='+ @api_key
+    uri = URI(requestString)
+    response = Net::HTTP.get(uri)
+    responseJSON = JSON.parse(response)
+    @ddragon_version = responseJSON[0]
   end
 end
