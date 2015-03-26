@@ -11,23 +11,30 @@
    <body>
       <div id="wrap">
          <div id="main">
-           <!-- NavBar -->
-           <%= render 'layouts/navbar' %>
-           <!-- end NavBar -->
-           
-           <!-- SearchBar -->
-           <%= render 'layouts/searchbar' %>
-           <!-- end SearchBar -->
-           <div class="container">
-             <%= render 'layouts/alerts' %>
-                <%= yield %>
-             </div>
-          </div>
-        </div>
-      <div id="footer">
-         <div class="container">
-            <p class="text-muted credit">League of legends on Rails<br/>by Nicolas Hugenin, Joé Butikofer et Christophe Bolinhas</p>
+           <div class="streched-vertical">
+            <!-- NavBar -->
+            <%= render 'layouts/navbar' %>
+            <!-- end NavBar -->
+            <!-- SearchBar -->
+            <%= render 'layouts/searchbar' %>
+            <!-- end SearchBar -->
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-9">
+                     <%= render 'layouts/alerts' %>
+                     <%= yield %>
+                  </div>
+                  <div class="col-md-2 pull-right">
+                     <%= render 'layouts/sidebar' %>
+                  </div>
+               </div>
+            </div>
          </div>
+        </div>
+      </div>
+      <div id="footer">
+League of legends on Rails<br/>by Nicolas Hugenin, Joé Butikofer et Christophe Bolinhas
+
       </div>
    </body>
 </html>
