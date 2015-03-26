@@ -1,0 +1,37 @@
+<%= render 'accounts/datas/header' %>
+<%= render 'accounts/datas/stats' %>
+
+<div role="tabpanel">
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active">
+      <a href="#account-stats" aria-controls="account-stats" role="tab" data-toggle="tab">Statistiques</a>
+    </li>
+    <li role="presentation">
+      <a href="#account-history" aria-controls="account-history" role="tab" data-toggle="tab">Historique des matchs</a>
+    </li>
+    <!--<li role="presentation">
+      <a href="#account-masteries" aria-controls="account-masteries" role="tab" data-toggle="tab">Maîtrises</a>
+    </li>
+    <li role="presentation">
+      <a href="#account-runes" aria-controls="account-runes" role="tab" data-toggle="tab">Runes</a>
+    </li>-->
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="account-stats">
+      <%= render 'accounts/datas/ranks' %>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="account-history">
+      <%= render 'accounts/datas/history' %>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="account-masteries">
+      ...
+    </div>
+    <div role="tabpanel" class="tab-pane" id="account-runes">
+      ...
+    </div>
+  </div>
+</div>

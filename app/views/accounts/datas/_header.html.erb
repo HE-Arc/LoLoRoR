@@ -1,0 +1,21 @@
+
+<div class="page-header">
+  <h1>BANANA</h1>
+  <small>
+    <span class="label label-primary">EUW</span>
+    <span class="label label-primary">Silver I</span>
+    <span class="label label-danger">
+      <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+      <a href="#" class="label-link" >Playing</a>
+    </span>
+  </small>
+</div>
+ <% #Check if the user already have this account %>
+  <% if @account.users.include?(current_user) %>
+    <%= render "accounts_users/removeAccount" %>
+  <% else %>
+    <%= render "accounts_users/addAccount" %>
+  <% end %>
+
+  <%= render "accounts_trackgroups/addTrackgroup" %>
+<hr/>
