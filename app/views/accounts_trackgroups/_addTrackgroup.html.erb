@@ -1,14 +1,7 @@
-<%= form_for @account, :url => url_for(:controller => 'accounts_trackgroups', :action => 'create'), html: {method: "post"}  do |f| %>
+<%= form_for @account, :url => url_for(:controller => 'accounts_trackgroups', :action => 'create'), html: {method: "post", class: "inline-form form-inline pull-right"}  do |f| %>
+<%= f.collection_select(:trackgroups, @trackgroups, :id, :name, {}, {class: "form-control input-sm"}) %>
 
-<p>
-  <%= f.label :trackgroups %>
-  
-  <%= f.collection_select(:trackgroups, @trackgroups, :id, :name) %>
-</p>
-
-<p>
   <%= f.hidden_field :id, :value => @account.id %>
-  <%= f.submit "Add to this trackgroup", class: 'btn btn-success' %>
-</p>
+  <%= f.submit "Ajouter au groupe", class: 'btn btn-success btn-xs' %>
 
 <% end %>
