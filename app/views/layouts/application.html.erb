@@ -1,84 +1,33 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>LoLoRoR</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-  <%= stylesheet_link_tag 'loloror', media:'all', 'data-turbolinks-track' => true %>
-  <%= stylesheet_link_tag 'theme.min', media:'all', 'data-turbolinks-track' => true %>
-</head>
-<body>
-  <nav class="navbar navbar-default navbar-fixed-top ">
-    <div class="container mainbody">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="true" aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#"><img class="img-circle" height="25" alt="Brand" src="img/logo.png">
-        <a class="navbar-brand" href="#">LoLTracker</a>
-      </div>
-      <div id="navbar" class="navbar-collapse collapse nav-justified">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="/">Accueil</a></li>
-          <% if user_signed_in? %>
-          <li><a href="#dashboard">Dashboard</a></li>
-          <li>
-            
-            <a href="#">Mes comptes</a></li>
-          <li><a href="#friends">Mes amis</a></li>
-          <% end %>
-          <li><a href="#contact">Contact</a></li>
-          <li><a href="#accounts">A propos</a></li>
-
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <%= render 'users/menu/register_items' %>
-          <%= render 'users/menu/login_items' %>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <div class="container">
-    <div class="row clearfix">
-      <div class="col-md-4 header hidden-xs hidden-sm">
-      </div>
-      <div class="col-md-4 header">
-        <div class="input-group dark-dropdown">
-          <input type="text" class="form-control" placeholder="Chercher un invocateur...">
-          <div class="input-group-btn ">
-            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                BR
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#">EUW</a></li>
-              <li><a href="#">EUNE</a></li>
-              <li><a href="#">NA</a></li>
-              <li class="divider"></li>
-              <li><a href="#">All</a></li>
-            </ul>
+   <head>
+      <title>LoLoRoR</title>
+      <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+      <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+      <%= csrf_meta_tags %>
+      <%= stylesheet_link_tag 'loloror', media:'all', 'data-turbolinks-track' => true %>
+      <%= stylesheet_link_tag 'theme.min', media:'all', 'data-turbolinks-track' => true %>
+   </head>
+   <body>
+      <div id="wrap">
+         <div id="main">
+           <!-- NavBar -->
+           <%= render 'layouts/navbar' %>
+           <!-- end NavBar -->
+           
+           <!-- SearchBar -->
+           <%= render 'layouts/searchbar' %>
+           <!-- end SearchBar -->
+           <div class="container">
+             <%= render 'layouts/alerts' %>
+                <%= yield %>
+             </div>
           </div>
-          <span class="input-group-btn">
-            <button class="btn btn-primary" type="button">Go!</button>
-          </span>
         </div>
+      <div id="footer">
+         <div class="container">
+            <p class="text-muted credit">League of legends on Rails<br/>by Nicolas Hugenin, Joé Butikofer et Christophe Bolinhas</p>
+         </div>
       </div>
-     </div>
-    </div>
-    
-  
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8">
-        <p class="notice"><%= notice %></p>
-        <p class="alert"><%= alert %></p> 
-      </div>
-    </div>
-    <%= yield %>
-    </div>
-</body>
+   </body>
 </html>

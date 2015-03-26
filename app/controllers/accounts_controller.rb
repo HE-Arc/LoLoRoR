@@ -17,6 +17,12 @@ class AccountsController < ApplicationController
     @user = current_user
     @accounts = @user.accounts
   end
+  
+  def searchAccounts
+    #TODO utiliser l'API
+    @accounts = Account.all
+    render "showUserAccounts"
+  end
 
   def new
     @account = Account.new

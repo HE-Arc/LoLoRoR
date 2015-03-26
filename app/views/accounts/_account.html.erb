@@ -1,2 +1,14 @@
-<b><%= link_to account.pseudoLoL, account %></b>
-<p><%= account.region %></p>
+
+
+<tr>
+<td><%= link_to account.pseudoLoL, account %></td>
+<td><%= account.region %></td>
+<td>
+  <% @account = account %>
+  <% if defined?(@trackgroup) %>
+  <%= render "accounts_trackgroups/removeTrackgroup" %>
+  <% else %>
+  <%= render "accounts_users/removeAccount" %>
+  <% end %>
+</td>
+</tr>

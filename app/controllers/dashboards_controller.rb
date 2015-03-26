@@ -9,8 +9,7 @@ class DashboardsController < ApplicationController
   
   def showUserDashboards
     @user = current_user
-    @dashboards = @user.dashboards
-    
+    @dashboards = @user.dashboards    
   end
 
   def new
@@ -39,8 +38,8 @@ class DashboardsController < ApplicationController
   end
   
  def destroy 
-    @dashboard.destroy
-    redirect_to dashboards_path
+   @dashboard.destroy
+   redirect_to users_dashboards_path
   end
   
   private

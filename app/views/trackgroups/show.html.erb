@@ -1,7 +1,39 @@
-<h1><%= @trackgroup.name %></h1>
-<p>belongs to <%=@trackgroup.user.username %></p>
-
-<h2> Accounts </h2>
-
-<%= render @accounts %>
-  
+<div class="row">
+  <div class="col-md-8">
+    
+    <%= link_to users_trackgroups_path, class:"btn btn-default btn-xs" do %>
+      <i class="glyphicon glyphicon-chevron-left"></i> Retourner aux groupes
+    <% end %>
+<h2><%= @trackgroup.name %></h2>
+    <div> 
+        <%= form_for @trackgroup, url: edit_trackgroup_path(@trackgroup), html: {method: "get"}  do |f| %>
+      <button type="submit" class="btn btn-default btn-xs">
+        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+      </button> 
+      <% end %>
+    </div>
+    <div>
+      <%= form_for @trackgroup, html: {method: "delete"}  do |f| %>
+     
+      <button type="submit" class="btn btn-default btn-xs">
+        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+      </button> 
+      <% end %>
+    </div>
+     <%= button_to "Ajouter un ami au groupe", users_trackgroups_path ,:class => "btn btn-primary" %>
+    <h3>Amis du groupe</h3>
+    
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Nom du compte</th>
+          <th>Serveur</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      <%= render @accounts %>
+      </tbody>
+    </table>
+  </div>
+</div>

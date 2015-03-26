@@ -1,3 +1,11 @@
+<div class="row">
+  <div class="col-md-8">
+    <%= button_to "Ajouter un groupe", new_trackgroup_path, :class => "btn btn-default", :method => "get" %>
 <h3>Trackgroups</h3>
-  <%= render @trackgroups %>
-<%= link_to "Create a Trackgroup", new_trackgroup_path %>
+   <table class="table table-hover table-striped">
+<%= render @trackgroups %>
+    </table>
+<%= button_to "Ajouter un groupe", new_trackgroup_path, :class => "btn btn-default", :method => "get" %>
+    
+  </div>
+</div>

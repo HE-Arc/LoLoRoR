@@ -40,9 +40,8 @@ class TrackgroupsController < ApplicationController
   end
   
  def destroy 
-    @trackgroup = Trackgroup.find(params[:id])
     @trackgroup.destroy
-    redirect_to trackgroups_path
+   redirect_to users_trackgroups_path
   end
   
   private
@@ -58,5 +57,4 @@ class TrackgroupsController < ApplicationController
       render :file => "public/401.html", :status => :unauthorized
     end
   end
-  
 end
