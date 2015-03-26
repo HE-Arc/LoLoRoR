@@ -25,7 +25,7 @@ class LolWrapper
   #gets the summoner profile using summoner_id and region_name
   def get_summoner_by_id(summoner_id, region_name)
     client = get_check_client(region_name)
-    return client.summoner.get(summoner_id)
+    return client.summoner.get(summoner_id)[0]
   end
   
   #returns a loading-screen picture of the champion refered by champion_id the skin can be selected with skin_id

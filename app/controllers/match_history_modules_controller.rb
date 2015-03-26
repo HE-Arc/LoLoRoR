@@ -2,15 +2,25 @@ class MatchHistoryModulesController < ApplicationController
   before_action :authenticate_user!
   before_action :check_user, except: [:new, :create]
   
+  def show
+    render "modules/history/_match"
+  end
+  
   def new
     @matchHistoryModule = MatchHistoryModule.new
-    render "views/modules/history/_new"
+    @accounts = current_user.accounts
+    @trackgroups = current_user.trackgroups
+    render "modules/history/_new"
   end
   
   def create
-    @matchHistoryModule = matchHistoryModule.new(get_params)
+    @matchHistoryModule = MatchHistoryModule.new
+    @matchHistoryModule.nb_match =  params[:nb_match]
+    @matchHistoryModule.dashboard = Dashboard.find(params[:dashID])
+    @matchHistoryModule.account = Account.where(pseudoLoL:  params[:pseudoLoL], region: params[:region])
+    
     if(@matchHistoryModule.save)
-      render "views/modules/history/_match"
+      render "modules/history/_match"
     else
       render status: 400
       render plain: "Error"
@@ -18,12 +28,14 @@ class MatchHistoryModulesController < ApplicationController
   end
   
   def edit
-    render "views/modules/history/_edit"
+    render "modules/history/_edit"
   end
   
   def update
-    if(@matchHistoryModule.update(get_params))
-      render "views/modules/history/_match"
+    @matchHistoryModule.nb_match =  params[:nb_match]
+    @matchHistoryModule.account = Account.where(pseudoLoL:  params[:pseudoLoL], region: params[:region])
+    if(@matchHistoryModule.save)
+      render "modules/history/_match"
     else
       render status: 400
       render plain: "Error"
@@ -31,7 +43,8 @@ class MatchHistoryModulesController < ApplicationController
   end
   
   def destroy
-    
+    @matchHistoryModule.destroy
+    redirect_to dashboard_path(params[:dashID])
   end
   
   private
