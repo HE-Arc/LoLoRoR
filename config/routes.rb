@@ -35,6 +35,11 @@ Rails.application.routes.draw do
  
   get 'about' => 'pages#about'
   
+  #Modules routes
+  scope 'dashboards/:dashID/modules' do
+    resources :match_history_modules
+  end
+  
   #Admin routes
   get 'users/all' => 'users#index', as: 'users_all'
   get 'users/show/:id' => 'users#show', as: 'user'
