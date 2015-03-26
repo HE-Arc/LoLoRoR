@@ -25,7 +25,7 @@ class LolWrapper
   #gets the summoner profile using summoner_id and region_name
   def get_summoner_by_id(summoner_id, region_name)
     client = get_check_client(region_name)
-    return client.summoner.get(summoner_id)
+    return client.summoner.get(summoner_id)[0]
   end
   
   #returns a loading-screen picture of the champion refered by champion_id the skin can be selected with skin_id
@@ -52,6 +52,10 @@ class LolWrapper
     return current_game
   end
   
+  def get_is_playing(accout_id, region_name)
+    return !get_current_game(accout_id,region_name).nil?
+  end
+  
   #gets the summoner id of the player refered by summoner_name on region_name server
   def get_summoner_id(summoner_name, region_name)
     client = get_check_client(region_name)
@@ -69,6 +73,29 @@ class LolWrapper
     return client.stats.ranked(account_id)
   end
 
+  def get_solo_ranking(ranking, account_id)
+    rank_infos = ranking[account_id]
+    rank_div = rank_value = "Unranked"
+    rank_infos.each do |item|
+      if item.queue == "RANKED_SOLO_5x5"
+        rank_value = item.tier.capitalize
+        item.entries.each do |entry|
+          if entry.player_or_team_id == account_id
+            rank_div = rank_value + " " + entry.division
+            break
+          end
+        end
+        
+      end
+    end
+    return rank_value, rank_div
+  end
+  
+  def get_account_ranked_league(account_id, region_name)
+    client = get_check_client(region_name)
+    return client.league.get(account_id)
+  end
+  
   #gets the match history of the player refered by account_id on region_name server
   def get_match_history(account_id, region_name)
     client = get_check_client(region_name)

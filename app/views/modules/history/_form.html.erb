@@ -8,21 +8,22 @@
     <div class="form-group">
       <label class="col-md-4 control-label">Compte :</label>
       <div class="col-md-8">
+        
         <select class="form-control acc-list">
           <optgroup label="Mes comptes">
-            <option value="30412">Lahft</option>
-            <option value="31239">Ymaktepi</option>
-            <option value="932123">TsUuJ</option>
+            <% @accounts.each do |a| %>
+              <option value="<%= a.id %>"><%= a.pseudoLoL %></option>
+            <% end %>
           </optgroup>
-          <optgroup label="Groupe pélo ahah">
-            <option value="213213">Friend1</option>
-            <option value="3123213">Friend2</option>
+          <% @trackgroups.each do |t| %>
+          <optgroup label= "<%= t.name %>" >
+            <% t.accounts.each do |a| %>
+              <option value="<%= a.id %>"><%= a.pseudoLoL %></option>
+            <% end %>
           </optgroup>
-          <optgroup label="Groupes Catins">
-            <option value="213213">Friend1</option>
-            <option value="3123213">Friend2</option>
-          </optgroup>
+          <% end %>
         </select>
+       
       </div>
     </div>
     <div class="form-group">

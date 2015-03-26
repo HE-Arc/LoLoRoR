@@ -1,13 +1,21 @@
+<%= @summoner %>
+<hr/>
+<%= @stats %>
+<hr/>
+
+<!--<%= %>-->
 
 <div class="page-header">
-  <h1>BANANA</h1>
+  <h1><%= @summoner.name %></h1>
   <small>
-    <span class="label label-primary">EUW</span>
-    <span class="label label-primary">Silver I</span>
+    <span class="label label-primary"><%= @account.region.upcase %></span>
+    <span class="label label-primary style-<%= @tier %>"><%= @solo_rank %></span>
+    <% if @isPlaying %>
     <span class="label label-danger">
       <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
-      <a href="#" class="label-link" >Playing</a>
+        <a href="#" class="label-link" >Playing</a>
     </span>
+    <% end %>
   </small>
 </div>
  <% #Check if the user already have this account %>

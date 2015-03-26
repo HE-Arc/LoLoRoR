@@ -2,5 +2,5 @@
 
 
 $( window ).load(function() {
- alert("NANA");
+ //alert("NANA");
 });
