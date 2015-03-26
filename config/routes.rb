@@ -38,7 +38,7 @@ Rails.application.routes.draw do
   #Admin routes
   get 'users/all' => 'users#index', as: 'users_all'
   get 'users/show/:id' => 'users#show', as: 'user'
-  get 'users/edit/:id' => 'users#edit'
+  delete 'users/destroy/:id' => 'users#destroy', as: 'destroy_user'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
