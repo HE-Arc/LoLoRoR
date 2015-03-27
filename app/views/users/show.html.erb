@@ -1,5 +1,8 @@
 <h2><%= @user.username %></h2>
 
 <% if user_signed_in? %>
-<%= link_to "Se déconnecter", destroy_user_session_path, :method => :delete %>
+  <% if current_user == @user %>
+<%= button_to "Modifier votre profil",edit_user_registration_path, method: "get", class: "btn btn-primary" %>
+    <%= link_to "Se déconnecter", destroy_user_session_path, :method => :delete %>
+  <% end %>
 <% end %>
