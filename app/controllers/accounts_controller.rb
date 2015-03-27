@@ -2,7 +2,7 @@ class AccountsController < ApplicationController
   
    # the user must be authenticated
   before_action :authenticate_user!, :except => [:show, :searchAccounts]
-  
+  LOL_WRAPPER = LolWrapper.new
   def show
    
     @idLoL = params[:idLoL]
@@ -41,14 +41,10 @@ class AccountsController < ApplicationController
     
     #Find ranking
     ranking = LOL_WRAPPER.get_account_ranked_league(@idLoL, @region)
-    puts("yop")
-    puts @idLoL
-    puts(ranking[@idLoL.to_s])
-    puts("yop")
-    
     @tier, @solo_rank = LOL_WRAPPER.get_solo_ranking(ranking, @idLoL)
     @tier = @tier.downcase
     @tier_image = @solo_rank.sub(' ', '_').upcase + ".png"
+    
     #TODO check error
     
     #Create or update the corresponding account in our database
@@ -66,5 +62,4 @@ class AccountsController < ApplicationController
       @trackgroups = @user.trackgroups
     end
   end
-  
 end

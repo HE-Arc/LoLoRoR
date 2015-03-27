@@ -1,28 +1,28 @@
 <h2>Log in</h2>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-<div class="field form-group">
-  <%= f.label :login %><br />
-  <%= f.text_field :login, autofocus: true, class: "form-control" %>
-</div>  
+  <div class="field form-group">
+    <%= f.label :login %><br />
+    <%= f.text_field :login, autofocus: true, class: "form-control" %>
+  </div>  
 
-<div class="field form-group">
-  <%= f.label :password %><br />
-  <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
-</div>
+  <div class="field form-group">
+    <%= f.label :password %><br />
+    <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+  </div>
 
-<% if devise_mapping.rememberable? -%>
-    <div class="field checkbox">
-        <%= f.label :remember_me do %>
+  <% if devise_mapping.rememberable? %>
+  <div class="field checkbox">
+  <%= f.label :remember_me do %>
 
-<%= f.check_box :remember_me  %>
-Se rappeler de moi
+  <%= f.check_box :remember_me  %>
+  Se rappeler de moi
 <% end %>
 
 <% end -%>
 
     <div class="actions">
-        <%= f.submit "Se connecter", class: "btn btn-primary" %>
+    <%= f.submit "Se connecter", class: "btn btn-primary" %>
 
 <% end %>
 
