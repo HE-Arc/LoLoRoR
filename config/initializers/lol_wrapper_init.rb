@@ -1,3 +1,3 @@
 require 'lol_wrapper'
 
-LOL_WRAPPER = LolWrapper.instance
+#LOL_WRAPPER = LolWrapper.instance
