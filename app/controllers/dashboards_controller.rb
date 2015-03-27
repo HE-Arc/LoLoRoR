@@ -5,6 +5,8 @@ class DashboardsController < ApplicationController
   before_action :check_user, except: [:new, :create, :showUserDashboards]
   
   def show
+    @accounts = current_user.accounts
+    @trackgroups = current_user.trackgroups
   end
   
   def showUserDashboards
