@@ -1,5 +1,4 @@
 <%= form_for @account, :url => url_for(:controller => 'accounts_users', :action => 'destroy'), html: {method: "delete", class: "inline-form"}  do |f| %>
-<%= render 'form' %>
   <%= f.hidden_field :id, :value => @account.id %>
   <%= f.submit "Remove from your accounts", class: 'btn btn-danger' %>
 </p>
