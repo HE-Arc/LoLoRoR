@@ -34,10 +34,7 @@ class AccountsController < ApplicationController
       @trackgroups = @user.trackgroups
     end
   end
-  
-  
-  
-  
+
   def showUserAccounts
     @user = current_user
     @accounts = @user.accounts
