@@ -60,9 +60,6 @@ class LolWrapper
   def get_summoner_id(summoner_name, region_name)
     client = get_check_client(region_name)
     id = client.summoner.by_name(summoner_name)[0].id
-    puts "jeanpaul"
-    puts id
-    puts "yop"
     return id
   end
   #gets a stats summary of the player refered by account_id on region_name server
@@ -74,7 +71,6 @@ class LolWrapper
   #gets the ranked infos of the player refered by account_id on region_name server
   def get_account_ranked_infos(account_id, region_name)
     client = get_check_client(region_name)
-    puts client.stats.ranked(account_id)
     return client.stats.ranked(account_id)
   end
 
