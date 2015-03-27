@@ -17,6 +17,7 @@ class AccountsController < ApplicationController
     @ranking = LOL_WRAPPER.get_account_ranked_league(params[:idLoL], params[:region])
     @tier, @solo_rank = LOL_WRAPPER.get_solo_ranking(@ranking, params[:idLoL])
     @tier = @tier.downcase
+    @tier_image = @solo_rank.sub(' ', '_').upcase + ".png"
     #TODO check error
     
     #Create or update the corresponding account in our database
