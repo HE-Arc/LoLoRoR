@@ -9,7 +9,7 @@ class AccountsTrackgroupsController < ApplicationController
     @trackgroup = Trackgroup.find(params[:account][:trackgroups])
     @account = Account.find(params[:account][:id])
     @trackgroup.accounts << @account
-    redirect_to @account
+    redirect_to account_path(:region => @account.region, :idLoL => @account.idLoL)
     
   end
   

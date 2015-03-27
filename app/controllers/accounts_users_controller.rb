@@ -9,7 +9,7 @@ class AccountsUsersController < ApplicationController
     @user = current_user
     @account = Account.find(params[:account][:id])
     @user.accounts << @account
-    redirect_to @account
+    redirect_to account_path(:region => @account.region, :idLoL => @account.idLoL)
     
   end
   

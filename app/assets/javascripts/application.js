@@ -21,7 +21,8 @@ $( window ).load(function() {
   $('.region-selection').click(function(){
     var container = $(this).parent().parent().siblings(".dropdown-toggle").children(".region-name");
     container.empty();
-    container.text($(this).text());
+    var selectedOption = container.text($(this).text()).context.text;
+    $("#region").val(selectedOption);
   });
 });
 
