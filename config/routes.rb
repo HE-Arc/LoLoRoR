@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get 'users' => 'users#showCurrentUser'
   
   #API account routes
-  get 'accounts/:region/:idLoL' => 'accounts#show', as: 'account' 
+  get 'accounts/:region/:idLoL' => 'accounts#show', as: 'account'
   get 'search/accounts/' => 'accounts#searchAccounts', as: 'accounts_search'
   
   resources :trackgroups, except: [:index]

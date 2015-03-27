@@ -2,25 +2,27 @@
   <div class="row line-content">
     <div class="col-md-4 hidden-xs hidden-sm text-center"><%= image_tag "logo/logo.png", height: "90" %></div>
     <div class="col-md-4 centered">
+       <%= form_tag(accounts_search_path, method: "get") do %>
       <div class="input-group dark-dropdown">
-        <input type="text" class="form-control" placeholder="Chercher un invocateur...">
+
+        <%= text_field_tag(:name, "", class: "form-control", placeholder: "Chercher un invocateur...") %>
           <div class="input-group-btn">
             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-              <span class="region-name">BR</span>
+              <span class="region-name"><%= @regions.first.upcase %></span>
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
-              <li><a class="region-selection">EUW</a></li>
-              <li><a class="region-selection">EUNE</a></li>
-              <li><a class="region-selection">NA</a></li>
-              <li class="divider"></li>
-              <li><a class="region-selection">All</a></li>
+              <% @regions.each do |r| %> 
+              <li><a class="region-selection"><%= r.upcase %></a></li>
+              <% end %> 
           </ul>
         </div>
+        <input type="hidden" id="region" name="region" value=<%= @regions.first.upcase %> />
         <span class="input-group-btn">
-          <button class="btn btn-primary" type="button">Chercher</button>
+          <%= submit_tag("Chercher", class: "btn btn-primary") %>
         </span>
         </div>
+      <% end %>
     </div>
   </div>
 </div>
