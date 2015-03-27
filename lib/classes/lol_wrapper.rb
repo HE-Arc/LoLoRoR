@@ -59,7 +59,11 @@ class LolWrapper
   #gets the summoner id of the player refered by summoner_name on region_name server
   def get_summoner_id(summoner_name, region_name)
     client = get_check_client(region_name)
-    return client.summoner.by_name(summoner_name)[0].id
+    id = client.summoner.by_name(summoner_name)[0].id
+    puts "jeanpaul"
+    puts id
+    puts "yop"
+    return id
   end
   #gets a stats summary of the player refered by account_id on region_name server
   def get_account_infos(account_id, region_name)
@@ -74,7 +78,7 @@ class LolWrapper
   end
 
   def get_solo_ranking(ranking, account_id)
-    rank_infos = ranking[account_id]
+    rank_infos = ranking[account_id.to_s]
     rank_div = rank_value = "Unranked"
     rank_infos.each do |item|
       if item.queue == "RANKED_SOLO_5x5"
@@ -93,6 +97,8 @@ class LolWrapper
   
   def get_account_ranked_league(account_id, region_name)
     client = get_check_client(region_name)
+    puts "hey"
+    puts account_id
     return client.league.get(account_id)
   end
   
