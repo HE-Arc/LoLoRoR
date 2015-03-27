@@ -20,11 +20,7 @@
   </small>
 </div>
  <% #Check if the user already have this account %>
-  <% if @account.users.include?(current_user) %>
-    <%= render "accounts_users/removeAccount" %>
-  <% else %>
-    <%= render "accounts_users/addAccount" %>
-  <% end %>
+  
 
-  <%= render "accounts_trackgroups/addTrackgroup" %>
+ 
 <hr/>
