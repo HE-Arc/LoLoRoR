@@ -28,6 +28,8 @@ class MatchHistoryModulesController < ApplicationController
   end
   
   def edit
+    @accounts = current_user.accounts
+    @trackgroups = current_user.trackgroups
     render "modules/history/_edit"
   end
   
@@ -45,11 +47,6 @@ class MatchHistoryModulesController < ApplicationController
   def destroy
     @matchHistoryModule.destroy
     redirect_to dashboard_path(params[:dashID])
-  end
-  
-  private
-  def get_params
-    params[:matchHistoryModule].permit(:account, :dashboard, :nb_match)
   end
   
   private
