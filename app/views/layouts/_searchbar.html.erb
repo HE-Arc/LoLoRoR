@@ -17,7 +17,7 @@
               <% end %> 
           </ul>
         </div>
-        <input type="hidden" id="region" name="region" />
+        <input type="hidden" id="region" name="region" value=<%= @regions.first.upcase %> />
         <span class="input-group-btn">
           <%= submit_tag("Chercher", class: "btn btn-primary") %>
         </span>

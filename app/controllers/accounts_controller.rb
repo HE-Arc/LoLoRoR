@@ -1,7 +1,7 @@
 class AccountsController < ApplicationController
   
    # the user must be authenticated
-  before_action :authenticate_user!, :except => [:show]
+  before_action :authenticate_user!, :except => [:show, :searchAccounts]
   
   def show
     #Find the summoner with the corresponding id and region
