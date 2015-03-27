@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   #Manage trackgroups (show, create, destroy) for the current user
   get 'users/trackgroups' => 'trackgroups#showUserTrackgroups'
   post 'users/trackgroups' => 'accounts_trackgroups#create'
+  post 'users/trackgroups/:id' => 'accounts_trackgroups#createAPI'
   delete 'users/trackgroups' => 'accounts_trackgroups#destroy'
   
   #Manage dashboards for the current user

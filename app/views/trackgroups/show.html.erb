@@ -1,3 +1,4 @@
+
 <div class="row">
   <div class="col-md-8">
     
@@ -20,7 +21,28 @@
       </button> 
       <% end %>
     </div>
-     <%= button_to "Ajouter un ami au groupe", users_trackgroups_path ,:class => "btn btn-primary" %>
+    
+     <%= form_for @trackgroup, :url => url_for(:controller => 'accounts_trackgroups', :action => 'createAPI'),  html: {method: "post"}  do |f| %>
+    <div class="input-group dark-dropdown">
+
+        <%= text_field_tag(:accname, "", class: "form-control", placeholder: "Chercher un invocateur...") %>
+          <div class="input-group-btn">
+            <button type="button" class="btn btn-primary dropdown-toggle-trackgroup" data-toggle="dropdown" aria-expanded="false">
+              <span class="region-name-trackgroup"><%= @regions.first.upcase %></span>
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <% @regions.each do |r| %> 
+              <li><a class="region-selection-trackgroup"><%= r.upcase %></a></li>
+              <% end %> 
+          </ul>
+        </div>
+        <input type="hidden" id="region-trackgroup" name="region" value=<%= @regions.first.upcase %> />
+        <span class="input-group-btn">
+          <%= submit_tag("Ajouter cet ami au groupe", class: "btn btn-primary") %>
+        </span>
+        </div>
+      <% end %>
     <h3>Amis du groupe</h3>
     
     <table class="table table-hover">

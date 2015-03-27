@@ -24,5 +24,13 @@ $( document ).ready(function() {
     var selectedOption = container.text($(this).text()).context.text;
     $("#region").val(selectedOption);
   });
+  
+  $('.region-selection-trackgroup').click(function(){
+    var container = $(this).parent().parent().siblings(".dropdown-toggle-trackgroup").children(".region-name-trackgroup");
+    container.empty();
+    var selectedRegion = container.text($(this).text()).context.text;
+    $("#region-trackgroup").val(selectedRegion);
+  });
+
 });
 
