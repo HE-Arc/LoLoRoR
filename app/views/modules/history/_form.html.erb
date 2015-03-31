@@ -4,12 +4,12 @@
    
   </button>
   <h4>Historique de match</h4>
-  <form class="form-horizontal">
+    <%= form_for @dashboard, :url => url_for(:controller => 'match_history_modules', :action => 'create', :dashID => @dashboard.id), html: {method: "post", class: "form-horizontal"}  do |f| %>
     <div class="form-group">
       <label class="col-md-4 control-label">Compte :</label>
       <div class="col-md-8">
         
-        <select class="form-control acc-list">
+        <select name="account_id" class="form-control acc-list">
           <optgroup label="Mes comptes">
             <% @accounts.each do |a| %>
             <option value="<%= a.id %>"><%= a.pseudoLoL %> (<%= a.region %>)</option>
@@ -29,7 +29,7 @@
     <div class="form-group">
       <label class="col-md-4 control-label">Nombre de matchs :</label>
       <div class="col-md-8">
-        <select class="form-control nb-list">
+        <select name="nb_match" class="form-control nb-list">
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -38,6 +38,7 @@
         </select>
       </div>
     </div>
-    <button class="btn btn-default pull-right save-btn">Enregistrer</button>
-  </form>
+
+    <%= f.submit "Enregistrer", class: 'btn btn-default pull-right save-btn' %>
+  <% end %>
 </div>

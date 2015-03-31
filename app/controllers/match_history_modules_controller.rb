@@ -8,6 +8,7 @@ class MatchHistoryModulesController < ApplicationController
   
   def new
     @matchHistoryModule = MatchHistoryModule.new
+    @dashboard = Dashboard.find(params[:dashID])
     @accounts = current_user.accounts
     @trackgroups = current_user.trackgroups
     render "modules/history/_new"
@@ -17,8 +18,8 @@ class MatchHistoryModulesController < ApplicationController
     @matchHistoryModule = MatchHistoryModule.new
     @matchHistoryModule.nb_match =  params[:nb_match]
     @matchHistoryModule.dashboard = Dashboard.find(params[:dashID])
-    @matchHistoryModule.account = Account.where(pseudoLoL:  params[:pseudoLoL], region: params[:region])
-    
+    @matchHistoryModule.account = Account.find(params[:account_id])
+
     if(@matchHistoryModule.save)
       render "modules/history/_match"
     else
