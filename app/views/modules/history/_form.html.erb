@@ -12,13 +12,13 @@
         <select class="form-control acc-list">
           <optgroup label="Mes comptes">
             <% @accounts.each do |a| %>
-              <option value="<%= a.id %>"><%= a.pseudoLoL %></option>
+            <option value="<%= a.id %>"><%= a.pseudoLoL %> (<%= a.region %>)</option>
             <% end %>
           </optgroup>
           <% @trackgroups.each do |t| %>
           <optgroup label= "<%= t.name %>" >
             <% t.accounts.each do |a| %>
-              <option value="<%= a.id %>"><%= a.pseudoLoL %></option>
+              <option value="<%= a.id %>"><%= a.pseudoLoL %> (<%= a.region %>)</option>
             <% end %>
           </optgroup>
           <% end %>
