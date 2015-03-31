@@ -4,7 +4,7 @@
    
   </button>
   <h4>Historique de match</h4>
-    <%= form_for @dashboard, :url => url_for(:controller => 'match_history_modules', :action => 'create', :dashID => @dashboard.id), html: {method: "post", class: "form-horizontal"}  do |f| %>
+  <%= form_for @dashboard, remote: true, :url => url_for(:controller => 'match_history_modules', :action => 'create', :dashID => @dashboard.id), html: {id: "new_module", method: "post", class: "form-horizontal"}  do |f| %>
     <div class="form-group">
       <label class="col-md-4 control-label">Compte :</label>
       <div class="col-md-8">

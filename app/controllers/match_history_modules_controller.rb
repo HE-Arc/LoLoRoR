@@ -35,8 +35,9 @@ class MatchHistoryModulesController < ApplicationController
   end
   
   def update
-    @matchHistoryModule.nb_match =  params[:nb_match]
-    @matchHistoryModule.account = Account.where(pseudoLoL:  params[:pseudoLoL], region: params[:region])
+    @matchHistoryModule.nb_match = params[:nb_match]
+    @matchHistoryModule.account = Account.find(params[:account_id])
+    
     if(@matchHistoryModule.save)
       render "modules/history/_match"
     else
