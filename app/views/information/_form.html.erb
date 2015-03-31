@@ -1,0 +1,15 @@
+<%= form_for @information do |f| %>
+<p>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+</p>
+  <%= f.label :smallDescription %>
+  <%= f.text_area :smallDescription %>
+<p>
+  <%= f.label :detailedDescription %>
+  <%= f.text_area :detailedDescription %>
+</p>
+<p>
+  <%= f.submit %>
+</p>
+<% end %>

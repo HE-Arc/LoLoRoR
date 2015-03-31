@@ -1,0 +1,13 @@
+<h1>News</h1>
+  <% @informations.each do |info| %>
+  <div>
+    <p><%= link_to info.title, info %><p>
+    <p><%= info.smallDescription %><p>
+  <div>
+  <% end %>
+
+<% if current_user.admin? %>
+<p>
+  <%= link_to 'Créer une news', new_information_path %>
+</p>
+<% end %>

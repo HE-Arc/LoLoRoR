@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-  root 'pages#home'
+  root 'information#index'
   
-  #resources :users
+  #News routes, only admins can CRUD on the news, users can only read (index, show)
+  resources :information
   
   devise_for :users, controllers: {                                          
     sessions: 'users/sessions',

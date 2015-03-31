@@ -1,0 +1,13 @@
+<h2><%= @information.title %></h2>
+
+<p>
+  <%= @information.detailedDescription %>
+</p>
+
+
+<% if current_user.admin? %>
+<p>
+  <%= link_to 'Modifier', edit_information_path(@information) %>
+  <%= link_to 'Supprimer', @information, method: :delete%>
+</p>
+<% end %>
