@@ -1,2 +1,2 @@
-module InformationsHelper
+module InformationHelper
 end
