@@ -6,8 +6,10 @@
   <div>
   <% end %>
 
+    <%if user_signed_in?%>
 <% if current_user.admin? %>
 <p>
   <%= link_to 'Créer une news', new_information_path %>
 </p>
 <% end %>
+    <% end %>
