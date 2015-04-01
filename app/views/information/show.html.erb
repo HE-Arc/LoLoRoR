@@ -4,10 +4,11 @@
   <%= @information.detailedDescription %>
 </p>
 
-
-<% if current_user.admin? %>
-<p>
-  <%= link_to 'Modifier', edit_information_path(@information) %>
-  <%= link_to 'Supprimer', @information, method: :delete%>
-</p>
+<% if user_signed_in? %>
+  <% if current_user.admin? %>
+  <p>
+    <%= link_to 'Modifier', edit_information_path(@information) %>
+    <%= link_to 'Supprimer', @information, method: :delete%>
+  </p>
+  <% end %>
 <% end %>
