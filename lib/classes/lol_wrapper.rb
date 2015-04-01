@@ -68,6 +68,25 @@ class LolWrapper
     return client.stats.summary(account_id)
   end
   
+  def get_file_stats(stats)
+    games_number = 0
+    wins_number = 0
+    kills = 0
+    assists = 0
+    if !stats.nil?
+      stats.each do |item|
+        wins_number += item.wins
+        if(item.aggregated_stats.total_champion_kills != nil)
+          kills += item.aggregated_stats.total_champion_kills
+        end
+        if(item.aggregated_stats.total_assists != nil)
+          assists += item.aggregated_stats.total_assists
+        end
+      end
+    end
+    return {:games_number => games_number, :wins_number => wins_number, :kills => kills, :assists => assists}
+  end
+  
   #gets the ranked infos of the player refered by account_id on region_name server
   def get_account_ranked_infos(account_id, region_name)
     client = get_check_client(region_name)
@@ -115,17 +134,34 @@ class LolWrapper
     region_name = name.downcase
     if region_name.is_a? String 
       if get_all_regions().include?(region_name)
-      #TODO could check if region name is in region_list
-      #@list_clients[region_name] = Lol::Client.new @api_key, {region: region_name, redis: "redis://localhost:6379", ttl: 900}
-      #end
-      #return @list_clients[region_name]
-        return Lol::Client.new @api_key, {region: region_name, redis: "redis://localhost:6379", ttl: 10}
+        if is_region_available(region_name)
+          return Lol::Client.new @api_key, {region: region_name, redis: "redis://localhost:6379", ttl: 10}
+        else
+          raise 'Server ' + region_name + ' is down.'
+        end
       else
-        return nil
+        raise 'Region ' + region_name + ' does not exist.'
       end
     else
-      raise 'Client name is not a string.'
+      raise 'Region name is not a string.'
     end
+  end
+  
+  #tries to know if the region is available, might change the request
+  def is_region_available(region_name)
+    uri = URI('https://'+ region_name+'.api.pvp.net/')
+    begin
+      request = Net::HTTP::Get.new(uri.path)
+      request.content_type = "application/json; charset=UTF-8"
+      #use_ssl is used in case the uri uses HTTP'S', false by default
+      #open_timeout is meant to throw an exception if the requests takes too long to complete
+      response = Net::HTTP.start(uri.host, uri.port, :open_timeout => 1, :use_ssl => true) {|http| http.request(request)}
+    rescue Net::OpenTimeout
+      return false
+    else
+      return true
+    end
+    return true
   end
   
   def get_static_client
@@ -133,8 +169,6 @@ class LolWrapper
                                      #(should create a static client, but since there is no such thing included in the gem...)
     return client.static
   end
-  
-  
   
   #gets champion data
   def get_champion(champion_id)
@@ -165,10 +199,7 @@ class LolWrapper
   def populate_region_list
     @region_list = Array.new
     #not an api-official way, but all the regions are listed in this not-api-key-limited query
-    requestString = 'http://status.leagueoflegends.com/shards'
-    uri = URI(requestString)
-    response = Net::HTTP.get(uri)
-    responseJSON = JSON.parse(response)
+    responseJSON = get_json_response('http://status.leagueoflegends.com/shards')
     #iterates over the response and adds the region tag at the end of the list
     responseJSON.each do |child|
       @region_list.push(child['slug'])
@@ -178,10 +209,15 @@ class LolWrapper
   #using the region_name server, gets the ddragon version and sets the @ddragon_version variable
   def set_ddragon_infos(region_name)
     @ddragon_region = region_name
-    requestString = 'https://global.api.pvp.net/api/lol/static-data/euw/v1.2/versions?api_key='+ @api_key
-    uri = URI(requestString)
-    response = Net::HTTP.get(uri)
-    responseJSON = JSON.parse(response)
+    responseJSON = get_json_response('https://global.api.pvp.net/api/lol/static-data/euw/v1.2/versions?api_key='+ @api_key)
     @ddragon_version = responseJSON[0]
+  end
+  
+  #sends an HTTP request using the string parameter
+  #returns a JSON object
+  def get_json_response(request_string)
+    uri = URI(request_string)
+    response = Net::HTTP.get(uri)
+    return JSON.parse(response)
   end
 end
