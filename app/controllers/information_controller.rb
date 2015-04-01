@@ -1,7 +1,7 @@
 class InformationController < ApplicationController
   
   # Only the admin can manage informations
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :check_admin, except: [:index, :show]
   
   def index

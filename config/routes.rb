@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   delete 'users/dashboards' => 'dashboards#destroy'
  
   get 'about' => 'pages#about'
+  get 'contact' => 'pages#contact'
   
   #Modules routes
   scope 'dashboards/:dashID/modules' do
