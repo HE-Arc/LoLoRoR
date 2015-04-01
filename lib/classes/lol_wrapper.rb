@@ -68,6 +68,25 @@ class LolWrapper
     return client.stats.summary(account_id)
   end
   
+  def get_file_stats(stats)
+    games_number = 0
+    wins_number = 0
+    kills = 0
+    assists = 0
+    if !stats.nil?
+      stats.each do |item|
+        wins_number += item.wins
+        if(item.aggregated_stats.total_champion_kills != nil)
+          kills += item.aggregated_stats.total_champion_kills
+        end
+        if(item.aggregated_stats.total_assists != nil)
+          assists += item.aggregated_stats.total_assists
+        end
+      end
+    end
+    return {:games_number => games_number, :wins_number => wins_number, :kills => kills, :assists => assists}
+  end
+  
   #gets the ranked infos of the player refered by account_id on region_name server
   def get_account_ranked_infos(account_id, region_name)
     client = get_check_client(region_name)

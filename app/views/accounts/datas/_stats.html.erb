@@ -1,14 +1,14 @@
 <table class="table table-responsive">
   <tr>
     <th>Nombre de parties</th>
-    <td>50</td>
+    <td><%= @file_stats[:games_number]%></td>
     <th>Victoires</th>
-    <td>0 (trop nul)</td>
+    <td><%= @file_stats[:wins_number]%></td>
   </tr>
   <tr>
     <th>Nombre de tués</th>
-    <td>10</td>
-    <th>Nombre de tués</th>
-    <td>10</td>
+    <td><%= @file_stats[:kills]%></td>
+    <th>Nombre d'assists</th>
+    <td><%= @file_stats[:assists]%></td>
   </tr>
 </table>
