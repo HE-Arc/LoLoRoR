@@ -17,14 +17,13 @@
 //= require_tree .
 
 
-$( document ).ready(function() {
+$(document).on('page:change',function() {
   $('.region-selection').click(function(){
     var container = $(this).parent().parent().siblings(".dropdown-toggle").children(".region-name");
     container.empty();
     var selectedOption = container.text($(this).text()).context.text;
     $("#region").val(selectedOption);
   });
-  
   $('.region-selection-trackgroup').click(function(){
     var container = $(this).parent().parent().siblings(".dropdown-toggle-trackgroup").children(".region-name-trackgroup");
     container.empty();

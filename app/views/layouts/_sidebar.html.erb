@@ -1,47 +1,45 @@
+<div class="well">
 <% if user_signed_in? %>
-<h4>Mes Dashboards</h4>
-<ul class="list-group">
-  <li class="list-group-item"><a href="#">Mon dashboard 1</a></li>
-  <li class="list-group-item"><a href="#">Mon dashboard 2</a></li>
-</ul>
-<h4>En partie</h4>
-<ul class="list-group">
-  <li class="list-group-item">
-    <ul class="media-list">
-      <li class="media">
-        <div class="media-left">
-          <a href="#">
-            <img class="media-object" src="img/braum.png" width="25px" alt="Bronze">
-          </a>
-        </div>
-        <div class="media-body">
-          <h4 class="media-heading">Lahft</h4>
-          <span class="glyphicons glyphicons-redo"></span>
-        </div>
-      </li>
+  <% if @dashboards_light.count > 0 %>
+    <h4>Mes Dashboards</h4>
+    <ul class="list-group">
+      <% @dashboards_light.each do |dash| %>
+        <li class="list-group-item"><%= link_to(dash.name, dash) %></li>
+      <% end %>
     </ul>
-  </li>
-  <li class="list-group-item">
-    <ul class="media-list">
-      <li class="media">
-        <div class="media-left">
-          <a href="#">
-            <img class="media-object" src="img/braum.png" width="25px" alt="Bronze">
-          </a>
-        </div>
-        <div class="media-body">
-          <h4 class="media-heading">Ymaktepi</h4>
-          <span class="glyphicons glyphicons-redo"></span>
-        </div>
+  <% else  %>
+Créez votre premier dashboard depuis <%= link_to('l\'interface de gestion de dashboards', users_dashboards_path) %>
+  <% end %>
+    <h4>En partie</h4>
+  <% if @playingUsers.count > 0 %>
+    <ul class="list-group">
+      <% @playingUsers.each do |user| %>
+      <li class="list-group-item">
+        <ul class="media-list">
+          <li class="media">
+            <div class="media-left">
+              <a href="#">
+                <img class="media-object" src="<%= user[:persoId] %>" width="25px" alt="Bronze">
+              </a>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading"><%= user[:pseudoLol] %></h4>
+              <span class="glyphicons glyphicons-redo"></span>
+            </div>
+          </li>
+        </ul>
       </li>
+      <% end %>
     </ul>
-  </li>
-</ul>
+  <% else %>
+    Aucun ami en partie
+  <% end %>
+
 <% else %>
- <div class="well">
+
    <p>LoLTracker vous permet de créer vos propres dashboards et de consulter les joueurs en cours de partie !</p>
-   <p><%= link_to "Inscrivez-vous", new_registration_path(resource_name) %> ou <%= link_to "connectez-vous", new_session_path(resource_name) %> pour accéder à toutes les fonctionnalités !</p>
-   
-</div>
+   <p><%= link_to "Inscrivez-vous", new_user_registration_path %> ou <%= link_to "connectez-vous", new_user_session_path %> pour accéder à toutes les fonctionnalités !</p>
+
 
 <% end %>
+</div>

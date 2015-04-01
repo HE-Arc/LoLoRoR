@@ -87,7 +87,6 @@ class LolWrapper
               break
             end
           end
-
         end
       end
     end

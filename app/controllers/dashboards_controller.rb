@@ -18,6 +18,7 @@ class DashboardsController < ApplicationController
   end
 
   def new
+    @button_text = "Créer le dashboard"
     @dashboard = Dashboard.new
   end
   
@@ -30,12 +31,11 @@ class DashboardsController < ApplicationController
       render 'new'
     end
   end
-  
   def edit
+    @button_text = "Mettre à jour"
   end
   
   def update
-    @button_text = "Mettre à jour"
     if(@dashboard.update(get_params))
       redirect_to @dashboard
     else
