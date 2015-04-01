@@ -4,6 +4,9 @@ class DashboardsController < ApplicationController
   before_action :authenticate_user!
   before_action :check_user, except: [:new, :create, :showUserDashboards]
   
+  # Texts used for the controls
+  
+  
   def show
     @accounts = current_user.accounts
     @trackgroups = current_user.trackgroups
@@ -32,6 +35,7 @@ class DashboardsController < ApplicationController
   end
   
   def update
+    @button_text = "Mettre à jour"
     if(@dashboard.update(get_params))
       redirect_to @dashboard
     else
@@ -48,6 +52,7 @@ class DashboardsController < ApplicationController
   def get_params
     params[:dashboard].permit(:name)
   end
+  
   
   private
   def check_user

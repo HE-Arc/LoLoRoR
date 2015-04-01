@@ -1,10 +1,10 @@
-<%= form_for @dashboard do |f| %>
-<p>
+<%= form_for @dashboard do |f|, html: {role: "form" } %>
+<div class="field form-group">
   <%= f.label :name %>
-  <%= f.text_field :name %>
-</p>
+  <%= f.text_field :name, class: "form-control" %>
+</div>
 
-<p>
-  <%= f.submit %>
-</p>
+<div class="field form-group">
+  <%= f.submit @button_text, class: "btn btn-default" %>
+</div>
 <% end %>
