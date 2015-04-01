@@ -134,6 +134,8 @@ class LolWrapper
     begin
       request = Net::HTTP::Get.new(uri.path)
       request.content_type = "application/json; charset=UTF-8"
+      #use_ssl is used in case the uri uses HTTP'S', false by default
+      #open_timeout is meant to throw an exception if the requests takes too long to complete
       response = Net::HTTP.start(uri.host, uri.port, :open_timeout => 1, :use_ssl => true) {|http| http.request(request)}
     rescue Net::OpenTimeout
       return false
@@ -199,5 +201,4 @@ class LolWrapper
     response = Net::HTTP.get(uri)
     return JSON.parse(response)
   end
-  
 end
