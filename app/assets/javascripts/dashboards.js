@@ -5,6 +5,7 @@ $(document).on('page:change', function() {
         if(inDb){
           
           var moduleId = moduleDiv.find('.module-id-field').val();
+         moduleDiv.closest('close').off('click');
           $.ajax({
             url: dashId + "/modules/match_history_modules/" + moduleId, // Route to the Script Controller method
             type: "DELETE",
@@ -117,7 +118,7 @@ $(document).on('page:change', function() {
         var moduleDiv = $(this).closest('.module-holder');
 
         editModule(moduleDiv);
-
+        //addShowButtonsListeners(moduleDiv);
 
     });
 
