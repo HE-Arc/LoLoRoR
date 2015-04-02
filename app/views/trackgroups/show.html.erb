@@ -2,24 +2,18 @@
     <%= link_to users_trackgroups_path, class:"btn btn-default btn-xs" do %>
       <i class="glyphicon glyphicon-chevron-left"></i> Retourner aux groupes
     <% end %>
-<h2><%= @trackgroup.name %></h2>
-    <div> 
-        <%= form_for @trackgroup, url: edit_trackgroup_path(@trackgroup), html: {method: "get"}  do |f| %>
-      <button type="submit" class="btn btn-default btn-xs">
+    <h2><%= @trackgroup.name %>
+       
+      <%= link_to edit_trackgroup_path(@trackgroup), class:"btn btn-default btn-xs"  do %>
         <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-      </button> 
       <% end %>
-    </div>
-    <div>
-      <%= form_for @trackgroup, html: {method: "delete"}  do |f| %>
-     
-      <button type="submit" class="btn btn-default btn-xs">
-        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-      </button> 
-      <% end %>
-    </div>
     
-     <%= form_for @trackgroup, :url => url_for(:controller => 'accounts_trackgroups', :action => 'createAPI'),  html: {method: "post"}  do |f| %>
+     <%= link_to @trackgroup, class:"btn btn-default btn-xs", method: "delete"  do %>
+        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+      <% end %>
+    </h2>
+    
+    <!--<%= form_for @trackgroup, :url => url_for(:controller => 'accounts_trackgroups', :action => 'createAPI'),  html: {method: "post"}  do |f| %>
     <div class="input-group dark-dropdown">
 
         <%= text_field_tag(:accname, "", class: "form-control", placeholder: "Chercher un invocateur...") %>
@@ -39,7 +33,8 @@
           <%= submit_tag("Ajouter cet ami au groupe", class: "btn btn-primary") %>
         </span>
         </div>
-      <% end %>
+      <% end %>-->
+    <div><i>Pour ajouter des amis à ce groupe, ajoutez les via leur page d'invocateurs !</i></div>
     <h3>Amis du groupe</h3>
     
     <table class="table table-hover">

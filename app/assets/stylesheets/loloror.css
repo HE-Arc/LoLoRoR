@@ -97,7 +97,8 @@ margin-top:-32767px;/* thank you Erik J - negate effect of float*/
 
 .article-row
 {
-  border-bottom:1px solid #d9230f;
+  margin-left:5px;
+  border-bottom:1px solid #7A8288;
 
 }
 

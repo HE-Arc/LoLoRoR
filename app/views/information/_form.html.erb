@@ -1,15 +1,19 @@
 <%= form_for @information do |f| %>
-<p>
-  <%= f.label :title %>
-  <%= f.text_field :title %>
-</p>
-  <%= f.label :smallDescription %>
-  <%= f.text_area :smallDescription %>
-<p>
-  <%= f.label :detailedDescription %>
-  <%= f.text_area :detailedDescription %>
-</p>
-<p>
-  <%= f.submit %>
-</p>
+<div class="field form-group">
+  <%= f.label "Titre de l'article" %>
+  <%= f.text_field :title, class: "form-control" %>
+</div>
+<div class="field form-group">
+  <%= f.label "Début de l'article" %>
+  <%= f.text_area :smallDescription, class: "form-control",  rows: "7" %>
+</div>
+<div class="field form-group">
+  <%= f.label "Suite"%>
+  <small>(optionel, suite du contenu raccourcis dans l'affichage complet de l'article)</small>
+  
+  <%= f.text_area :detailedDescription, class: "form-control",  rows: "7" %>
+</div>
+<div class="field form-group">
+  <%= f.submit @button_text, class: "btn btn-default" %>
+</div>
 <% end %>

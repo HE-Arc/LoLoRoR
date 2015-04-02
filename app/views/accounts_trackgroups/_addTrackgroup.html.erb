@@ -1,7 +1,6 @@
 <%= form_for @account, :url => url_for(:controller => 'accounts_trackgroups', :action => 'create'), html: {method: "post", class: "inline-form form-inline pull-right"}  do |f| %>
 <%= f.collection_select(:trackgroups, @trackgroups, :id, :name, {}, {class: "form-control input-sm"}) %>
-
-  <%= f.hidden_field :id, :value => @account.id %>
-  <%= f.submit "Ajouter au groupe", class: 'btn btn-success btn-xs' %>
+<%= f.hidden_field :id, :value => @account.id %>
+<%= f.submit "Ajouter au groupe", class: 'btn btn-success btn-xs' %>
 
 <% end %>
