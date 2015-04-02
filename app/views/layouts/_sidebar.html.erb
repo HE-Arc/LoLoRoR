@@ -4,7 +4,7 @@
     <h4>Mes Dashboards</h4>
     <ul class="list-group">
       <% @dashboards_light.each do |dash| %>
-        <li class="list-group-item"><%= link_to(dash.name, dash) %></li>
+      <li class="list-group-item"><%= link_to(dash.name, dash) %></li>
       <% end %>
     </ul>
   <% else  %>

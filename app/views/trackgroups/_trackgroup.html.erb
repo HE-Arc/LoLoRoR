@@ -1,6 +1,6 @@
 <tr>
   <td><%= link_to trackgroup.name, trackgroup %></td>
-  <td><small><%= trackgroup.accounts.count %> membres </small></td>
+  <td><small><%= trackgroup.accounts.count %> comptes </small></td>
   <td>
     <%= form_for trackgroup, url: edit_trackgroup_path(trackgroup), html: {method: "get"}  do |f| %>
     <button type="submit" class="btn btn-default btn-xs">

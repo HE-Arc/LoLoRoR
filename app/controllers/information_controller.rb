@@ -14,6 +14,7 @@ class InformationController < ApplicationController
 
   def new
     @information = Information.new
+    @button_text = "Ajouter la news"
   end
   
   def create
@@ -26,6 +27,7 @@ class InformationController < ApplicationController
   end
   
   def edit
+    @button_text = "Modifier la news"
     @information = Information.find(params[:id])
   end
   
