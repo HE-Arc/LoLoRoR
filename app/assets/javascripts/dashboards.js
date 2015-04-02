@@ -68,7 +68,7 @@ $(document).on('page:change', function() {
   
     function addShowButtonsListeners(moduleDiv){
       
-      
+      moduleDiv.find('.edit-module-history').off('click');
       moduleDiv.find('.edit-module-history').click(function() {
                     var moduleDiv = $(this).closest('.module-holder');
                     editModule(moduleDiv);
@@ -76,10 +76,13 @@ $(document).on('page:change', function() {
     }
     function addEditButtonsListeners(moduleDiv, exists){
         var dashId = $('#dash-id').val();
+      
+        moduleDiv.off('click', '.close');
         moduleDiv.on('click', '.close', function() {
             removeModule(moduleDiv, dashId, exists);
         });
 
+        moduleDiv.off('click', '.save-btn');
         moduleDiv.on('click', '.save-btn', function() {
             saveModule(moduleDiv, dashId, exists);
         });
