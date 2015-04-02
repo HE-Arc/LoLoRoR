@@ -1,9 +1,8 @@
-<div class="module-holder col-md-6 panel panel-default ">
-   <div class="panel-heading">
-     Historique de match - Lahft <a class="pull-right" href="/mypath"><i class="glyphicon glyphicon-wrench"></i></a>
-   </div>
-   <ul class="list-group">
-     <%= render 'modules/history/match' %>
-     <%= render 'modules/history/match' %>
-   </ul>
+<input type="hidden" value="<%= @mod.id %>" class="module-id-field"/>
+<div class="panel-heading">
+  Historique de match - <%= @mod.account.pseudoLoL %> (<%= @mod.account.region %>) <a class="pull-right btn btn-default btn-xs edit-module-history" ><i class="glyphicon glyphicon-wrench"></i></a>
 </div>
+<ul class="list-group">
+  <%= render 'modules/history/match' %>
+  <%= render 'modules/history/match' %>
+</ul>

@@ -8,8 +8,9 @@ class DashboardsController < ApplicationController
   
   
   def show
-    @accounts = current_user.accounts
-    @trackgroups = current_user.trackgroups
+    #@accounts = current_user.accounts
+    #@trackgroups = current_user.trackgroups
+    @historyModules = @dashboard.match_history_modules
   end
   
   def showUserDashboards

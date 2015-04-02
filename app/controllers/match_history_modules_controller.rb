@@ -3,60 +3,64 @@ class MatchHistoryModulesController < ApplicationController
   before_action :check_user, except: [:new, :create]
   
   def show
-    render "modules/history/_match"
+    render :partial => "modules/history/show"
   end
   
   def new
-    @matchHistoryModule = MatchHistoryModule.new
+    @mod = MatchHistoryModule.new
     @dashboard = Dashboard.find(params[:dashID])
     @accounts = current_user.accounts
     @trackgroups = current_user.trackgroups
-    render "modules/history/_new"
+    return render :partial => "modules/history/new"
   end
   
   def create
-    @matchHistoryModule = MatchHistoryModule.new
-    @matchHistoryModule.nb_match =  params[:nb_match]
-    @matchHistoryModule.dashboard = Dashboard.find(params[:dashID])
-    @matchHistoryModule.account = Account.find(params[:account_id])
+    @mod  = MatchHistoryModule.new
+    @moduleInfos = params[:module_infos]
+    @mod.nb_match =  @moduleInfos[:nb_match]
+    @mod.dashboard = Dashboard.find(@moduleInfos[:dash_id])
+    @mod.account = Account.find(@moduleInfos[:account_id])
 
-    if(@matchHistoryModule.save)
-      render "modules/history/_match"
+    if(@mod.save)
+      return render :partial => "modules/history/show"
     else
       render status: 400
-      render plain: "Error"
+      flash.now[:alert] = "Erreur : Ajout impossible"
     end
   end
   
   def edit
+    @dashboard = Dashboard.find(params[:dashID])
     @accounts = current_user.accounts
     @trackgroups = current_user.trackgroups
-    render "modules/history/_edit"
+    return render :partial => "modules/history/edit"
   end
   
   def update
-    @matchHistoryModule.nb_match = params[:nb_match]
-    @matchHistoryModule.account = Account.find(params[:account_id])
+    @moduleInfos = params[:module_infos]
+    @mod.nb_match = @moduleInfos[:nb_match]
+    @mod.account = Account.find(@moduleInfos[:account_id])
     
-    if(@matchHistoryModule.save)
-      render "modules/history/_match"
+    if(@mod.save)
+      return render :partial => "modules/history/show"
     else
       render status: 400
-      render plain: "Error"
+      flash.now[:alert] = "Erreur : Edition impossible"
     end
   end
   
   def destroy
-    @matchHistoryModule.destroy
-    redirect_to dashboard_path(params[:dashID])
+    @mod.destroy
+    flash.now[:notice] = "Erreur : Edition impossible"
+    render :nothing => true
   end
   
   private
   def check_user
-    @matchHistory = MatchHistoryModule.find(params[:id])
+    @mod = MatchHistoryModule.find(params[:id])
     
      #the current user must own the resource
-    if @matchHistory.dashboard.user != current_user
+    if @mod.dashboard.user != current_user
       render :file => "public/401.html", :status => :unauthorized
     end
   end
