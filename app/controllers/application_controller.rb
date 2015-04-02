@@ -10,6 +10,8 @@ class ApplicationController < ActionController::Base
   before_action :get_lighter_dashboards
   before_action :get_current_playing
   
+  rescue_from Lol::InvalidAPIResponse, :with => :render_invalid_response
+  
  
   def set_locale
     I18n.locale = :fr
@@ -46,10 +48,12 @@ class ApplicationController < ActionController::Base
           end
         end
       end
-      
     end
   end
   
+  private
   
-  
+  def render_invalid_response(exception)
+    render :template => "/error/custom_error.html.erb"
+  end
 end
