@@ -1,16 +1,11 @@
-<%= @summoner %>
-<hr/>
-<%= @stats %>
-<hr/>
-
-<%= @tier_image %>
+<%= @file_ranks[:solo][:division_image] %>
 <!--<%= %>-->
 
 <div class="page-header">
   <h1><%= @summoner.name %></h1>
   <small>
     <span class="label label-primary"><%= @account.region.upcase %></span>
-    <span class="label label-primary style-<%= @tier %>"><%= @solo_rank %></span>
+    <span class="label label-primary style-<%= @tier %>"><%= @file_ranks[:solo][:division] %></span>
     <% if @isPlaying %>
     <span class="label label-danger">
       <span class="glyphicon glyphicon-play" aria-hidden="true"></span>

@@ -18,17 +18,20 @@ class AccountsController < ApplicationController
   end
   
   def searchAccounts
-    
-   tmp = LOL_WRAPPER.get_summoner_id(params[:name],  params[:region])
-   @idLoL = tmp
-   @region = params[:region]
-    
-   
-   find_summoner
-    
-   render "show"
+
+    #begin
+      tmp = LOL_WRAPPER.get_summoner_id(params[:name],  params[:region])
+      @idLoL = tmp
+      @region = params[:region]
+
+
+      find_summoner
+      render "show"
+    #rescue Lol::InvalidAPIResponse 
+      #render ""
+    #end
   end
-  
+
   def find_summoner
      #Find the summoner with the corresponding id and region
     @summoner = LOL_WRAPPER.get_summoner_by_id(@idLoL,@region)
@@ -42,11 +45,9 @@ class AccountsController < ApplicationController
     @isPlaying = LOL_WRAPPER.get_is_playing(@idLoL, @region)
     
     #Find ranking
-    ranking = LOL_WRAPPER.get_account_ranked_league(@idLoL, @region)
-    @tier, @solo_rank = LOL_WRAPPER.get_solo_ranking(ranking, @idLoL)
-    @tier = @tier.downcase
-    @tier_image = @solo_rank.sub(' ', '_').upcase + ".png"
-    
+    @file_ranks = LOL_WRAPPER.get_file_ranks(@idLoL, @region)
+        
+    @debug = @file_ranks[:ranking]    
     #TODO check error
     
     #Create or update the corresponding account in our database
