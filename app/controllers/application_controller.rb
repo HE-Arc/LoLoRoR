@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_locale
   before_action :get_regions
+  before_action :get_lighter_dashboards
+  before_action :get_current_playing
   
  
   def set_locale
@@ -24,5 +26,30 @@ class ApplicationController < ActionController::Base
   def get_regions
     @regions = LOL_WRAPPER.region_list
   end
+  
+  def get_lighter_dashboards
+    if user_signed_in?
+      @dashboards_light = current_user.dashboards
+    end
+  end
+  
+  def get_current_playing
+    if user_signed_in?
+      @playingUsers = []
+      user_groups = current_user.trackgroups
+      user_groups.each do |g|
+        g.accounts.each do |u|
+          isPlaying = LOL_WRAPPER.get_is_playing(u.idLoL, u.region)
+          if isPlaying
+            #current_game
+            @playingUsers << { pseudoLol: u.pseudoLoL, persoId: 10}
+          end
+        end
+      end
+      
+    end
+  end
+  
+  
   
 end

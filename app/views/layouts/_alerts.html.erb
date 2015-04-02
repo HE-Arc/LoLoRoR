@@ -1,6 +1,7 @@
-<div class="row">
-  <div class="col-md-8">
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-  </div>
-</div>
+<% if !notice.nil? %>
+<div class="alert alert-notice"><%= notice %></div>
+<% end %>
+
+<% if !alert.nil? %>
+  <div class="alert alert-warning"><%= alert %></div>
+<% end %>

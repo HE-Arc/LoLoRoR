@@ -1,11 +1,11 @@
-<div class="row">
-  <div class="col-md-8">
-    <%= button_to "Ajouter un dashboard", new_dashboard_path, :class => "btn btn-default", :method => "get" %>
+<%= button_to "Ajouter un dashboard", new_dashboard_path, :class => "btn btn-default", :method => "get" %>
 <h3>Dashboards</h3>
    <table class="table table-hover table-striped">
+     <tr>
+       <th>Nom du dashboard</th>
+       <th>Modifier</th>
+       <th>Supprimer</th>
+     </tr>
      <%= render @dashboards %>
     </table>
- <%= button_to "Ajouter un dashboard", new_dashboard_path, :class => "btn btn-default", :method => "get" %>
-    
-  </div>
-</div>
+<%= button_to "Ajouter un dashboard", new_dashboard_path, :class => "btn btn-default", :method => "get" %>

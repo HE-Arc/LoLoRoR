@@ -4,6 +4,9 @@ class DashboardsController < ApplicationController
   before_action :authenticate_user!
   before_action :check_user, except: [:new, :create, :showUserDashboards]
   
+  # Texts used for the controls
+  
+  
   def show
     @accounts = current_user.accounts
     @trackgroups = current_user.trackgroups
@@ -15,6 +18,7 @@ class DashboardsController < ApplicationController
   end
 
   def new
+    @button_text = "Créer le dashboard"
     @dashboard = Dashboard.new
   end
   
@@ -27,8 +31,8 @@ class DashboardsController < ApplicationController
       render 'new'
     end
   end
-  
   def edit
+    @button_text = "Mettre à jour"
   end
   
   def update
@@ -48,6 +52,7 @@ class DashboardsController < ApplicationController
   def get_params
     params[:dashboard].permit(:name)
   end
+  
   
   private
   def check_user
