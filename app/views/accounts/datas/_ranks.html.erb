@@ -1,3 +1,4 @@
+<%= @debug %>
 <div class="row">
   <div class="col-md-4">
     <div class="thumbnail text-center">
@@ -6,9 +7,9 @@
       </div>
       <img src="img/bronze.png" alt="Bronze I">
       <div class="caption">
-        <h4>Bronze 1</h4>
-        <p>59 points</p>
-        <p>10 victoires - 5 défaites (66%)</p>
+        <h4><%=@file_ranks[:team3][:division] %></h4>
+        <p><%=@file_ranks[:team3][:lp] %> LP</p>
+        <p><%=@file_ranks[:team3][:wins] %> wins - <%=@file_ranks[:team3][:losses] %> losses (<%=@file_ranks[:team3][:ratio] %>%)</p>
       </div>
     </div>   
   </div>
@@ -19,9 +20,9 @@
       </div>
       <img src="img/bronze.png" alt="FROTTE_FROTTE">
       <div class="caption">
-        <h4><%= @solo_rank %></h4>
-        <p>59 points</p>
-        <p>10 victoires - 5 défaites (66%)</p>
+        <h4><%=@file_ranks[:solo][:division] %></h4>
+        <p><%=@file_ranks[:solo][:lp] %> LP</p>
+        <p><%=@file_ranks[:solo][:wins] %> wins - <%=@file_ranks[:solo][:losses] %> losses (<%=@file_ranks[:solo][:ratio] %>%)</p>
       </div>
     </div>   
   </div>
@@ -32,9 +33,9 @@
       </div>
       <img src="img/bronze.png" alt="Bronze I">
       <div class="caption">
-        <h4>Bronze 1</h4>
-        <p>59 points</p>
-        <p>10 victoires - 5 défaites (66%)</p>
+        <h4><%=@file_ranks[:team5][:division] %></h4>
+        <p><%=@file_ranks[:team5][:lp] %> LP</p>
+        <p><%=@file_ranks[:team5][:wins] %> wins - <%=@file_ranks[:team5][:losses] %> losses (<%=@file_ranks[:team5][:ratio] %>%)</p>
       </div>
     </div>   
   </div>
