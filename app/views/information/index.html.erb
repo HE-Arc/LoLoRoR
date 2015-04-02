@@ -10,7 +10,7 @@
 <% @informations.each do |info| %>
   <div class="row article-row">
     <div class="col-md-12">
-      <h3><%= link_to info.title, info %> <small>02.04.2015 [TODO]</small></h3>
+      <h3><%= link_to info.title, info %> <small> <%= info.updated_at.to_s.first(10)  %></small></h3>
       <p><%= info.smallDescription %><p>
         <% if info.detailedDescription != "" %>
         <p>
