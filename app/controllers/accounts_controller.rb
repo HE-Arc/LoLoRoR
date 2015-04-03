@@ -28,11 +28,10 @@ class AccountsController < ApplicationController
         @idLoL = tmp
         @region = params[:region]
       end
-      
-      
-      if !@idLoL.nil?
-        find_summoner
 
+      if !@idLoL.nil? 
+        puts(@idLoL)
+        find_summoner
         render "show"
         #render :nothing => true
       end
@@ -53,7 +52,6 @@ class AccountsController < ApplicationController
     #Find the summoner with the corresponding id and region
 
     @summoner = LOL_WRAPPER.get_summoner_by_id(@idLoL,@region)
-
 
     #Find the stats of the summoner with the corresponding id and region
     @stats = LOL_WRAPPER.get_account_infos(@idLoL,@region)

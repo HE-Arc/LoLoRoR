@@ -1,6 +1,8 @@
+<% hidden_notice = flash[:notice] ? '' : 'hidden' %>
 
-<div class="alert alert-info"> Notice : <%= notice %></div>
+  <div class="alert alert-info <%= hidden_notice %>"><%= notice %></div>
 
 
+<% hidden_alert = flash[:alert] ? '' : 'hidden' %>
 
-  <div class="alert alert-danger">Alert : <%= alert %></div>
+  <div class="alert alert-danger <%= hidden_alert %>"><%= alert %></div>
