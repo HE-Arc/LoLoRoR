@@ -60,6 +60,9 @@ class AccountsController < ApplicationController
 
     @file_ranks =  LOL_WRAPPER.get_file_ranks(@idLoL, @region)
     #TODO check error
+    
+    @file_history =  LOL_WRAPPER.get_file_history(@idLoL, @region)
+    
 
     #Create or update the corresponding account in our database
     if Account.exists?(:idLoL => @idLoL)

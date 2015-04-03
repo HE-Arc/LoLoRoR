@@ -4,39 +4,30 @@
       <img src="img/braum.png" class="img-responsive" alt="Image News">
     </div>
     <div class="col-md-3">
+      <% if match[:is_won] %>
       <span class="victory">Victoire</span><br/>
+      <% else %>
+      <span class="defeat">Defaite</span><br/>
+      <% end %>
       <span class="map_name">Faille de l'invocateur</span>
       <span class="game_date">05.03.2011 16:50</span>
     </div>
     <div class="col-md-2">
-      10 tués<br/>
-      5 morts<br/>
-      4 assistances
+      <%= match[:kills] %> tués<br/>
+      <%= match[:deaths] %> morts<br/>
+      <%= match[:assists] %> assistances
     </div>
     <div class="col-md-2">
-      7000 or<br/>
-      5 minions
+      <%= match[:gold] %> or<br/>
+      <%= match[:cs] %> minions
     </div>
     <div class="col-md-2">
       <ul class="list-group row">
+        <% match[:items].each do |item| %>
         <li class="list-group-item col-xs-4">
-          <img src="img/icons/1.png" class="img-responsive" alt="obj1"/>
+          <img src="<%= item %>" class="img-responsive" alt="obj1"/>
         </li>
-        <li class="list-group-item col-xs-4">
-          <img src="img/icons/2.png" class="obj_img" alt="obj2"/>
-        </li>
-        <li class="list-group-item col-xs-4">
-          <img src="img/icons/blank.png" class="obj_img" alt="blank"/>
-        </li>
-        <li class="list-group-item col-xs-4">
-          <img src="img/icons/blank.png" class="obj_img" alt="blank"/>
-        </li>
-        <li class="list-group-item col-xs-4">
-          <img src="img/icons/blank.png" class="obj_img" alt="blank"/>
-        </li>
-        <li class="list-group-item col-xs-4">
-          <img src="img/icons/blank.png" class="obj_img" alt="blank"/>
-        </li>
+        <% end %>
       </ul>
     </div>
     <div class="col-md-2">

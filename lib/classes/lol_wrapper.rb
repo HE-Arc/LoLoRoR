@@ -20,11 +20,11 @@ class LolWrapper
     @division_list = [ "", "V", "IV", "III", "II", "I"]
   end
 
-  
+
   #------------------------------------------------------------------------------
   #                    Public
   #------------------------------------------------------------------------------
-  
+
 
   #gets the summoner profile using summoner_id and region_name
   def get_summoner_by_id(summoner_id, region_name)
@@ -64,9 +64,9 @@ class LolWrapper
   end    
 
   def get_file_ranks(account_id, region_name)
-    solo =   { :tier => "Unranked", :division => "", :lp => 0, :wins => 0, :losses => 0, :ratio => 0 }
-    team3 =  { :tier => "Unranked", :division => "", :lp => 0, :wins => 0, :losses => 0, :ratio => 0 }
-    team5 =  { :tier => "Unranked", :division => "", :lp => 0, :wins => 0, :losses => 0, :ratio => 0 }
+    solo =   { :tier => "UNRANKED", :division => "", :lp => 0, :wins => 0, :losses => 0, :ratio => 0 }
+    team3 =  { :tier => "UNRANKED", :division => "", :lp => 0, :wins => 0, :losses => 0, :ratio => 0 }
+    team5 =  { :tier => "UNRANKED", :division => "", :lp => 0, :wins => 0, :losses => 0, :ratio => 0 }
     ranking = get_account_ranked_league(account_id, region_name)
     if !ranking.nil?
       rank_infos = ranking[account_id.to_s]
@@ -82,16 +82,21 @@ class LolWrapper
     end
     return {:solo => solo, :team3 => team3, :team5 => team5 }
   end
-  
+
   #gets the match history of the player refered by account_id on region_name server
-  def get_match_history(account_id, region_name)
+  def get_file_history(account_id, region_name)
     games = get_recent_games(account_id, region_name)
+    parsed_games = []
+    games.each do |game| 
+      parsed_games.push(get_parsed_game(game, account_id))
+    end
+    return parsed_games
   end
 
   #------------------------------------------------------------------------------
-  #                    Private (Static Data)
+  #                    Public (Static Data)
   #------------------------------------------------------------------------------
-  
+
   def get_all_regions
     return @region_list
   end
@@ -107,12 +112,21 @@ class LolWrapper
     champion = get_champion(champion_id)
     return "http://ddragon.leagueoflegends.com/cdn/"+@ddragon_version+"/img/champion/"+champion.name+".png"
   end
-  
+
+  #returns a little square picture of the champion refered by champion_id
+  def get_item_square_link(item_id)
+    return "http://ddragon.leagueoflegends.com/cdn/"+@ddragon_version+"/img/item/"+item_id.to_s+".png"
+  end
+
+
+
+
+
   private
   #------------------------------------------------------------------------------
   #                    Private
   #------------------------------------------------------------------------------
-  
+
   #gets a client using a server name. if it doesn't exist, it creates a new client and adds it to the hash
   def get_check_client(name)
     region_name = name.downcase
@@ -161,28 +175,28 @@ class LolWrapper
     return client.game.recent(account_id)
   end
 
-  
+
   #gets a stats summary of the player refered by account_id on region_name server
   def get_account_infos(account_id, region_name)
     client = get_check_client(region_name)
     return client.stats.summary(account_id)
   end
-  
-  
+
+
   #returns true if a > b
   def is_rank_better(tier_a, division_a, tier_b, division_b)
     index_tier_a = @tier_list.find_index(tier_a.upcase)
     index_tier_b = @tier_list.find_index(tier_b.upcase)
     index_division_a = @division_list.find_index(division_a)
     index_division_b = @division_list.find_index(division_b)
-    
+
     if index_tier_a == index_tier_b
       return index_division_a > index_division_b
     else
       return index_tier_a > index_tier_b
     end
   end
-  
+
   def get_best_rank(league, queue_type)
     tier = league.tier
     entry = league.entries.first
@@ -197,7 +211,7 @@ class LolWrapper
       queue_type[:name] = entry.player_or_team_name
     end
   end
- 
+
   def get_win_loss_ratio(wins, losses)
     total = wins + losses
     ratio = 0
@@ -206,7 +220,7 @@ class LolWrapper
     end
     return (ratio*100).to_i
   end
-  
+
   def get_account_ranked_league(account_id, region_name)
     client = get_check_client(region_name)
     league_info = nil
@@ -228,11 +242,103 @@ class LolWrapper
     end
     return current_game
   end
-  
+
+  def get_parsed_game(game, account_id)
+    parsed_game = {}
+    parsed_game[:id] = game.game_id
+    parsed_game[:date] = game.create_date
+
+    #player related
+    parsed_game[:champion_played] = game.champion_id
+    parsed_game[:level] = game.level
+    parsed_game[:summ1] = game.spell1
+    parsed_game[:summ2] = game.spell2
+
+    #game mode related
+    parsed_game[:map_id] = game.map_id
+    parsed_game[:game_mode] = game.game_mode
+    parsed_game[:game_type] = game.game_type
+    parsed_game[:game_sub_type] = game.sub_type
+    parsed_game[:ip_earned] = game.ip_earned
+
+    #stats
+    stats = game.stats
+    parsed_game[:gold] = stats.gold_earned
+    parsed_game[:kills] = stats.champions_killed
+    parsed_game[:assists] = stats.assists
+    parsed_game[:deaths] = stats.num_deaths
+    parsed_game[:cs] = stats.minions_killed
+    parsed_game[:turret_kills] = stats.turrets_killed
+    parsed_game[:cc_duration]= stats.total_time_crowd_control_dealt
+    parsed_game[:multi_kills] = get_multi_kills(stats)
+    parsed_game[:damage_taken] = stats.total_damage_taken
+    parsed_game[:damage_dealt] = stats.total_damage_dealt
+    parsed_game[:wards_placed] = stats.ward_placed
+    parsed_game[:wards_killed] = stats.ward_killed
+    parsed_game[:duration] = stats.time_played
+    parsed_game[:is_won] = stats.win
+
+    #items
+    parsed_game[:items] = []
+    list_items = parsed_game[:items] 
+    add_item(stats.item0, list_items)
+    add_item(stats.item1, list_items)
+    add_item(stats.item2, list_items)
+    add_item(stats.item3, list_items)
+    add_item(stats.item4, list_items)
+    add_item(stats.item5, list_items)
+    add_item(stats.item6, list_items)
+
+    #otherplayers
+    team1 = []
+    team2 = []
+
+    player = {:id => account_id, :champion_played => game.champion_id}
+    add_to_team(player, team1, team2, game.team_id)
+
+    game.fellow_players.each do |player_struct|
+      player = {:id => player_struct.summoner_id, :champion_played => player_struct.champion_id}
+      add_to_team(player, team1, team2, player_struct.team_id)
+    end
+    parsed_game[:team1] = team1
+    parsed_game[:team2] = team2
+    return parsed_game
+  end
+
+  def add_to_team(player, team1, team2, team_id)
+    if(team_id.to_i == 100.to_i)
+      team1.push(player)
+    else
+      team2.push(player)
+    end
+  end
+
+  def get_multi_kills(stats)
+    if !stats.penta_kills.nil?
+      return 5
+    elsif !stats.quadra_kills.nil?
+      return 4
+    elsif !stats.triple_kills.nil?
+      return 3
+    elsif !stats.double_kills.nil?
+      return 2
+    else
+      return 1
+    end
+  end
+
+  def add_item(item, list_items)
+    #might not work so I added a method in case any kind of check is needed
+    unless item.nil?
+      list_items.push(get_item_square_link(item))
+    else
+      list_items.push("img/icons/blank.png")
+    end
+  end
   #------------------------------------------------------------------------------
   #                    Private (Static Data)
   #------------------------------------------------------------------------------
-  
+
   #gets champion data
   def get_champion(champion_id)
     return get_static_client.champion.get(champion_id, champData: 'all')
@@ -257,7 +363,7 @@ class LolWrapper
   def get_rune(rune_id)
     get_static_client.rune.get(rune_id, runeData: 'all')
   end
-  
+
   #called at server start, creates and populates the array of regions
   def populate_region_list
     @region_list = Array.new

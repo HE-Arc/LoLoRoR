@@ -1,4 +1,6 @@
 <div class="list-group">
-  <%= render '/accounts/datas/match' %>
+  <% @file_history.each do |match| %>
 
+  <%= render :partial => "/accounts/datas/match", :locals => {:match => match} %>
+  <% end%>
 </div>     
