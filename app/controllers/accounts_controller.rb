@@ -23,17 +23,21 @@ class AccountsController < ApplicationController
 
     #begin
     begin
-      tmp = LOL_WRAPPER.get_summoner_id(params[:name],  params[:region])
-      @idLoL = tmp
-      @region = params[:region]
-      if !tmp.nil?
+      if !defined?(@idLoL)
+        tmp = LOL_WRAPPER.get_summoner_id(params[:name],  params[:region])
+        @idLoL = tmp
+        @region = params[:region]
+      end
+      
+      
+      if !@idLoL.nil?
         find_summoner
 
         render "show"
         #render :nothing => true
       end
     rescue Lol::NotFound
-      @error = {:title => "Utilisateur non existant", :message => "Nous n'avons pas pu exécuter votre requête, veuillez réessayer."}
+      @error = {:title => "Utilisateur non existant", :message => "L'utilisateur que vous avez demander n'existe pas !"}
       flash.now[:notice] = @error[:message]
       render "error/custom_error"
       

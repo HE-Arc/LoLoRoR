@@ -5,24 +5,36 @@
       <div class="caption">
         <h3>Team 3v3</h3>     
       </div>
-      <img src="img/bronze.png" alt="Bronze I">
+      <% imagename = @file_ranks[:team3][:tier] + @file_ranks[:team3][:division] %>
+      <%= image_tag 'tiers/'+imagename+'.png' %>
       <div class="caption">
-        <h4><%=@file_ranks[:team3][:tier] %> <%=@file_ranks[:team3][:division] %></h4>
+        <h4><%=@file_ranks[:team3][:tier].capitalize %> <%=@file_ranks[:team3][:division] %></h4>
+        <% if @file_ranks[:team3][:division] != "" %>
         <p><%=@file_ranks[:team3][:lp] %> LP</p>
         <p><%=@file_ranks[:team3][:wins] %> wins - <%=@file_ranks[:team3][:losses] %> losses (<%=@file_ranks[:team3][:ratio] %>%)</p>
+        <% else %>
+        <p>&thinsp;</p>
+        <p>&thinsp;</p>
+        <% end %>
       </div>
     </div>   
   </div>
   <div class="col-md-4">
     <div class="thumbnail text-center">
       <div class="caption">
-        <h3>Solo ranked</h3>     
+        <h3>Solo</h3>     
       </div>
-      <img src="img/bronze.png" alt="FROTTE_FROTTE">
+      <% imagename = @file_ranks[:solo][:tier] + @file_ranks[:solo][:division] %>
+      <%= image_tag 'tiers/'+imagename.upcase+'.png' %>
       <div class="caption">
-        <h4><%=@file_ranks[:solo][:tier] %> <%=@file_ranks[:solo][:division] %></h4>
-        <p><%=@file_ranks[:solo][:lp] %> LP</p>
-        <p><%=@file_ranks[:solo][:wins] %> wins - <%=@file_ranks[:solo][:losses] %> losses (<%=@file_ranks[:solo][:ratio] %>%)</p>
+        <h4><%=@file_ranks[:solo][:tier].capitalize %> <%=@file_ranks[:solo][:division] %></h4>
+        <% if @file_ranks[:solo][:division] != "" %>
+          <p><%=@file_ranks[:solo][:lp] %> LP</p>
+          <p><%=@file_ranks[:solo][:wins] %> wins - <%=@file_ranks[:solo][:losses] %> losses (<%=@file_ranks[:solo][:ratio] %>%)</p>
+        <% else %>
+        <p>&thinsp;</p>
+        <p>&thinsp;</p>
+        <% end %>
       </div>
     </div>   
   </div>
@@ -31,11 +43,17 @@
       <div class="caption">
         <h3>Team 5v5</h3>     
       </div>
-      <img src="img/bronze.png" alt="Bronze I">
+      <% imagename = @file_ranks[:team5][:tier] + @file_ranks[:team5][:division] %>
+      <%= image_tag 'tiers/'+imagename.upcase+'.png' %>
       <div class="caption">
-        <h4><%=@file_ranks[:team5][:tier] %> <%=@file_ranks[:team5][:division] %></h4>
-        <p><%=@file_ranks[:team5][:lp] %> LP</p>
-        <p><%=@file_ranks[:team5][:wins] %> wins - <%=@file_ranks[:team5][:losses] %> losses (<%=@file_ranks[:team5][:ratio] %>%)</p>
+        <h4><%=@file_ranks[:team5][:tier].capitalize %> <%=@file_ranks[:team5][:division] %></h4>
+        <% if @file_ranks[:team5][:division] != "" %>
+          <p><%=@file_ranks[:team5][:lp] %> LP</p>
+          <p><%=@file_ranks[:team5][:wins] %> wins - <%=@file_ranks[:team5][:losses] %> losses (<%=@file_ranks[:team5][:ratio] %>%)</p>
+        <% else %>
+        <p>&thinsp;</p>
+        <p>&thinsp;</p>
+        <% end %>
       </div>
     </div>   
   </div>
