@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   root 'information#index'
   
   #News routes, only admins can CRUD on the news, users can only read (index, show)
-  resources :information
+  resources :information, except: [:index]
+  
+  get '/:pageNumber' => 'information#index'
   
   devise_for :users, controllers: {                                          
     sessions: 'users/sessions',

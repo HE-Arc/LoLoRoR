@@ -28,7 +28,7 @@
   <% number_of_pages = @informations.count/number_per_page+1 %>
   <nav>
   <center><ul class="pagination">
-    <% if number_of_pages >= @page_number %>
+    <% if @page_number == 0 %>
         <li class="disabled">
       <% else %>
         <li>
@@ -46,7 +46,7 @@
           <a href="/<%= i %>"><%= i+1 %></a></li>
     <% end %>
     
-    <% if number_of_pages <= @page_number %>
+    <% if @page_number >= number_of_pages-1 %>
         <li class="disabled">
       <% else %>
         <li>
