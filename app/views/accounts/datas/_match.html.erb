@@ -1,7 +1,7 @@
 <span class="list-group-item">
   <div class="row">
     <div class="col-md-1">
-      <img src="img/braum.png" class="img-responsive" alt="Image News">
+     <%= image_tag match[:champion_played_image] , class: "img-responsive", width: "100%" %>
     </div>
     <div class="col-md-3">
       <% if match[:is_won] %>
@@ -9,8 +9,9 @@
       <% else %>
       <span class="defeat">Defaite</span><br/>
       <% end %>
-      <span class="map_name">Faille de l'invocateur</span>
-      <span class="game_date">05.03.2011 16:50</span>
+      <span class="map_name"><%= match[:map_name]%></span>
+      <br/>
+      <span class="game_date"><%= match[:date] %> </span>
     </div>
     <div class="col-md-2">
       <%= match[:kills] %> tués<br/>
