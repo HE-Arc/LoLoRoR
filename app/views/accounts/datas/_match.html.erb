@@ -24,8 +24,8 @@
     <div class="col-md-2">
       <ul class="list-group row">
         <% match[:items].each do |item| %>
-        <li class="list-group-item col-xs-4">
-          <img src="<%= item %>" class="img-responsive" alt="obj1"/>
+        <li class="list-group-item col-xs-4 item-history">
+          <%= image_tag item, class: "img-responsive item-history", width: "100%" %>
         </li>
         <% end %>
       </ul>

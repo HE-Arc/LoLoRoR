@@ -287,7 +287,7 @@ class LolWrapper
     add_item(stats.item3, list_items)
     add_item(stats.item4, list_items)
     add_item(stats.item5, list_items)
-    add_item(stats.item6, list_items)
+    #add_item(stats.item6, list_items)
 
     #otherplayers
     team1 = []
