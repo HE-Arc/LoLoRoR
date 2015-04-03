@@ -10,8 +10,6 @@ class AccountsController < ApplicationController
     @idLoL = params[:idLoL]
     @region = params[:region]
     searchAccounts
-    #find_summoner
-
   end
 
   def showUserAccounts
@@ -20,23 +18,23 @@ class AccountsController < ApplicationController
   end
 
   def searchAccounts
-
-    #begin
     begin
-      tmp = LOL_WRAPPER.get_summoner_id(params[:name],  params[:region])
-      @idLoL = tmp
-      @region = params[:region]
-      if !tmp.nil?
-        find_summoner
+      if !defined?(@idLoL)
+        tmp = LOL_WRAPPER.get_summoner_id(params[:name],  params[:region])
+        @idLoL = tmp
+        @region = params[:region]
+      end
 
+      if !@idLoL.nil? 
+        puts(@idLoL)
+        find_summoner
         render "show"
         #render :nothing => true
       end
     rescue Lol::NotFound
-      @error = {:title => "Utilisateur non existant", :message => "Nous n'avons pas pu exécuter votre requête, veuillez réessayer."}
-      flash.now[:notice] = @error[:message]
+      @error = {:title => "Utilisateur non existant", :message => "L'utilisateur que vous avez demandé n'existe pas !"}
+      flash.now[:alert] = @error[:message]
       render "error/custom_error"
-      
     end
     #rescue Lol::InvalidAPIResponse 
     #render ""
@@ -49,7 +47,6 @@ class AccountsController < ApplicationController
     #Find the summoner with the corresponding id and region
 
     @summoner = LOL_WRAPPER.get_summoner_by_id(@idLoL,@region)
-
 
     #Find the stats of the summoner with the corresponding id and region
     @file_stats = LOL_WRAPPER.get_file_stats(@idLoL,@region)

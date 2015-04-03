@@ -45,10 +45,11 @@ class ApplicationController < ActionController::Base
           isPlaying = LOL_WRAPPER.get_is_playing(u.idLoL, u.region)
           if isPlaying
             #current_game
-            @playingUsers << { pseudoLol: u.pseudoLoL, persoId: 10}
+            @playingUsers << u 
           end
         end
       end
+      
     end
   end
 

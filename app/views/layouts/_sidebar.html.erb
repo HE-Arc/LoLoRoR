@@ -8,26 +8,14 @@
       <% end %>
     </ul>
   <% else  %>
-Créez votre premier dashboard depuis <%= link_to('l\'interface de gestion de dashboards', users_dashboards_path) %>
+  Créez votre premier dashboard depuis <%= link_to('l\'interface de gestion de dashboards', users_dashboards_path) %>
   <% end %>
     <h4>En partie</h4>
   <% if @playingUsers.count > 0 %>
     <ul class="list-group">
       <% @playingUsers.each do |user| %>
       <li class="list-group-item">
-        <ul class="media-list">
-          <li class="media">
-            <div class="media-left">
-              <a href="#">
-                <img class="media-object" src="<%= user[:persoId] %>" width="25px" alt="Bronze">
-              </a>
-            </div>
-            <div class="media-body">
-              <h4 class="media-heading"><%= user[:pseudoLol] %></h4>
-              <span class="glyphicons glyphicons-redo"></span>
-            </div>
-          </li>
-        </ul>
+        <%= link_to user.pseudoLoL, account_path(:region => user.region, :idLoL => user.idLoL) %>
       </li>
       <% end %>
     </ul>

@@ -6,6 +6,7 @@ class InformationController < ApplicationController
   
   def index
     @informations = Information.all
+    @page_number = 0
   end
   
   def show
