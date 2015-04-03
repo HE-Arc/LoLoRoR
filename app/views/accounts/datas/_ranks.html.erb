@@ -6,7 +6,7 @@
         <h3>Team 3v3</h3>     
       </div>
       <% imagename = @file_ranks[:team3][:tier] + @file_ranks[:team3][:division] %>
-      <%= image_tag 'tiers/'+imagename+'.png' %>
+      <%= image_tag 'tiers/'+imagename.upcase+'.png' %>
       <div class="caption">
         <h4><%=@file_ranks[:team3][:tier].capitalize %> <%=@file_ranks[:team3][:division] %></h4>
         <% if @file_ranks[:team3][:division] != "" %>

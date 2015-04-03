@@ -1,4 +1,4 @@
-
+<% number_per_page = 5 %>
 <%if user_signed_in?%>
   <% if current_user.admin? %>
     <%= link_to new_information_path, class: "btn btn-default btn-xs" do %>
@@ -7,7 +7,7 @@
   <% end %>
 <% end %>
 
-<% @informations.each do |info| %>
+<% @informations.order("created_at desc").limit(number_per_page).offset(number_per_page*@page_number).each do |info| %>
   <div class="row article-row">
     <div class="col-md-12">
       <h3><%= link_to info.title, info %> <small> <%= info.updated_at.to_s.first(10)  %></small></h3>
@@ -21,4 +21,43 @@
       <% end %>
     </div>
   </div>
+<% end %>
+
+
+<% if @informations.count >  number_per_page %>
+  <% number_of_pages = @informations.count/number_per_page+1 %>
+  <nav>
+  <center><ul class="pagination">
+    <% if number_of_pages >= @page_number %>
+        <li class="disabled">
+      <% else %>
+        <li>
+      <% end %>
+      <a href="/<%= @page_number-1 %>" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <% for i in 0...number_of_pages %>
+      <% if i == @page_number %>
+        <li class="disabled">
+      <% else %>
+        <li>
+      <% end %>
+          <a href="/<%= i %>"><%= i+1 %></a></li>
+    <% end %>
+    
+    <% if number_of_pages <= @page_number %>
+        <li class="disabled">
+      <% else %>
+        <li>
+      <% end %>
+      <a href="/<%= @page_number+1 %>" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+    </ul></center>
+</nav>
+<% elsif @informations.count == 0 %>
+  <% flash.now[:notice] = "Aucune news" %>
+
 <% end %>
