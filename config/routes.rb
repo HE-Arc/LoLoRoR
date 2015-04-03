@@ -2,14 +2,16 @@ Rails.application.routes.draw do
   root 'information#index'
   
   #News routes, only admins can CRUD on the news, users can only read (index, show)
-  resources :information
+  resources :information, except: [:index]
+  
+  get '/:pageNumber' => 'information#index'
   
   devise_for :users, controllers: {                                          
     sessions: 'users/sessions',
     registrations: 'users/registrations'
       }  
   
-  get 'users' => 'users#showCurrentUser'
+  get 'users/me' => 'users#showCurrentUser', as: 'users'
   
   #API account routes
   get 'accounts/:region/:idLoL' => 'accounts#show', as: 'account'
@@ -35,8 +37,8 @@ Rails.application.routes.draw do
   post 'users/dashboards' => 'dashboards#create'
   delete 'users/dashboards' => 'dashboards#destroy'
  
-  get 'about' => 'pages#about'
-  get 'contact' => 'pages#contact'
+  get 'pages/about' => 'pages#about', as: 'about'
+  get 'pages/contact' => 'pages#contact', as: 'contact'
   
   #Modules routes
   scope 'dashboards/:dashID/modules' do

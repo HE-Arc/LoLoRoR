@@ -6,7 +6,13 @@ class InformationController < ApplicationController
   
   def index
     @informations = Information.all
-    @page_number = 0
+    
+    if params.has_key?(:pageNumber)
+      @page_number = params[:pageNumber].to_i
+    else
+      @page_number = 0
+    end
+      
   end
   
   def show

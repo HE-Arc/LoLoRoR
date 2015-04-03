@@ -4,7 +4,7 @@ Rails.application.configure do
 config.action_mailer.raise_delivery_errors = true
 config.action_mailer.perform_deliveries = true
 
-config.action_mailer.default_url_options = { :host => 'loloror.ch' }
+config.action_mailer.default_url_options = { :host => 'http://awesome-ruby-box-182151.euw1-2.nitrousbox.com/' }
 
 ActionMailer::Base.smtp_settings = {  
   :address              => "smtp.gmail.com",  

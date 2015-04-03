@@ -10,7 +10,6 @@ class DashboardsController < ApplicationController
   def show
     #@accounts = current_user.accounts
     #@trackgroups = current_user.trackgroups
-    puts "LOL ICI"
     @historyModules = []
     @modules = @dashboard.match_history_modules
     @modules.each do |hm|

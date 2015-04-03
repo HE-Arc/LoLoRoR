@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable 
+  :recoverable, :rememberable, :trackable, :validatable, :confirmable 
   
   # Useful link for authenticating with an username : https://github.com/plataformatec/devise/wiki/How-To:-Allow-users-to-sign-in-using-their-username-or-email-address#rails-4
   # Virtual attribute for authenticating by either username or email
