@@ -16,6 +16,12 @@ class LolWrapper
   @@game_type_hash = { "CUSTOM_GAME" => "Custom", "MATCHED_GAME" => "Matched", "TUTORIAL_GAME" => "Tutorial"}
   @@game_sub_type_hash = { "NONE"=> "None", "NORMAL"=> "Normal", "BOT"=> "Bot", "RANKED_SOLO_5x5"=> "Ranked Solo", "RANKED_PREMADE_3x3"=> "Ranked 3v3", "RANKED_PREMADE_5x5"=> "Ranked Duo", "ODIN_UNRANKED"=> "TeamBuilder", "RANKED_TEAM_3x3"=> "Team 3v3", "RANKED_TEAM_5x5"=> "Team 5v5", "NORMAL_3x3"=> "Normal 3v3", "BOT_3x3"=> "Bot 3v3", "CAP_5x5"=> "CAP_5x5", "ARAM_UNRANKED_5x5"=> "ARAM", "ONEFORALL_5x5"=> "One For All", "FIRSTBLOOD_1x1"=> "1v1", "FIRSTBLOOD_2x2"=> "2v2", "SR_6x6"=> "Hexakill", "URF"=> "URF", "URF_BOT"=> "Bot URF", "NIGHTMARE_BOT"=> "Nightmare", "ASCENSION"=> "Ascension", "HEXAKILL"=> "Hexakill", "KING_PORO"=> "King Poro", "COUNTER_PICK" => 'No idea'}
   @@map_id_hash = { "1" => "Faille de l'invocateur", "2" => "Faille de l'invocateur", "3" => "Map Tutoriel", "4" => "Forêt Torturée", "8" => "Dominion", "10" => "Forêt Torturée", "11" => "Faille de l'invocateur", "12" => "Abîme Hurlant"}
+  @@champions_hash = nil
+  @@runes_hash = nil
+  @@masteries_hash = nil
+  @@summoners_hash = nil
+  @@items_hash = nil
+
   def initialize
     @list_clients = Hash.new
     @api_key = CONFIG[:api_key]
@@ -27,6 +33,7 @@ class LolWrapper
     @game_type_hash = @@game_type_hash
     @game_sub_type_hash = @@game_sub_type_hash
     @map_id_hash = @@map_id_hash
+    initialize_static_hashes
   end
 
 
@@ -126,10 +133,6 @@ class LolWrapper
   def get_item_square_link(item_id)
     return "http://ddragon.leagueoflegends.com/cdn/"+@ddragon_version+"/img/item/"+item_id.to_s+".png"
   end
-
-
-
-
 
   private
   #------------------------------------------------------------------------------
@@ -303,11 +306,11 @@ class LolWrapper
     team1 = []
     team2 = []
 
-    player = {:id => account_id, :champion_played_id => game.champion_id}#, :champion_played_image => get_champion_square_link(game.champion_id)}
+    player = {:id => account_id, :champion_played_id => game.champion_id, :champion_played_image => get_champion_square_link(game.champion_id)}
     add_to_team(player, team1, team2, game.team_id)
 
     game.fellow_players.each do |player_struct|
-      player = {:id => player_struct.summoner_id, :champion_played_id => player_struct.champion_id}#, :champion_played_image => get_champion_square_link(player_struct.champion_id)}
+      player = {:id => player_struct.summoner_id, :champion_played_id => player_struct.champion_id, :champion_played_image => get_champion_square_link(player_struct.champion_id)}
       add_to_team(player, team1, team2, player_struct.team_id)
     end
     parsed_game[:team1] = team1
@@ -342,36 +345,69 @@ class LolWrapper
     unless item.nil?
       list_items.push(get_item_square_link(item))
     else
-      list_items.push("img/icons/blank.png")
+      list_items.push("icons/blank.png")
     end
   end
   #------------------------------------------------------------------------------
   #                    Private (Static Data)
   #------------------------------------------------------------------------------
 
+  def initialize_static_hashes()
+    if @@champions_hash.nil?
+      champions = get_static_client.champion.get#(champData: 'all')
+      parse_static_to_hash(champions, @@champions_hash ={}, "champions")
+    end
+    if @@runes_hash.nil?
+      runes = get_static_client.rune.get#(runeData: 'all')
+      parse_static_to_hash(runes, @@runes_hash = {}, "runes")
+
+    end
+    if @@masteries_hash.nil?
+      masteries  = get_static_client.mastery.get#(masteryData: 'all')
+      parse_static_to_hash(masteries, @@masteries_hash= {}, "masteries")
+
+    end
+    if @@summoners_hash.nil?
+      summs = get_static_client.summoner_spell.get#( spellData: 'all')
+      parse_static_to_hash(summs, @@summoners_hash = {}, "summoners spells")
+    end
+    if @@items_hash.nil?
+      items= get_static_client.item.get#(itemData: 'all')
+      parse_static_to_hash(items, @@items_hash = {}, "items")
+    end
+    
+  end
+
+  def parse_static_to_hash(datas, hash, description)
+    datas.each do |data_struct|
+      hash[data_struct.id] = data_struct
+    end
+    puts "Finished loading static hash about: " + description
+  end
+
   #gets champion data
   def get_champion(champion_id)
-    return get_static_client.champion.get(champion_id, champData: 'all')
+    return @@champions_hash[champion_id]
   end
 
   #gets all item data
   def get_item(item_id)
-    return get_static_client.item.get(item_id, itemData: 'all')
+    return @@items_hash[item_id]
   end
 
   #gets all summoner spell data
   def get_summoner_spell(ss_id)
-    get_static_client.summoner_spell.get(ss_id, spellData: 'all')
+    return @@summoners_hash[ss_id]
   end
 
   #gets all mastery data
   def get_mastery(mastery_id)
-    get_static_client.mastery.get(mastery_id, masteryData: 'all')
+    return @@masteries_hash[mastery_id]
   end
 
   #gets all rune data
   def get_rune(rune_id)
-    get_static_client.rune.get(rune_id, runeData: 'all')
+    return @@runes_hash[rune_id]
   end
 
   #called at server start, creates and populates the array of regions

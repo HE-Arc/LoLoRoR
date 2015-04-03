@@ -1,3 +1,4 @@
 require 'lol_wrapper'
 
-#LOL_WRAPPER = LolWrapper.instance
+#loads all the static data at startup
+LOL_WRAPPER = LolWrapper.new
