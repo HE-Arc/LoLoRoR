@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
       }  
   
-  get 'users' => 'users#showCurrentUser'
+  get 'users/me' => 'users#showCurrentUser', as: 'users'
   
   #API account routes
   get 'accounts/:region/:idLoL' => 'accounts#show', as: 'account'
@@ -37,8 +37,8 @@ Rails.application.routes.draw do
   post 'users/dashboards' => 'dashboards#create'
   delete 'users/dashboards' => 'dashboards#destroy'
  
-  get 'about' => 'pages#about'
-  get 'contact' => 'pages#contact'
+  get 'pages/about' => 'pages#about', as: 'about'
+  get 'pages/contact' => 'pages#contact', as: 'contact'
   
   #Modules routes
   scope 'dashboards/:dashID/modules' do
