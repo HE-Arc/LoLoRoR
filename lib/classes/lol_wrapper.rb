@@ -17,7 +17,7 @@ class LolWrapper
     set_ddragon_infos('euw')
     populate_region_list()
     @tier_list = ["UNRANKED", "BRONZE", "SILVER", "GOLD", "PLATINUM", "DIAMOND", "MASTER", "CHALLENGER", "CHALLENJOUR"]
-    @division_list = ["V", "IV", "III", "II", "I"]
+    @division_list = [ "", "V", "IV", "III", "II", "I"]
   end
 
   def get_all_regions
@@ -89,21 +89,62 @@ class LolWrapper
     end
     return {:games_number => games_number, :wins_number => wins_number, :kills => kills, :assists => assists}
   end
+  
+  def get_entries(account_id, region_name)
+    client = get_check_client(region_name)
+    return client.league.get_entries(account_id)
+  end
+    
 
   def get_file_ranks(account_id, region_name)
-    solo_stats = nil
-    team3_stats = nil
-    team5_stats = nil
+    solo =   { :tier => "Unranked", :division => "", :lp => 0, :wins => 0, :losses => 0, :ratio => 0 }
+    team3 =  { :tier => "Unranked", :division => "", :lp => 0, :wins => 0, :losses => 0, :ratio => 0 }
+    team5 =  { :tier => "Unranked", :division => "", :lp => 0, :wins => 0, :losses => 0, :ratio => 0 }
     ranking = get_account_ranked_league(account_id, region_name)
-    solo_stats = get_solo_ranking(ranking, account_id)
-
-    teams = get_account_ranked_teams(account_id, region_name)
-
-    team3, team5 = join_teams_ranking(account_id, ranking, teams)
-
-    return {:solo => solo_stats, :team3 => team3, :team5 => team5, :ranking => ranking}
+    if !ranking.nil?
+      rank_infos = ranking[account_id.to_s]
+      rank_infos.each do |item|
+        if item.queue == "RANKED_TEAM_3x3"
+          get_best_rank(item, team3)
+        elsif item.queue == "RANKED_TEAM_5x5"
+          get_best_rank(item, team5)
+        elsif item.queue == "RANKED_SOLO_5x5"
+          get_best_rank(item, solo)
+        end
+      end
+    end
+    return {:solo => solo, :team3 => team3, :team5 => team5 }
   end
 
+  #returns true if a > b
+  def is_rank_better(tier_a, division_a, tier_b, division_b)
+    index_tier_a = @tier_list.find_index(tier_a.upcase)
+    index_tier_b = @tier_list.find_index(tier_b.upcase)
+    index_division_a = @division_list.find_index(division_a)
+    index_division_b = @division_list.find_index(division_b)
+    
+    if index_tier_a == index_tier_b
+      return index_division_a > index_division_b
+    else
+      return index_tier_a > index_tier_b
+    end
+  end
+  
+  def get_best_rank(league, queue_type)
+    tier = league.tier
+    entry = league.entries.first
+    division = entry.division
+    if is_rank_better(tier, division, queue_type[:tier], queue_type[:division])
+      queue_type[:division] = division
+      queue_type[:tier] = tier
+      queue_type[:wins] = entry.wins
+      queue_type[:losses] = entry.losses
+      queue_type[:lp] = entry.league_points
+      queue_type[:ratio] = get_win_loss_ratio(entry.wins, entry.losses)
+      queue_type[:name] = entry.player_or_team_name
+    end
+  end
+  
   #gets the ranked infos of the player refered by account_id on region_name server
   def get_account_ranked_infos(account_id, region_name)
     client = get_check_client(region_name)
@@ -155,24 +196,19 @@ class LolWrapper
         if item.queue == "RANKED_TEAM_3x3"
           join_teams_queue(account_id, item, teams, team3)
         elsif item.queue == "RANKED_TEAM_5x5"
-          join_teams_queue(account_id, item, teams, team4)
+          join_teams_queue(account_id, item, teams, team5)
         end
       end
     end
     return team3, team5
   end
 
-  #returns true if a > b
-  def is_rank_better(tier_a, division_a, tier_b, division_b)
-    return true
-  end
 
   def join_teams_queue(account_id, queue, teams, team)
     if !teams.nil?
       teams.each do |team_src|
-        
         tier_local = queue.tier.capitalize
-        if is_rank_better()
+        if is_rank_better('a', 'a', 'a', 'a')
           queue.entries.each do |entry|
             #puts entry.player_or_team_id + "== "+ account_id.to_s + (entry.player_or_team_id.to_i == account_id.to_i).to_s
             if entry.player_or_team_id.to_s == team_src.full_id.to_s
@@ -193,7 +229,7 @@ class LolWrapper
     client = get_check_client(region_name)
     league_info = nil
     begin
-      league_info = client.league.get(account_id)
+      league_info = client.league.get_entries(account_id)
     rescue
     end
     return league_info
