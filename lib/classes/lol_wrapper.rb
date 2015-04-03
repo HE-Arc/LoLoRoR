@@ -9,15 +9,24 @@ require 'net/http'
 #this class is meant to be a singleton, TODO: singletonize the stuff
 class LolWrapper
   #include Singleton
-  attr_accessor :list_clients, :api_key, :ddragon_region, :ddragon_version, :region_list, :tier_list, :division_list
-
+  attr_accessor :list_clients, :api_key, :ddragon_region, :ddragon_version, :region_list, :tier_list, :division_list, :game_mode_hash, :game_mode_hash, :game_sub_type_hash
+  @@tier_list = ["UNRANKED", "BRONZE", "SILVER", "GOLD", "PLATINUM", "DIAMOND", "MASTER", "CHALLENGER", "CHALLENJOUR"]
+  @@division_list = [ "", "V", "IV", "III", "II", "I"]
+  @@game_mode_hash = { "CLASSIC" => "Classic", "ODIN" => "TeamBuilder", "ARAM" => "ARAM", "TUTORIAL" => "Tutorial", "ONEFORALL" => "One For All", "ASCENSION" => "Ascension", "FIRSTBLOOD" => "First Blood", "KINGPORO" => "King Poro" }
+  @@game_type_hash = { "CUSTOM_GAME" => "Custom", "MATCHED_GAME" => "Matched", "TUTORIAL_GAME" => "Tutorial"}
+  @@game_sub_type_hash = { "NONE"=> "None", "NORMAL"=> "Normal", "BOT"=> "Bot", "RANKED_SOLO_5x5"=> "Ranked Solo", "RANKED_PREMADE_3x3"=> "Ranked 3v3", "RANKED_PREMADE_5x5"=> "Ranked Duo", "ODIN_UNRANKED"=> "TeamBuilder", "RANKED_TEAM_3x3"=> "Team 3v3", "RANKED_TEAM_5x5"=> "Team 5v5", "NORMAL_3x3"=> "Normal 3v3", "BOT_3x3"=> "Bot 3v3", "CAP_5x5"=> "CAP_5x5", "ARAM_UNRANKED_5x5"=> "ARAM", "ONEFORALL_5x5"=> "One For All", "FIRSTBLOOD_1x1"=> "1v1", "FIRSTBLOOD_2x2"=> "2v2", "SR_6x6"=> "Hexakill", "URF"=> "URF", "URF_BOT"=> "Bot URF", "NIGHTMARE_BOT"=> "Nightmare", "ASCENSION"=> "Ascension", "HEXAKILL"=> "Hexakill", "KING_PORO"=> "King Poro", "COUNTER_PICK" => 'No idea'}
+  @@map_id_hash = { "1" => "Faille de l'invocateur", "2" => "Faille de l'invocateur", "3" => "Map Tutoriel", "4" => "Forêt Torturée", "8" => "Dominion", "10" => "Forêt Torturée", "11" => "Faille de l'invocateur", "12" => "Abîme Hurlant"}
   def initialize
     @list_clients = Hash.new
     @api_key = CONFIG[:api_key]
     set_ddragon_infos('euw')
     populate_region_list()
-    @tier_list = ["UNRANKED", "BRONZE", "SILVER", "GOLD", "PLATINUM", "DIAMOND", "MASTER", "CHALLENGER", "CHALLENJOUR"]
-    @division_list = [ "", "V", "IV", "III", "II", "I"]
+    @division_list = @@division_list
+    @tier_list = @@tier_list
+    @game_mode_hash = @@game_mode_hash
+    @game_type_hash = @@game_type_hash
+    @game_sub_type_hash = @@game_sub_type_hash
+    @map_id_hash = @@map_id_hash
   end
 
 
@@ -246,19 +255,20 @@ class LolWrapper
   def get_parsed_game(game, account_id)
     parsed_game = {}
     parsed_game[:id] = game.game_id
-    parsed_game[:date] = game.create_date
+    parsed_game[:date] = game.create_date.strftime('Le %d.%m.%y à %H:%M')
 
     #player related
-    parsed_game[:champion_played] = game.champion_id
+    parsed_game[:champion_played_id] = game.champion_id
+    parsed_game[:champion_played_image] = get_champion_square_link(game.champion_id)
     parsed_game[:level] = game.level
     parsed_game[:summ1] = game.spell1
     parsed_game[:summ2] = game.spell2
 
     #game mode related
-    parsed_game[:map_id] = game.map_id
-    parsed_game[:game_mode] = game.game_mode
-    parsed_game[:game_type] = game.game_type
-    parsed_game[:game_sub_type] = game.sub_type
+    parsed_game[:map_name] = @map_id_hash[game.map_id.to_s]
+    parsed_game[:game_mode] = @game_mode_hash[game.game_mode]
+    parsed_game[:game_type] = @game_type_hash[game.game_type]
+    parsed_game[:game_sub_type] = @game_sub_type_hash[game.sub_type]
     parsed_game[:ip_earned] = game.ip_earned
 
     #stats
@@ -293,11 +303,11 @@ class LolWrapper
     team1 = []
     team2 = []
 
-    player = {:id => account_id, :champion_played => game.champion_id}
+    player = {:id => account_id, :champion_played_id => game.champion_id}#, :champion_played_image => get_champion_square_link(game.champion_id)}
     add_to_team(player, team1, team2, game.team_id)
 
     game.fellow_players.each do |player_struct|
-      player = {:id => player_struct.summoner_id, :champion_played => player_struct.champion_id}
+      player = {:id => player_struct.summoner_id, :champion_played_id => player_struct.champion_id}#, :champion_played_image => get_champion_square_link(player_struct.champion_id)}
       add_to_team(player, team1, team2, player_struct.team_id)
     end
     parsed_game[:team1] = team1
