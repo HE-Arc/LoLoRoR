@@ -1,33 +1,37 @@
 <%= link_to users_dashboards_path, class:"btn btn-default btn-xs" do %>
-   <i class="glyphicon glyphicon-chevron-left"></i> Retourner aux dashboards
-   <% end %>
+<i class="glyphicon glyphicon-chevron-left"></i> Retourner aux dashboards
+<% end %>
 <input type="hidden" id="dash-id" value="<%= @dashboard.id %>" />
 
 <div class="page-header">
-   <h1>
-      <%= @dashboard.name %>
-      <%= form_for @dashboard, url: edit_dashboard_path(@dashboard), html: {method: "get", class:"inline-form"}  do |f| %>
-      <small>
-         <button type="submit" class="btn btn-default btn-xs">
-         <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-         </button> 
-         <% end %>
-            <%= form_for @dashboard, html: {method: "delete", class:"inline-form"}  do |f| %>
-            <button type="submit" class="btn btn-default btn-xs">
-            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-            </button> 
-        <% end %>
-      </small>
-     <small class="pull-right">
-        <button class="btn btn-default btn-xs" id="add-module-history">Ajouter module historique</button> 
-     </small>
-   </h1>
+  <h1>
+    <%= @dashboard.name %>
+    <%= form_for @dashboard, url: edit_dashboard_path(@dashboard), html: {method: "get", class:"inline-form"}  do |f| %>
+    <small>
+      <button type="submit" class="btn btn-default btn-xs">
+        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+      </button> 
+      <% end %>
+      <%= form_for @dashboard, html: {method: "delete", class:"inline-form"}  do |f| %>
+      <button type="submit" class="btn btn-default btn-xs">
+        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+      </button> 
+      <% end %>
+    </small>
+    <small class="pull-right">
+      <button class="btn btn-default btn-xs" id="add-module-history">Ajouter module historique</button> 
+    </small>
+  </h1>
 </div>
-<div id="dashboard-holder" class="row">
-  <% @historyModules.each do |mod| %>
-  <% @mod = mod %>
-  <%= render mod %>
-  <% end %>
+<div class="container-fluid">
+  <div id="dashboard-holder" class="row">
+    <% @historyModules.each do |mod| %>
+    <% @mod = mod[:module] %>
+    <% @history = mod[:history] %>
+    <%= render @mod %>
 
+
+    <% end %>
+
+  </div>
 </div>
- 

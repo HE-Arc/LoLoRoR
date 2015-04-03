@@ -3,6 +3,7 @@
   Historique de match - <%= @mod.account.pseudoLoL %> (<%= @mod.account.region %>) <a class="pull-right btn btn-default btn-xs edit-module-history" ><i class="glyphicon glyphicon-wrench"></i></a>
 </div>
 <ul class="list-group">
-  <%= render 'modules/history/match' %>
-  <%= render 'modules/history/match' %>
+  <% @history.first(@mod.nb_match).each do |match| %>
+    <%= render 'modules/history/match' %>
+  <% end %>
 </ul>

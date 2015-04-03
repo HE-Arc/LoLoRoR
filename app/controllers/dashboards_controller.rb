@@ -10,7 +10,12 @@ class DashboardsController < ApplicationController
   def show
     #@accounts = current_user.accounts
     #@trackgroups = current_user.trackgroups
-    @historyModules = @dashboard.match_history_modules
+    puts "LOL ICI"
+    @historyModules = []
+    @modules = @dashboard.match_history_modules
+    @modules.each do |hm|
+      @historyModules << {module: hm, history: LOL_WRAPPER.get_file_history(hm.account.idLoL, hm.account.region)}
+    end
   end
   
   def showUserDashboards
