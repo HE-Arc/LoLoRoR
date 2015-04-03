@@ -2,11 +2,11 @@ class AccountsTrackgroupsController < ApplicationController
   
   # the user must be authenticated
   before_action :authenticate_user!
+  before_action :check_user
   
   # Create an association between the trackgroup and an existing account
   def create
     
-    @trackgroup = Trackgroup.find(params[:account][:trackgroups])
     @account = Account.find(params[:account][:id])
     @trackgroup.accounts << @account
     redirect_to account_path(:region => @account.region, :idLoL => @account.idLoL)
@@ -29,8 +29,6 @@ class AccountsTrackgroupsController < ApplicationController
       @account = Account.new(idLoL: idLoL, region: params[:region], pseudoLoL: @summoner.name)
       @account.save
     end
-    
-    @trackgroup = Trackgroup.find(params[:id])
 
     @trackgroup.accounts << @account
     redirect_to(:back)
@@ -40,10 +38,23 @@ class AccountsTrackgroupsController < ApplicationController
    # Remove the association between the trackgroup and the account
   def destroy
     
-    @trackgroup = Trackgroup.find(params[:account][:idTrackgroup])
     @account = Account.find(params[:account][:idAccount])
     @account.trackgroups.delete(@trackgroup)
     redirect_to(:back)
     
   end
+  
+  private
+  def check_user
+    if params.has_key?(:id)
+      @trackgroup = Trackgroup.find(params[:id])
+    else
+      @trackgroup = Trackgroup.find(params[:account][:trackgroups])
+    end
+     #the current user must own the resource
+    if @trackgroup.user != current_user
+      render :file => "public/401.html", :status => :unauthorized
+    end
+  end
+  
 end
