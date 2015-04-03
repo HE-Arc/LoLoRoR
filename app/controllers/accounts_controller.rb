@@ -54,9 +54,7 @@ class AccountsController < ApplicationController
     @summoner = LOL_WRAPPER.get_summoner_by_id(@idLoL,@region)
 
     #Find the stats of the summoner with the corresponding id and region
-    @stats = LOL_WRAPPER.get_account_infos(@idLoL,@region)
-
-    @file_stats = LOL_WRAPPER.get_file_stats(@stats)
+    @file_stats = LOL_WRAPPER.get_file_stats(@idLoL,@region)
 
     #Find if is playing
     @isPlaying = LOL_WRAPPER.get_is_playing(@idLoL, @region)
