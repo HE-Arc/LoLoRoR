@@ -103,11 +103,15 @@ class LolWrapper
   def get_file_history(account_id, region_name)
     games = get_recent_games(account_id, region_name)
     parsed_games = []
+    names = get_parsed_games_player_names(games, account_id, region_name)
     games.each do |game| 
-      parsed_games.push(get_parsed_game(game, account_id))
+      parsed_games.push(get_parsed_game(game, account_id, region_name, names))
     end
+
     return parsed_games
   end
+
+
 
   #------------------------------------------------------------------------------
   #                    Public (Static Data)
@@ -138,6 +142,8 @@ class LolWrapper
   #------------------------------------------------------------------------------
   #                    Private
   #------------------------------------------------------------------------------
+
+
 
   #gets a client using a server name. if it doesn't exist, it creates a new client and adds it to the hash
   def get_check_client(name)
@@ -250,12 +256,11 @@ class LolWrapper
     begin
       current_game = client.current_game.spectator_game_info(  "1", account_id )
     rescue
-      puts "Summoner not in game"
     end
     return current_game
   end
 
-  def get_parsed_game(game, account_id)
+  def get_parsed_game(game, account_id, region_name, names)
     parsed_game = {}
     parsed_game[:id] = game.game_id
     parsed_game[:date] = game.create_date.strftime('Le %d.%m.%y à %H:%M')
@@ -306,17 +311,20 @@ class LolWrapper
     team1 = []
     team2 = []
 
-    player = {:id => account_id, :champion_played_id => game.champion_id, :champion_played_image => get_champion_square_link(game.champion_id)}
+    player = {:id => account_id, :champion_played_id => game.champion_id, :champion_played_image => get_champion_square_link(game.champion_id), :player_name => names[account_id.to_s]}
     add_to_team(player, team1, team2, game.team_id)
 
+
     game.fellow_players.each do |player_struct|
-      player = {:id => player_struct.summoner_id, :champion_played_id => player_struct.champion_id, :champion_played_image => get_champion_square_link(player_struct.champion_id)}
+      player = {:id => player_struct.summoner_id, :champion_played_id => player_struct.champion_id, :champion_played_image => get_champion_square_link(player_struct.champion_id), :player_name => names[player_struct.summoner_id.to_s]}
       add_to_team(player, team1, team2, player_struct.team_id)
     end
+
     parsed_game[:team1] = team1
     parsed_game[:team2] = team2
     return parsed_game
   end
+
 
   def add_to_team(player, team1, team2, team_id)
     if(team_id.to_i == 100.to_i)
@@ -324,6 +332,28 @@ class LolWrapper
     else
       team2.push(player)
     end
+  end
+
+
+  #get players names by their ids for the matchhistory display
+  def get_parsed_games_player_names(parsed_games, account_id, region_name)
+    list_ids = [account_id]
+    parsed_games.each do |game|
+      game.fellow_players.each do |player|
+        list_ids << player.summoner_id
+      end
+    end
+    sliced_lists = list_ids.each_slice(40).to_a
+    all_names = {}
+
+    client = get_check_client(region_name)
+
+    sliced_lists.each do |list|
+      names = client.summoner.name(list)
+      all_names = all_names.merge(names)
+    end
+    puts all_names
+    return all_names
   end
 
   def get_multi_kills(stats)
@@ -375,7 +405,7 @@ class LolWrapper
       items= get_static_client.item.get#(itemData: 'all')
       parse_static_to_hash(items, @@items_hash = {}, "items")
     end
-    
+
   end
 
   def parse_static_to_hash(datas, hash, description)

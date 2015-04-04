@@ -35,7 +35,29 @@
       <button class="btn btn-default btn-details-history" >Détails du match</button>
     </div>
   </div>
-  <div class="row details" >
-    THIS IS HIDDEN
+  <div class="row details well" >
+    <div class="col-md-6">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Champion</th>
+          <th>Joueur</th>
+        </tr>
+      </thead>
+        <tbody>
+          <% match[:team1].each do |player| %>
+          <tr>
+            <td>
+              <%= image_tag player[:champion_played_image] , class: "img-responsive", width: "100%" %>
+            </td>
+            <td>
+              <%= player[:player_name] %>
+            </td>
+          <tr>
+          <% end %>
+      </tbody>
+      
+    </table>
+    </div>
   </div>
 </span>
