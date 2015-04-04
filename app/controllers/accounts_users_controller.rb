@@ -5,7 +5,7 @@ class AccountsUsersController < ApplicationController
   
   # Create an association between the current user and the account
   def create
-    
+    puts "-1"
     @user = current_user
     puts "0"
     @account = Account.find(params[:account][:id])
