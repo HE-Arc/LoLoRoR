@@ -145,7 +145,7 @@ class LolWrapper
     if region_name.is_a? String 
       if get_all_regions().include?(region_name)
         if is_region_available(region_name)
-          return Lol::Client.new @api_key, {region: region_name, redis: "redis://localhost:6379", ttl: 10}
+          return Lol::Client.new @api_key, {region: region_name, redis: "redis://localhost:6379", ttl: 900}
         else
           raise 'Server ' + region_name + ' is down.'
         end
