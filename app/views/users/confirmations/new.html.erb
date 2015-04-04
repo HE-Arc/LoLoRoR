@@ -1,11 +1,10 @@
-
 <h2>Renvoi des instructions de confirmation</h2>
 
 <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post, role: "form" }) do |f| %>
 <%= devise_error_messages! %>
 
 <div class="field form-group">
-  <%= f.label :username %><br />
+  <%= f.label :username, value ="Nom d'utilisateur" %><br />
   <%= f.text_field :username, autofocus: true, class: "form-control" %>
 </div>
 
