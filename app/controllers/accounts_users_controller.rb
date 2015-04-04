@@ -5,7 +5,8 @@ class AccountsUsersController < ApplicationController
   
   # Create an association between the current user and the account
   def create
-    puts "-1"
+    begin
+      
     @user = current_user
     puts "0"
     @account = Account.find(params[:account][:id])
@@ -13,7 +14,10 @@ class AccountsUsersController < ApplicationController
     puts "1"
     redirect_to account_path(:region => @account.region, :idLoL => @account.idLoL)
     puts "2"
-    
+    rescue
+      render :text => "lol"
+      
+    end
   end
   
   # Remove the association between the current user and the account
