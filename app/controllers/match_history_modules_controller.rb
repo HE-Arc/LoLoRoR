@@ -3,7 +3,7 @@
   before_action :check_user, except: [:new, :create]
 
   def show
-    @file_history =  LOL_WRAPPER.get_file_history(@mod.account.idLoL, @mod.account.region)
+    @file_history =  LOL_WRAPPER.get_file_history(@mod.account.idLoL, @mod.account.region, true)
     render :partial => "modules/history/show"
   end
 
