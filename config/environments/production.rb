@@ -1,6 +1,7 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  config.assets.raise_runtime_errors = true
   
   config.action_controller.relative_url_root = '/loloror'
   config.action_mailer.raise_delivery_errors = false
