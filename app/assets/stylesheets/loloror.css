@@ -212,7 +212,7 @@ float: none !important;
 }
 
 .item-image{
-  max-width:20px;
+  max-width:25px;
   
 }
 .champion-image{
@@ -222,4 +222,42 @@ float: none !important;
 .nopadding {
    padding: 0 !important;
    margin: 0 !important;
+}
+
+.borderless td, .borderless th, .borderless tr, .borderless li{
+  border:none;
+  
+}
+
+/* rank coloration */
+.style-unranked{
+  display:none;
+}
+
+.style-bronze{
+  background-color:#614E1A;
+}
+
+.style-silver{
+  background-color:#CECECE;
+}
+
+.style-gold{
+  background-color:#F5D800;
+}
+
+.style-platinum{
+  background-color:#CCCCFF;
+}
+
+.style-diamond{
+  background-color:#00CCCB;
+}
+
+.style-master{
+  background-color:#F0E68C;
+}
+
+.style-challenger{
+  background-color:#E8D630;
 }

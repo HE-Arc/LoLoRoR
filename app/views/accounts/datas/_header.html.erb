@@ -5,7 +5,7 @@
   <h1><%= @summoner.name %></h1>
   <small>
     <span class="label label-primary"><%= @account.region.upcase %></span>
-    <span class="label label-primary style-<%= @tier %>"><%= @file_ranks[:solo][:division] %></span>
+    <span class="label style-<%= @file_ranks[:solo][:tier].downcase %>"><%= @file_ranks[:solo][:tier] %> <%= @file_ranks[:solo][:division] %></span>
     <% if @isPlaying %>
     <span class="label label-danger">
       <span class="glyphicon glyphicon-play" aria-hidden="true"></span>

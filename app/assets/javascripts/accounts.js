@@ -1,4 +1,3 @@
-
 var ready;
 var loaded = false;
 ready = function() {
@@ -10,11 +9,12 @@ ready = function() {
       $("#"+id).toggle();
       return false;
     }
-    $('.details').hide();
+    
     $('.btn-details-history').off('click');
     $(document).on('click','.btn-details-history', function(){
       $(this).parent().parent().parent().find('.details').toggle();
     });
+    $('.details').hide();
   }
 }
 
@@ -23,3 +23,4 @@ ready = function() {
 $(document).ready(ready);
 $(document).on('page:load', ready);
 $(document).on('page:change', ready);
+$(document).on('page:update', ready);

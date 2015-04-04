@@ -5,25 +5,27 @@
     </div>
     <div class="col-md-3">
       <% if match[:is_won] %>
-      <span class="victory">Victoire</span><br/>
+        <div class="victory">Victoire</div>
       <% else %>
-      <span class="defeat">Defaite</span><br/>
+        <div class="defeat">Defaite</div>
       <% end %>
-      <span class="map_name"><%= match[:map_name]%></span>
-      <br/>
-      <span class="game_date"><%= match[:date] %> </span>
+      <div class="map_name"><%= match[:map_name]%></div>
+      <% minutes = match[:duration] /60 %>
+      <% secondes = match[:duration] %60 %>
+      <div class="game_duration">Durée <%= minutes %>:<%= secondes %> </div>
+      <div class="game_date"><small><%= match[:date] %></small></div>
     </div>
     <div class="col-md-2">
-      <%= match[:kills] %> tués<br/>
-      <%= match[:deaths] %> morts<br/>
-      <%= match[:assists] %> assistances
+      <div><%= match[:kills] %> tués</div>
+      <div><%= match[:deaths] %> morts</div>
+      <div><%= match[:assists] %> assistances</div>
     </div>
     <div class="col-md-2">
-      <%= match[:gold] %> or<br/>
-      <%= match[:cs] %> minions
+      <div><%= match[:gold] %> or</div>
+      <div><%= match[:cs] %> minions tués</div>
     </div>
     <div class="col-md-2">
-      <ul class="list-group row">
+      <ul class="list-group row borderless">
         <% match[:items].each do |item| %>
         <li class="list-group-item col-xs-4 item-history nopadding">
           <%= image_tag item, class: "item-image" %>
@@ -52,6 +54,7 @@
       </table>
     </div>
     <div class="col-md-4">
+      <% if match[:team2].count > 0 %>
       <h6>Equipe violette</h6>
       <table class="table table-striped">
         <% match[:team2].each do |player| %>
@@ -65,32 +68,39 @@
         <tr>
           <% end %>
       </table>
+      
+      <% else %>
+      <h6 class="vcenter">Equipe de bots</h6>
+      
+      <% end %>
+      
     </div>
     <div class="col-md-4">
+      <h6>Statistiques invocateur</h6>
       <table class="table table-striped">
         <tr>
           <td>Or gagné</td>
           <td><%= match[:gold] %></td>
         </tr>
         <tr>
-          <td>Or gagné</td>
-          <td><%= match[:gold] %></td>
+          <td>Tourelles tuées</td>
+          <td><%= match[:turret_kills] %></td>
         </tr>
         <tr>
-          <td>Or gagné</td>
-          <td><%= match[:gold] %></td>
+          <td>Dégats subits</td>
+          <td><%= match[:damage_taken] %></td>
         </tr>
         <tr>
-          <td>Or gagné</td>
-          <td><%= match[:gold] %></td>
+          <td>Dégats infligés</td>
+          <td><%= match[:damage_dealt] %></td>
         </tr>
         <tr>
-          <td>Or gagné</td>
-          <td><%= match[:gold] %></td>
+          <td>Balises de vision placées</td>
+          <td><%= match[:wards_placed] %></td>
         </tr>
         <tr>
-          <td>Or gagné</td>
-          <td><%= match[:gold] %></td>
+          <td>Balises de vision tuées</td>
+          <td><%= match[:wards_killed] %></td>
         </tr>
       </table>
 
