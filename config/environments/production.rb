@@ -1,10 +1,12 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  
+  config.action_controller.relative_url_root = '/loloror'
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.perform_deliveries = true
 
-  config.action_mailer.default_url_options = { :host => 'loltracker.rails.teleinf.labinfo.eiaj.ch' }
+  config.action_mailer.default_url_options = { :host => 'http://srvz-isic04.he-arc.ch/' }
 
   ActionMailer::Base.smtp_settings = {  
     :address              => "smtp.gmail.com",  

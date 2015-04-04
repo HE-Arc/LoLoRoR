@@ -83,7 +83,7 @@ test:
 #
 production:
   <<: *default
-  database: loloror_production
-  username: loloror
-  password: loloror
+  database: CONFIG[:db_name]
+  username: CONFIG[:db_username]
+  password: CONFIG[:db_password]
   host: localhost
