@@ -1,27 +1,30 @@
 <li class="list-group-item row">
   <div class="col-md-2 thumbnail">
-    <img src="img/braum.png" class="img-responsive" alt="Image News">
+     <%= image_tag match[:champion_played_image] , class: "img-responsive", width: "100%" %>
   </div>
   <div class="col-md-3">
     <div class="list-group list-group-condensed">
+      <% if match[:is_won] %>
       <span class="list-group-item victory">V</span>
+      <% else %>
+      <span class="list-group-item defeat">D</span>
+      <% end %>      
       <span class="list-group-item map_name">SR</span>
       <span class="list-group-item">Normale 5v5</span>
     </div>  
   </div>
   <div class="col-md-2">
     <div class="list-group list-group-condensed">
-      <span class="list-group-item">10/5/4</span>
-      <span class="list-group-item"> 7k</span>
+      <span class="list-group-item"><%= match[:kills] %>/<%= match[:deaths] %>/ <%= match[:assists] %></span>
+      <%gold = match[:gold]/1000 %>
+      <span class="list-group-item"> <%= gold %>k</span>
     </div>
   </div>
   <div class="col-md-5 hidden-sm hidden-xs">
-   
-    <span class="thumbnail col-md-4"><%= image_tag "logo/logo.png", class: "img-responsive" %></span>
-    <span class="thumbnail col-md-4"><%= image_tag "logo/logo.png", class: "img-responsive" %></span>
-    <span class="thumbnail col-md-4"><%= image_tag "logo/logo.png", class: "img-responsive" %></span>
-    <span class="thumbnail col-md-4"><%= image_tag "logo/logo.png", class: "img-responsive" %></span>
-    <span class="thumbnail col-md-4"><%= image_tag "logo/logo.png", class: "img-responsive" %></span>
-    <span class="thumbnail col-md-4"><%= image_tag "logo/logo.png", class: "img-responsive" %></span>
+    <% match[:items].each do |item| %>
+    <span class="thumbnail col-md-4">
+      <%= image_tag item, class: "img-responsive item-history", width: "100%" %>
+    </span>
+    <% end %>
   </div>
 </li>

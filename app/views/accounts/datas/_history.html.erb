@@ -1,7 +1,5 @@
 <div class="list-group">
-  <% i = 0 %>
   <% @file_history.each do |match| %>
-  <% i += 1 %>
-  <%= render :partial => "/accounts/datas/match", :locals => {:match => match, :index => i } %>
+  <%= render :partial => "/accounts/datas/match", :locals => {:match => match} %>
   <% end %>
 </div>

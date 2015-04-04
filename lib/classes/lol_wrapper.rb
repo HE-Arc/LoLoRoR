@@ -16,6 +16,7 @@ class LolWrapper
   @@game_type_hash = { "CUSTOM_GAME" => "Custom", "MATCHED_GAME" => "Matched", "TUTORIAL_GAME" => "Tutorial"}
   @@game_sub_type_hash = { "NONE"=> "None", "NORMAL"=> "Normal", "BOT"=> "Bot", "RANKED_SOLO_5x5"=> "Ranked Solo", "RANKED_PREMADE_3x3"=> "Ranked 3v3", "RANKED_PREMADE_5x5"=> "Ranked Duo", "ODIN_UNRANKED"=> "TeamBuilder", "RANKED_TEAM_3x3"=> "Team 3v3", "RANKED_TEAM_5x5"=> "Team 5v5", "NORMAL_3x3"=> "Normal 3v3", "BOT_3x3"=> "Bot 3v3", "CAP_5x5"=> "CAP_5x5", "ARAM_UNRANKED_5x5"=> "ARAM", "ONEFORALL_5x5"=> "One For All", "FIRSTBLOOD_1x1"=> "1v1", "FIRSTBLOOD_2x2"=> "2v2", "SR_6x6"=> "Hexakill", "URF"=> "URF", "URF_BOT"=> "Bot URF", "NIGHTMARE_BOT"=> "Nightmare", "ASCENSION"=> "Ascension", "HEXAKILL"=> "Hexakill", "KING_PORO"=> "King Poro", "COUNTER_PICK" => 'No idea'}
   @@map_id_hash = { "1" => "Faille de l'invocateur", "2" => "Faille de l'invocateur", "3" => "Map Tutoriel", "4" => "Forêt Torturée", "8" => "Dominion", "10" => "Forêt Torturée", "11" => "Faille de l'invocateur", "12" => "Abîme Hurlant"}
+  @@map_id_hash_short = { "1" => "SR", "2" => "SR", "3" => "Tuto", "4" => "TT", "8" => "D", "10" => "TT", "11" => "SR", "12" => "HA"}
   @@champions_hash = nil
   @@runes_hash = nil
   @@masteries_hash = nil
@@ -100,10 +101,14 @@ class LolWrapper
   end
 
   #gets the match history of the player refered by account_id on region_name server
-  def get_file_history(account_id, region_name)
+  #if the lightApiConsumption parameter is set to true, the infos about the other players in the game arent fetched
+  def get_file_history(account_id, region_name, lightApiConsumption = false)
     games = get_recent_games(account_id, region_name)
     parsed_games = []
-    names = get_parsed_games_player_names(games, account_id, region_name)
+    names = nil
+    if lightApiConsumption == false
+      names = get_parsed_games_player_names(games, account_id, region_name)
+    end
     games.each do |game| 
       parsed_games.push(get_parsed_game(game, account_id, region_name, names))
     end
@@ -151,7 +156,10 @@ class LolWrapper
     if region_name.is_a? String 
       if get_all_regions().include?(region_name)
         if is_region_available(region_name)
-          return Lol::Client.new @api_key, {region: region_name, redis: "redis://localhost:6379", ttl: 10}
+          unless @list_clients.has_key?(region_name)
+            @list_clients[region_name] = Lol::Client.new @api_key, {region: region_name, redis: "redis://localhost:6379", ttl: 900}
+          end
+          return @list_clients[region_name]
         else
           raise 'Server ' + region_name + ' is down.'
         end
@@ -261,6 +269,8 @@ class LolWrapper
   end
 
   def get_parsed_game(game, account_id, region_name, names)
+    lightApiConsumption = names.nil?
+
     parsed_game = {}
     parsed_game[:id] = game.game_id
     parsed_game[:date] = game.create_date.strftime('Le %d.%m.%y à %H:%M')
@@ -273,7 +283,11 @@ class LolWrapper
     parsed_game[:summ2] = game.spell2
 
     #game mode related
-    parsed_game[:map_name] = @map_id_hash[game.map_id.to_s]
+    if lightApiConsumption
+      parsed_game[:map_name] = @map_id_hash_short[game.map_id.to_s]
+    else
+      parsed_game[:map_name] = @map_id_hash[game.map_id.to_s]
+    end
     parsed_game[:game_mode] = @game_mode_hash[game.game_mode]
     parsed_game[:game_type] = @game_type_hash[game.game_type]
     parsed_game[:game_sub_type] = @game_sub_type_hash[game.sub_type]
@@ -311,12 +325,20 @@ class LolWrapper
     team1 = []
     team2 = []
 
-    player = {:id => account_id, :champion_played_id => game.champion_id, :champion_played_image => get_champion_square_link(game.champion_id), :player_name => names[account_id.to_s]}
+    player = {:id => account_id, :champion_played_id => game.champion_id, :champion_played_image => get_champion_square_link(game.champion_id)} 
+
+    if lightApiConsumption == false
+      player[:player_name]= names[account_id.to_s]
+    end
+
     add_to_team(player, team1, team2, game.team_id)
 
 
     game.fellow_players.each do |player_struct|
-      player = {:id => player_struct.summoner_id, :champion_played_id => player_struct.champion_id, :champion_played_image => get_champion_square_link(player_struct.champion_id), :player_name => names[player_struct.summoner_id.to_s]}
+      player = {:id => player_struct.summoner_id, :champion_played_id => player_struct.champion_id, :champion_played_image => get_champion_square_link(player_struct.champion_id)}
+      if lightApiConsumption == false
+        player[:player_name]= names[player_struct.summoner_id.to_s]
+      end
       add_to_team(player, team1, team2, player_struct.team_id)
     end
 

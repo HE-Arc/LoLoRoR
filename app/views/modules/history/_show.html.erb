@@ -1,9 +1,9 @@
 <input type="hidden" value="<%= @mod.id %>" class="module-id-field"/>
 <div class="panel-heading">
-  Historique de match - <%= @mod.account.pseudoLoL %> (<%= @mod.account.region %>) <a class="pull-right btn btn-default btn-xs edit-module-history" ><i class="glyphicon glyphicon-wrench"></i></a>
+  Historique de match - <%= link_to @mod.account.pseudoLoL,'/accounts/'+@mod.account.region+'/'+@mod.account.idLoL.to_s %> (<%= @mod.account.region %>) <a class="pull-right btn btn-default btn-xs edit-module-history" ><i class="glyphicon glyphicon-wrench"></i></a>
 </div>
 <ul class="list-group">
   <% @history.first(@mod.nb_match).each do |match| %>
-    <%= render 'modules/history/match' %>
+    <%= render :partial => 'modules/history/match', :locals => {:match => match} %>
   <% end %>
 </ul>
