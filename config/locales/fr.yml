@@ -5,5 +5,11 @@ fr:
       models:
         user:
           attributes:
+            username:
+              taken: "Ce nom d'utilisateur est déjà pris"
+            email:
+              taken: "Cette adresse email est déjà prise"
             password_confirmation:
               confirmation: "Les mots de passes sont différents !"
+            password:
+              too_short: "Le mot de passe est trop court"
