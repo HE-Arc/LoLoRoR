@@ -208,5 +208,18 @@ float: none !important;
 .item-history{
   margin:0px;
   padding:0px;
+  text-align:center;
 }
 
+.item-image{
+  max-width:20px;
+  
+}
+.champion-image{
+  max-width:35px;
+}
+
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}

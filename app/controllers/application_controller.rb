@@ -56,9 +56,10 @@ class ApplicationController < ActionController::Base
   private
 
   def render_invalid_response(exception)
-    @error = {:title => "Serveur Riot indisponible", :message => "Le serveur Riot est actuellement indisponible, merci d'essayer sur une autre région ou de patienter quelques milions d'années."}
-
+    @error = {:title => "Serveur Riot indisponible", :message => "Le serveur Riot est actuellement indisponible, merci d'essayer sur une autre région ou de patienter quelques secondes."}
+    puts exception
+    flash.now[:alert] = @error[:message]
     render :template => "/error/custom_error.html.erb"
-    flash[:notice] = "YOLO"
+   
   end
 end

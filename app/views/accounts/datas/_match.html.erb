@@ -1,7 +1,7 @@
 <span class="list-group-item">
   <div class="row">
     <div class="col-md-1">
-     <%= image_tag match[:champion_played_image] , class: "img-responsive", width: "100%" %>
+      <%= image_tag match[:champion_played_image] , class: "champion-image", width: "100%" %>
     </div>
     <div class="col-md-3">
       <% if match[:is_won] %>
@@ -25,39 +25,75 @@
     <div class="col-md-2">
       <ul class="list-group row">
         <% match[:items].each do |item| %>
-        <li class="list-group-item col-xs-4 item-history">
-          <%= image_tag item, class: "img-responsive item-history", width: "100%" %>
+        <li class="list-group-item col-xs-4 item-history nopadding">
+          <%= image_tag item, class: "item-image" %>
         </li>
         <% end %>
       </ul>
     </div>
     <div class="col-md-2">
-      <button class="btn btn-default btn-details-history" >Détails du match</button>
+      <button class="btn btn-default btn-details-history" >Détails</button>
     </div>
   </div>
-  <div class="row details well" >
-    <div class="col-md-6">
-    <table class="table table-striped">
-      <thead>
+  <div class="row details well" sytle="display:none" >
+    <div class="col-md-4">
+      <h6>Equipe bleue</h6>
+      <table class="table table-striped">
+        <% match[:team1].each do |player| %>
         <tr>
-          <th>Champion</th>
-          <th>Joueur</th>
-        </tr>
-      </thead>
-        <tbody>
-          <% match[:team1].each do |player| %>
-          <tr>
-            <td>
-              <%= image_tag player[:champion_played_image] , class: "img-responsive", width: "100%" %>
-            </td>
-            <td>
-              <%= player[:player_name] %>
-            </td>
-          <tr>
+          <td>
+            <%= image_tag player[:champion_played_image] , class: "champion-image" %>
+          </td>
+          <td>
+            <%= link_to player[:player_name],'/accounts/'+@region+'/'+player[:id].to_s %>
+          </td>
+        <tr>
           <% end %>
-      </tbody>
-      
-    </table>
+      </table>
+    </div>
+    <div class="col-md-4">
+      <h6>Equipe violette</h6>
+      <table class="table table-striped">
+        <% match[:team2].each do |player| %>
+        <tr>
+          <td>
+            <%= image_tag player[:champion_played_image] , class: "champion-image" %>
+          </td>
+          <td>
+            <%= link_to player[:player_name],'/accounts/'+@region+'/'+player[:id].to_s %>
+          </td>
+        <tr>
+          <% end %>
+      </table>
+    </div>
+    <div class="col-md-4">
+      <table class="table table-striped">
+        <tr>
+          <td>Or gagné</td>
+          <td><%= match[:gold] %></td>
+        </tr>
+        <tr>
+          <td>Or gagné</td>
+          <td><%= match[:gold] %></td>
+        </tr>
+        <tr>
+          <td>Or gagné</td>
+          <td><%= match[:gold] %></td>
+        </tr>
+        <tr>
+          <td>Or gagné</td>
+          <td><%= match[:gold] %></td>
+        </tr>
+        <tr>
+          <td>Or gagné</td>
+          <td><%= match[:gold] %></td>
+        </tr>
+        <tr>
+          <td>Or gagné</td>
+          <td><%= match[:gold] %></td>
+        </tr>
+      </table>
+
     </div>
   </div>
 </span>
