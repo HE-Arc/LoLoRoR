@@ -284,7 +284,7 @@ class LolWrapper
 
     #game mode related
     if lightApiConsumption
-      parsed_game[:map_name] = @map_id_hash_short[game.map_id.to_s]
+      parsed_game[:map_name] = @@map_id_hash_short[game.map_id.to_s]
     else
       parsed_game[:map_name] = @map_id_hash[game.map_id.to_s]
     end

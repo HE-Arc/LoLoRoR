@@ -13,7 +13,7 @@ class DashboardsController < ApplicationController
     @historyModules = []
     @modules = @dashboard.match_history_modules
     @modules.each do |hm|
-      @historyModules << {module: hm, history: LOL_WRAPPER.get_file_history(hm.account.idLoL, hm.account.region)}
+      @historyModules << {module: hm, history: LOL_WRAPPER.get_file_history(hm.account.idLoL, hm.account.region, true)}
     end
   end
   

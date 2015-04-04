@@ -21,7 +21,7 @@
     @mod.nb_match =  @moduleInfos[:nb_match]
     @mod.dashboard = Dashboard.find(@moduleInfos[:dash_id])
     @mod.account = Account.find(@moduleInfos[:account_id])
-    @history = LOL_WRAPPER.get_file_history(@mod.account.idLoL, @mod.account.region)
+    @history = LOL_WRAPPER.get_file_history(@mod.account.idLoL, @mod.account.region, true)
 
     if(@mod.save)
       return render :partial => "modules/history/show"
@@ -42,7 +42,7 @@
     @moduleInfos = params[:module_infos]
     @mod.nb_match = @moduleInfos[:nb_match]
     @mod.account = Account.find(@moduleInfos[:account_id])
-    @history = LOL_WRAPPER.get_file_history(@mod.account.idLoL, @mod.account.region)
+    @history = LOL_WRAPPER.get_file_history(@mod.account.idLoL, @mod.account.region, true)
 
     if(@mod.save)
       return render :partial => "modules/history/show"

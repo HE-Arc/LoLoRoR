@@ -229,6 +229,10 @@ float: none !important;
   
 }
 
+.details{
+  display:none;
+}
+
 /* rank coloration */
 .style-unranked{
   display:none;
@@ -243,6 +247,7 @@ float: none !important;
 }
 
 .style-gold{
+  color:#222222;
   background-color:#F5D800;
 }
 
