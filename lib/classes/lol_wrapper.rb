@@ -129,13 +129,13 @@ class LolWrapper
   #returns a loading-screen picture of the champion refered by champion_id the skin can be selected with skin_id
   def get_champion_image_link(champion_id, skin_id = '0')
     champion = get_champion(champion_id)
-    return "http://ddragon.leagueoflegends.com/cdn/img/champion/loading/"+champion.name+"_"+skin_id+".jpg"
+    return "http://ddragon.leagueoflegends.com/cdn/img/champion/loading/"+champion.key+"_"+skin_id+".jpg"
   end
 
   #returns a little square picture of the champion refered by champion_id
   def get_champion_square_link(champion_id)
     champion = get_champion(champion_id)
-    return "http://ddragon.leagueoflegends.com/cdn/"+@ddragon_version+"/img/champion/"+champion.name+".png"
+    return "http://ddragon.leagueoflegends.com/cdn/"+@ddragon_version+"/img/champion/"+champion.key+".png"
   end
 
   #returns a little square picture of the champion refered by champion_id
@@ -360,7 +360,11 @@ class LolWrapper
   #get players names by their ids for the matchhistory display
   def get_parsed_games_player_names(parsed_games, account_id, region_name)
     list_ids = [account_id]
+
     parsed_games.each do |game|
+      if game.fellow_players.nil?
+        raise Lol::InvalidAPIResponse.new("yolo", "swag")
+      end
       game.fellow_players.each do |player|
         list_ids << player.summoner_id
       end
