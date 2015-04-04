@@ -26,7 +26,6 @@ class AccountsController < ApplicationController
       end
 
       if !@idLoL.nil? 
-        puts(@idLoL)
         find_summoner
         render "show"
         #render :nothing => true
@@ -45,7 +44,7 @@ class AccountsController < ApplicationController
 
   def find_summoner
     #Find the summoner with the corresponding id and region
-
+    if !@region.nil?
     @summoner = LOL_WRAPPER.get_summoner_by_id(@idLoL,@region)
 
     #Find the stats of the summoner with the corresponding id and region
@@ -75,6 +74,9 @@ class AccountsController < ApplicationController
     if user_signed_in?
       @user = current_user
       @trackgroups = @user.trackgroups
+    end
+    else
+      render :text => "lol2"
     end
 
   end
