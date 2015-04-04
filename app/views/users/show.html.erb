@@ -1,8 +1,48 @@
-<h2><%= @user.username %></h2>
-
 <% if user_signed_in? %>
   <% if current_user == @user %>
-<%= button_to "Modifier votre profil",edit_user_registration_path, method: "get", class: "btn btn-primary" %>
-    <%= link_to "Se déconnecter", destroy_user_session_path, :method => :delete %>
+  <h2><%= @user.username %>
+    <small>
+      <div class="btn-group" role="group" >
+        <%= link_to "Modifier votre profil",edit_user_registration_path, method: "get", class: "btn btn-primary" %>
+        <%= link_to "Se déconnecter", destroy_user_session_path, :method => :delete, class: "btn btn-default" %>
+      </div>
+    </small>
+  </h2>
+
+
+    <table class="table">
+      <tr>
+          <td>Pseudo</td>
+          <td><%= @user.username %></td>
+      </tr>
+      <tr>
+          <td>Email</td>
+          <td><%= @user.email %></td>
+      </tr>
+      <tr>
+        <td>Dashboards</td>
+        <td><%= @user.dashboards.count %></td>
+      </tr>
+      <tr>
+        <td>Comptes</td>
+        <td><%= @user.accounts.count %></td>
+      </tr>
+      <tr>
+          <td>Amis</td>
+            <% friendCount = 0 %>
+            <% @user.trackgroups.each do |track| %>
+            <% friendCount+=track.accounts.count %>
+            <% end %>
+          <td><%= friendCount %></td>
+      </tr>
+    </table>
+<center>
+  <div class="btn-group" role="group" >
+    <%= link_to "Mes dashboards", dashboards_path, method: "get", class: "btn btn-default" %>
+    <%= link_to "Mes comptes", users_accounts_path, method: "get", class: "btn btn-default" %>
+    <%= link_to "Mes amis", users_trackgroups_path, method: "get", class: "btn btn-default" %>
+  </div>
+</center>
+
+    <% end %>
   <% end %>
-<% end %>

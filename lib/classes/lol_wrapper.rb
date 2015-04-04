@@ -64,11 +64,13 @@ class LolWrapper
     stats = get_account_infos(account_id, region_name)
     games_number = 0
     wins_number = 0
+    losses_number = 0
     kills = 0
     assists = 0
     if !stats.nil?
       stats.each do |item|
         wins_number += item.wins
+        losses_number += item.losses.nil? ? 0 : item.losses
         if item.aggregated_stats.total_champion_kills != nil
           kills += item.aggregated_stats.total_champion_kills
         end
@@ -77,6 +79,8 @@ class LolWrapper
         end
       end
     end
+    games_number = wins_number + losses_number
+    
     return {:games_number => games_number, :wins_number => wins_number, :kills => kills, :assists => assists}
   end    
 
@@ -300,13 +304,13 @@ class LolWrapper
     parsed_game[:assists] = stats.assists
     parsed_game[:deaths] = stats.num_deaths
     parsed_game[:cs] = stats.minions_killed
-    parsed_game[:turret_kills] = stats.turrets_killed
+    parsed_game[:turret_kills] = stats.turrets_killed.nil? ? 0 : stats.turrets_killed
     parsed_game[:cc_duration]= stats.total_time_crowd_control_dealt
     parsed_game[:multi_kills] = get_multi_kills(stats)
     parsed_game[:damage_taken] = stats.total_damage_taken
     parsed_game[:damage_dealt] = stats.total_damage_dealt
-    parsed_game[:wards_placed] = stats.ward_placed
-    parsed_game[:wards_killed] = stats.ward_killed
+    parsed_game[:wards_placed] = stats.ward_placed.nil? ? 0 : stats.ward_placed
+    parsed_game[:wards_killed] = stats.ward_killed.nil? ? 0 : stats.ward_killed
     parsed_game[:duration] = stats.time_played
     parsed_game[:is_won] = stats.win
 
