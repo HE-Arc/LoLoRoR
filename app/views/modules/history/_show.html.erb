@@ -1,6 +1,7 @@
 <input type="hidden" value="<%= @mod.id %>" class="module-id-field"/>
 <div class="panel-heading">
-  Historique de match - <%= link_to @mod.account.pseudoLoL,'/accounts/'+@mod.account.region+'/'+@mod.account.idLoL.to_s %> (<%= @mod.account.region %>) <a class="pull-right btn btn-default btn-xs edit-module-history" ><i class="glyphicon glyphicon-wrench"></i></a>
+  Historique de match - <%= link_to @mod.account.pseudoLoL, account_path(:region => @mod.account.region, :idLoL => @mod.account.idLoL) %> (<%= @mod.account.region %>) 
+  <a class="pull-right btn btn-default btn-xs edit-module-history" ><i class="glyphicon glyphicon-wrench"></i></a>
 </div>
 <ul class="list-group">
   <% @history.first(@mod.nb_match).each do |match| %>

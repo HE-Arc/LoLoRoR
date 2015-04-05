@@ -1,6 +1,6 @@
 <li class="list-group-item row">
   <div class="col-md-2 thumbnail">
-     <%= image_tag match[:champion_played_image] , class: "img-responsive", width: "100%" %>
+     <%= image_tag match[:champion_played_image] , class: "champion-image" %>
   </div>
   <div class="col-md-3">
     <div class="list-group list-group-condensed">
@@ -13,14 +13,18 @@
       <span class="list-group-item"><%= match[:game_sub_type]%></span>
     </div>  
   </div>
-  <div class="col-md-2">
+  <div class="col-md-3">
     <div class="list-group list-group-condensed">
-      <span class="list-group-item"><%= match[:kills] %>/<%= match[:deaths] %>/ <%= match[:assists] %></span>
+      <span class="list-group-item">
+        <div>K : <%= match[:kills] %></div>
+        <div>D : <%= match[:deaths] %></div>
+        <div>A : <%= match[:assists] %></div>
+      </span>
       <%gold = match[:gold]/1000 %>
       <span class="list-group-item"> <%= gold %>k</span>
     </div>
   </div>
-  <div class="col-md-5 hidden-sm hidden-xs">
+  <div class="col-md-4 hidden-sm hidden-xs">
     <% match[:items].each do |item| %>
     <span class="thumbnail col-md-4">
       <%= image_tag item, class: "img-responsive item-history", width: "100%" %>
