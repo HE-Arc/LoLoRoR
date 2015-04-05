@@ -40,7 +40,7 @@ class TrackgroupsController < ApplicationController
   end
   
  def destroy 
-    @trackgroup.destroy
+   @trackgroup.destroy
    redirect_to users_trackgroups_path
   end
   
