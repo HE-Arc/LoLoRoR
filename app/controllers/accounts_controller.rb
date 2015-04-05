@@ -37,7 +37,7 @@ class AccountsController < ApplicationController
       flash.now[:alert] = @error[:message]
       render "error/custom_error"
     rescue 
-      @error = {:title => "Utilisateur non existant", :message => "L'OLOLOLOL !"}
+      @error = {:title => "Utilisateur non existant", :message => "L'OLOLOLOL !"+@idLoL.to_s}
       flash.now[:alert] = @error[:message]
       render "error/custom_error"
       

@@ -47,7 +47,7 @@
             <%= image_tag player[:champion_played_image] , class: "champion-image" %>
           </td>
           <td>
-            <%= link_to player[:player_name],'/accounts/'+@region+'/'+player[:id].to_s %>
+           <%= link_to player[:player_name], account_path(:idLoL => player[:id], :region => @region) %>
           </td>
         <tr>
           <% end %>
@@ -63,7 +63,7 @@
             <%= image_tag player[:champion_played_image] , class: "champion-image" %>
           </td>
           <td>
-            <%= link_to player[:player_name],'/accounts/'+@region+'/'+player[:id].to_s %>
+            <%= link_to player[:player_name], account_path(:idLoL => player[:id], :region => @region) %>
           </td>
         <tr>
           <% end %>
