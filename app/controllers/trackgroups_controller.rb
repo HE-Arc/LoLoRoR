@@ -40,6 +40,7 @@ class TrackgroupsController < ApplicationController
   end
   
  def destroy 
+   @trackgroup = Trackgroup.find(params[:id])
    @trackgroup.destroy
    redirect_to users_trackgroups_path
   end
