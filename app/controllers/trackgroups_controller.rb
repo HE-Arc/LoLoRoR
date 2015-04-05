@@ -42,8 +42,8 @@ class TrackgroupsController < ApplicationController
  def destroy 
    @trackgroup = Trackgroup.find(params[:id])
    @trackgroup.destroy
-   #redirect_to users_trackgroups_path
-   redirect_to root_path
+   redirect_to users_trackgroups_path
+   
   end
   
   private
