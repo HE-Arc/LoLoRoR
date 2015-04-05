@@ -20,7 +20,7 @@ class AccountsController < ApplicationController
 
   def searchAccounts
     begin
-      if !defined?(@idLoL)
+      if !defined?(@idLoL) 
         tmp = LOL_WRAPPER.get_summoner_id(params[:name],  params[:region])
         @idLoL = tmp
         @region = params[:region]
@@ -36,6 +36,11 @@ class AccountsController < ApplicationController
       @error = {:title => "Utilisateur non existant", :message => "L'utilisateur que vous avez demandé n'existe pas !"}
       flash.now[:alert] = @error[:message]
       render "error/custom_error"
+    else 
+      @error = {:title => "Utilisateur non existant", :message => "L'OLOLOLOL !"}
+      flash.now[:alert] = @error[:message]
+      render "error/custom_error"
+      
     end
     #rescue Lol::InvalidAPIResponse 
     #render ""
