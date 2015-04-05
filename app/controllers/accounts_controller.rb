@@ -6,10 +6,16 @@ class AccountsController < ApplicationController
 
   LOL_WRAPPER = LolWrapper.new
   def show
+    begin
+      @idLoL = params[:idLoL]
+      @region = params[:region]
+      searchAccounts
+    rescue
+      @error = {:title => "SHUT UP BOLHINAS", :message => "L'SHUT UP BOLHINAS !"}
+      flash.now[:alert] = @error[:message]
+      render "error/custom_error"
+    end
 
-    @idLoL = params[:idLoL]
-    @region = params[:region]
-    searchAccounts
   end
 
   def showUserAccounts
@@ -26,6 +32,7 @@ class AccountsController < ApplicationController
       end
 
       if !@idLoL.nil? 
+        puts(@idLoL)
         find_summoner
         render "show"
         #render :nothing => true
@@ -44,7 +51,7 @@ class AccountsController < ApplicationController
 
   def find_summoner
     #Find the summoner with the corresponding id and region
-    if !@region.nil?
+
     @summoner = LOL_WRAPPER.get_summoner_by_id(@idLoL,@region)
 
     #Find the stats of the summoner with the corresponding id and region
@@ -56,9 +63,9 @@ class AccountsController < ApplicationController
 
     @file_ranks =  LOL_WRAPPER.get_file_ranks(@idLoL, @region)
     #TODO check error
-    
+
     @file_history =  LOL_WRAPPER.get_file_history(@idLoL, @region)
-    
+
 
     #Create or update the corresponding account in our database
     if Account.exists?(:idLoL => @idLoL)
@@ -74,9 +81,6 @@ class AccountsController < ApplicationController
     if user_signed_in?
       @user = current_user
       @trackgroups = @user.trackgroups
-    end
-    else
-      render :text => "lol2"
     end
 
   end
