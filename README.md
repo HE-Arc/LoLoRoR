@@ -13,7 +13,7 @@ API League of Legends : The official API we use for retrieve all the information
 3. run the command : rake db:create db:migrate
   * If you already have an older version of the database, run : rake db:drop
 4. Find the file app.yml in folder config and make sure the values are correct
-  * If you don't have this file, create a new one with the name app.yml and copy-paste this and fill the gap :
+  * If you don't have this file, create a new one with the name app.yml, copy-paste this and fill the gap :
 
 ```
  # file config/app.yml
