@@ -5,10 +5,13 @@ Web application to track your friends on the popular game League of Legends. It 
 ## Dependances :
 Redis : REmote DIctionary Server, it's an open-source data structure server with key-value storage.
 
-API League of Legends : The official API we use for retrieve all the informations about the summoner. In order to send request to the API, we need an API key.
+League of Legends API: The official API we use to retrieve all the informations about the summoners. In order to send requests to the API, you need an API key which you can get by going [https://developer.riotgames.com/](here).
+
+[https://rubygems.org/gems/ruby-lol/](ruby-lol Gem): a gem that has almost all the needed queries to get the informations from the Riot API. [http://www.rubydoc.info/github/mikamai/ruby-lol/index](Doc) [https://github.com/mikamai/ruby-lol](GitHub). 
+The gem uses Redis to cache the responses to the queries, which is usefull since the same API-key cannot perform more than 10 queries/10 seconds.
 
 ## How to use the project :
-1. install redis : https://www.digitalocean.com/community/tutorials/how-to-install-and-use-redis
+1. install redis : [https://www.digitalocean.com/community/tutorials/how-to-install-and-use-redis](tutorial)
 2. run the command : bundle install
 3. run the command : rake db:create db:migrate
   * If you already have an older version of the database, run : rake db:drop
