@@ -8,12 +8,9 @@ class AccountsUsersController < ApplicationController
     #begin
       
     @user = current_user
-    puts "0"
     @account = Account.find(params[:account][:id])
     @user.accounts << @account
-    puts "1"
     redirect_to account_path(:region => @account.region, :idLoL => @account.idLoL)
-    puts "2"
     #rescue
      # flash.now[:alert] = "Une erreur inconnue est survenue, veuillez contacter l'administrateur du site."
       #render "error/custom_error"
