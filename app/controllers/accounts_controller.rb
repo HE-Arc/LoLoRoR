@@ -39,7 +39,7 @@ class AccountsController < ApplicationController
     rescue 
       @error = {:title => "Utilisateur non existant", :message => "Saissiez un nom d'utilisateur pour la recherche"+@idLoL.to_s}
       flash.now[:alert] = @error[:message]
-      render "error/custom_error"
+      #render "error/custom_error"
       
     end
     #rescue Lol::InvalidAPIResponse 
@@ -83,7 +83,7 @@ class AccountsController < ApplicationController
         @trackgroups = @user.trackgroups
       end
     rescue
-      @error = {:title => "SHUT UP BOLHINAS", :message => "L'SHUT UP BOLHINAS !"}
+      @error = {:title => "L'utilisateur que vous avez entré n'existe pas.", :message => "L'utilisateur que vous avez entré n'existe pas."}
       flash.now[:alert] = @error[:message]
       render "error/custom_error"
     end
